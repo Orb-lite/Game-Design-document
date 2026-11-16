@@ -1,0 +1,6 @@
+{
+  "name": "The Last Relic — GDD v2.2 & Pitch Deck",
+  "description": "Documento Maestro de Diseño de Videojuego (GDD v2.2 — Edición IP Original INDAUTOR) y Pitch Deck Comercial de The Last Relic en el universo de Valdris.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
