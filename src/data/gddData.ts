@@ -1460,11 +1460,11 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
     code: '13 / 14',
     section: "Holiday Events · Halloween, Dark Santa's Wish & Reactive Skins",
     title: "Halloween, Dark Santa's Wish & Summer Solstice Live-Ops",
-    keyMessage: 'Event skins react dynamically to matching seasonal storms while keeping hitboxes 100% invariant.',
+    keyMessage: 'Always-Open 24/7 Queue + 1 Attempt Every 24 Hours turns daily holiday runs into high-stakes streamable rituals.',
     bullets: [
-      'Autumn · Halloween (Night of the Hollow Bell): Blood-orange harvest moon, Wraith-Lantern Stashes, Hollow Reaper Executioner boss, & Hollow Lantern Warden skin (pulses in Miasma fog).',
-      "Winter · Dark Santa's Wish: Sub-zero Glacial Storm, Cursed Gift Reliquaries, Frost Bell-Keeper boss, & Frostbound Hearth-Breaker skin (accumulates rime frost in blizzards).",
-      'Summer · Solar-Ash Reckoning: Solar Eclipse Altars & Sun-Baked Eclipse Sentinel Dual-Crossbow skin (ignites live molten embers under Scorching Heat Storms).',
+      '24/7 Queue & 24h Personal Cooldown (Zero Pay-to-Win): Instant global matchmaking paired with a strict 1-Entry-Per-24h ritual cooldown across flagship holiday queues.',
+      'Halloween — Wish or Threat: Pick WISH (target Gold-Tier Spectral Harvester Plate or Hollow Executioner Cloak under standard rules) or THREAT (accept cursed blood-fog, disabled radar, enraged Boss, or bounty mark to win the set + exclusive Cursed VFX / Ether Seal variant; defeat locks out 24h).',
+      "Midwinter — Dark Santa's Wish & Summer Solar-Ash: Lock in a Gold-Tier set via Wish UI to slay Dark Santa & showcase spoils in the Social Hub (24h loss cooldown), paired with reactive Winter Frost, Halloween Miasma & Summer Ember skins.",
     ],
     image: GENERATED_ASSETS.eventHalloweenValdris,
     showcaseTitle: 'Holiday Event Arenas & Climate-Reactive Event Skins',
@@ -1852,41 +1852,82 @@ export const CO_PITCHING_ALLIANCE = {
 export const SEASONAL_LIVE_OPS = {
   eyebrow: 'Seasonal Live-Ops & Holiday Events',
   title: 'Holiday Events, 4-Season Storm Cycle & Reactive Skins',
-  lead: 'To keep the world visually alive year-round without requiring our partner art studio to rebuild maps from scratch, Valdris Chronicle pairs marquee dark-fantasy Holiday Events—like Halloween and Dark Santa’s Wish—with a quarterly Dynamic Storm & World Cycle:',
+  lead: 'To keep the world visually alive year-round without requiring our partner art studio to rebuild maps from scratch, Valdris Chronicle pairs marquee dark-fantasy Holiday Events—like Halloween (Wish or Threat) and Midwinter (Dark Santa’s Wish)—with a quarterly Dynamic Storm & World Cycle:',
+  eventQueueLineup: {
+    title: 'Seasonal Event Lineup: 1 Attempt Every 24 Hours (Zero Pay-to-Win)',
+    lead: 'Both flagship events run on an Always-Open 24/7 Queue with a strict 1-Entry-Per-24h Personal Cooldown—guaranteeing fast global matchmaking while turning every daily run into high-stakes, streamable ritual content:',
+    queueMetrics: [
+      { label: 'Matchmaking Queue', value: 'Always-Open 24/7' },
+      { label: 'Entry Cadence', value: '1 Attempt / 24h' },
+      { label: 'Monetization Guardrail', value: 'Zero Pay-to-Win' },
+      { label: 'Reward Showcase', value: 'Instant Social Hub Flex' },
+    ],
+    halloween: {
+      title: 'Halloween — Wish or Threat',
+      prompt: 'Before entering their daily run, the UI forces a risk-reward choice:',
+      targetSets: ['Spectral Harvester Plate', 'Hollow Executioner Cloak'],
+      curses: [
+        'Cursed Blood-Fog Visibility Reduction',
+        'Disabled Minimap & Compass Radar',
+        'Enraged World Boss Scaling',
+        'Map-Wide Public Bounty Mark',
+      ],
+      wish: {
+        label: 'WISH',
+        summary:
+          'Pick your target Halloween Gold-Tier cosmetic set (e.g., Spectral Harvester Plate or Hollow Executioner Cloak) and fight under standard rules to claim it on victory.',
+      },
+      threat: {
+        label: 'THREAT',
+        summary:
+          'Voluntarily accept a match-wide curse (such as cursed blood-fog, disabled radar, enraged World Boss, or public bounty mark). Triumphing under Threat awards the chosen Gold-Tier set plus an exclusive Cursed VFX / Ether Seal variant—while defeat locks the player out for 24 hours.',
+      },
+    },
+    midwinter: {
+      title: "Midwinter — Dark Santa's Wish",
+      summary:
+        'Players lock in their desired Gold-Tier cosmetic set via the pre-match Wish UI and enter a winter-transformed dark fantasy arena to defeat the Dark Santa encounter. Winners claim their selected set immediately to showcase in the Social Hub; losers wait 24 hours for their next attempt.',
+      highlights: [
+        'Pre-Match Wish UI: Lock in your target Gold-Tier Winter set before queuing.',
+        'Winter Arena & Boss: Glacial blizzard dressing culminating in the Dark Santa encounter.',
+        'Victory & Cooldown Rule: Instant unlock & Social Hub showcase on win; 24-hour lockout on defeat.',
+      ],
+    },
+  },
   holidayEvents: [
     {
       id: 'halloween-hollow-bell',
       seasonTag: 'Autumn · Halloween Event',
-      title: 'Night of the Hollow Bell',
-      window: 'Oct 24 – Nov 7',
+      title: 'Night of the Hollow Bell (Wish or Threat)',
+      window: 'Always-Open 24/7 Queue · 1 Entry / 24h',
       stormPairing: 'Toxic Miasma Gas (Crimson Harvest Moon)',
       accentHex: '#9461C9',
       image: GENERATED_ASSETS.eventHalloweenValdris,
       atmosphere:
         'A giant blood-orange harvest moon hangs above Valdris while wrought-iron jack-o’-lantern braziers line Citadel drawbridges and spectral Miasma wisps haunt the Catacomb vaults.',
       gameplayTwist:
-        'Wraith-Lantern Stashes spawn haunted cosmetic contracts across outer camps, and the Act IV–V raid boss rises as the cursed Hollow Reaper Executioner.',
-      rewardSkin: 'Hollow Lantern Warden Set (Earned via Haunted Bounties — Zero Pay-to-Win)',
+        'Pre-match Wish or Threat ritual: fight normally for a chosen Gold-Tier set (Spectral Harvester Plate / Hollow Executioner Cloak) or accept a Threat curse for an exclusive Cursed VFX / Ether Seal variant.',
+      rewardSkin: 'Gold-Tier Halloween Set + Optional Threat Cursed VFX / Ether Seal',
     },
     {
       id: 'dark-santas-wish',
-      seasonTag: 'Winter · Holiday Event',
+      seasonTag: 'Midwinter · Holiday Event',
       title: "Dark Santa's Wish",
-      window: 'Dec 15 – Jan 7',
+      window: 'Always-Open 24/7 Queue · 1 Entry / 24h',
       stormPairing: 'Glacial Ice Storm (Sub-Zero Blizzard)',
       accentHex: '#3E82C7',
       image: GENERATED_ASSETS.stormWinterBlizzard,
       atmosphere:
         'Snow blankets the Citadel battlements and howling freezing winds replace the toxic mist as crimson-iron Yule banners and frozen courtyard shrines transform the warzone.',
       gameplayTwist:
-        'Cursed Gift Reliquaries drop inside snowbound courtyards guarded by the Frost Bell-Keeper (Dark Santa Boss Variant), awarding Frostbound Wish Tokens for direct event skin unlocks.',
-      rewardSkin: 'Frostbound Hearth-Breaker Set (Dark Santa Armor + Runic Ice Axe)',
+        'Players lock in a desired Gold-Tier set via the pre-match Wish UI and battle through the snowbound arena to defeat the Dark Santa encounter; defeat triggers a 24-hour personal cooldown.',
+      rewardSkin: 'Chosen Gold-Tier Set + Instant Social Hub Showcase (Frostbound Hearth-Breaker)',
     },
     {
       id: 'solar-ash-solstice',
       seasonTag: 'Summer · Solstice Event',
       title: 'Solar-Ash Reckoning',
-      window: 'Jul 1 – Jul 21',
+      window: 'Jul 1 – Jul 21 · Daily Contract Queue',
       stormPairing: 'Scorching Heat Storm (Ember-Ash Tempest)',
       accentHex: '#E06C5A',
       image: GENERATED_ASSETS.stormSummerHeat,

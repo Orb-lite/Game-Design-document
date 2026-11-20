@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Calendar, CloudSnow, Flame, Ghost, Gift, Layers, Sparkles, Sun, Wind } from 'lucide-react';
+import { Calendar, Clock, CloudSnow, Flame, Ghost, Gift, Layers, ShieldAlert, Skull, Sparkles, Sun, Wind } from 'lucide-react';
 import {
   BALANCE_POTIONS,
   BALANCE_RUNES,
@@ -60,6 +60,10 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
   const [deltaBracket, setDeltaBracket] = useState<number>(1.25);
   const [selectedSeasonId, setSelectedSeasonId] = useState<string>(
     SEASONAL_LIVE_OPS.stormPhases[1].id
+  );
+  const [halloweenRitualChoice, setHalloweenRitualChoice] = useState<'wish' | 'threat'>('threat');
+  const [selectedWishSet, setSelectedWishSet] = useState<string>(
+    SEASONAL_LIVE_OPS.eventQueueLineup.halloween.targetSets[0]
   );
 
   const activeBiome = BIOMES.find((b) => b.id === selectedBiomeId) ?? BIOMES[0];
@@ -1045,6 +1049,193 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
                       </div>
                     </article>
                   ))}
+                </div>
+              </div>
+
+              {/* Seasonal Event Lineup: 1 Attempt Every 24 Hours (Zero Pay-to-Win) */}
+              <div className="rounded-lg border border-[#C89B3C]/40 bg-[#141417] p-6 lg:p-8">
+                <div className="flex flex-col gap-3 border-b border-white/10 pb-6 md:flex-row md:items-end md:justify-between">
+                  <div>
+                    <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-[#C89B3C] uppercase">
+                      <Clock className="h-3.5 w-3.5" aria-hidden="true" />
+                      <span>Always-Open 24/7 Queue · High-Stakes Daily Ritual</span>
+                    </div>
+                    <h4 className="font-display mt-2 text-2xl font-semibold text-[#F6EFE2]">
+                      {SEASONAL_LIVE_OPS.eventQueueLineup.title}
+                    </h4>
+                  </div>
+                  <p className="max-w-lg text-xs leading-relaxed text-[#D4CEC3]">
+                    {SEASONAL_LIVE_OPS.eventQueueLineup.lead}
+                  </p>
+                </div>
+
+                {/* Queue Metrics Strip */}
+                <dl className="grid grid-cols-2 gap-4 border-b border-white/10 py-5 lg:grid-cols-4">
+                  {SEASONAL_LIVE_OPS.eventQueueLineup.queueMetrics.map((m) => (
+                    <div key={m.label}>
+                      <dt className="text-[11px] text-[#9C968B]">{m.label}</dt>
+                      <dd className="font-mono-tabular mt-0.5 text-base font-semibold text-[#F6EFE2]">
+                        {m.value}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+
+                {/* Flagship Queue Breakdown: Halloween Wish or Threat + Midwinter Dark Santa's Wish */}
+                <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-12">
+                  {/* Halloween — Wish or Threat Interactive Selector */}
+                  <div className="rounded-md border border-[#9461C9]/45 bg-[#0F0F12] p-6 lg:col-span-7">
+                    <div className="flex flex-col gap-3 border-b border-white/10 pb-4 sm:flex-row sm:items-center sm:justify-between">
+                      <div>
+                        <p className="flex items-center gap-1.5 text-[11px] font-semibold tracking-wider text-[#C4A1EA] uppercase">
+                          <Skull className="h-3.5 w-3.5" aria-hidden="true" />
+                          <span>Pre-Match Risk-Reward Choice</span>
+                        </p>
+                        <h5 className="font-display mt-1 text-xl font-semibold text-[#F6EFE2]">
+                          {SEASONAL_LIVE_OPS.eventQueueLineup.halloween.title}
+                        </h5>
+                      </div>
+
+                      <div
+                        className="flex items-center gap-1 rounded-md border border-white/10 bg-[#141417] p-1"
+                        role="tablist"
+                        aria-label="Inspect Halloween Wish or Threat choice"
+                      >
+                        <button
+                          type="button"
+                          role="tab"
+                          aria-selected={halloweenRitualChoice === 'wish'}
+                          onClick={() => setHalloweenRitualChoice('wish')}
+                          className={`rounded px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition-colors ${
+                            halloweenRitualChoice === 'wish'
+                              ? 'bg-[#C89B3C] text-[#0B0B0D]'
+                              : 'text-[#B8B1A6] hover:text-[#F6EFE2]'
+                          }`}
+                        >
+                          WISH (Standard)
+                        </button>
+                        <button
+                          type="button"
+                          role="tab"
+                          aria-selected={halloweenRitualChoice === 'threat'}
+                          onClick={() => setHalloweenRitualChoice('threat')}
+                          className={`rounded px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition-colors ${
+                            halloweenRitualChoice === 'threat'
+                              ? 'bg-[#9461C9] text-[#F6EFE2]'
+                              : 'text-[#B8B1A6] hover:text-[#F6EFE2]'
+                          }`}
+                        >
+                          THREAT (Cursed Stakes)
+                        </button>
+                      </div>
+                    </div>
+
+                    <p className="mt-3 text-xs text-[#9C968B]">
+                      {SEASONAL_LIVE_OPS.eventQueueLineup.halloween.prompt}
+                    </p>
+
+                    {/* Target Gold-Tier Set Picker */}
+                    <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
+                      <span className="text-[#9C968B]">Locked Gold-Tier Target:</span>
+                      {SEASONAL_LIVE_OPS.eventQueueLineup.halloween.targetSets.map((setName) => (
+                        <button
+                          key={setName}
+                          type="button"
+                          onClick={() => setSelectedWishSet(setName)}
+                          className={`rounded border px-2.5 py-1 text-[11px] font-semibold transition-colors ${
+                            selectedWishSet === setName
+                              ? 'border-[#C89B3C] bg-[#C89B3C]/15 text-[#F6EFE2]'
+                              : 'border-white/15 bg-[#141417] text-[#B8B1A6] hover:border-white/30'
+                          }`}
+                        >
+                          {setName}
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                      <div
+                        className={`rounded border p-4 transition-colors ${
+                          halloweenRitualChoice === 'wish'
+                            ? 'border-[#C89B3C]/70 bg-[#181612]'
+                            : 'border-white/10 bg-[#141417]/70'
+                        }`}
+                      >
+                        <p className="font-mono-tabular text-xs font-bold text-[#D4AF37]">
+                          {SEASONAL_LIVE_OPS.eventQueueLineup.halloween.wish.label}
+                        </p>
+                        <p className="mt-1.5 text-xs leading-relaxed text-[#D4CEC3]">
+                          {SEASONAL_LIVE_OPS.eventQueueLineup.halloween.wish.summary}
+                        </p>
+                      </div>
+
+                      <div
+                        className={`rounded border p-4 transition-colors ${
+                          halloweenRitualChoice === 'threat'
+                            ? 'border-[#9461C9]/80 bg-[#181420]'
+                            : 'border-white/10 bg-[#141417]/70'
+                        }`}
+                      >
+                        <p className="font-mono-tabular flex items-center gap-1.5 text-xs font-bold text-[#C4A1EA]">
+                          <ShieldAlert className="h-3.5 w-3.5" aria-hidden="true" />
+                          <span>{SEASONAL_LIVE_OPS.eventQueueLineup.halloween.threat.label}</span>
+                        </p>
+                        <p className="mt-1.5 text-xs leading-relaxed text-[#D4CEC3]">
+                          {SEASONAL_LIVE_OPS.eventQueueLineup.halloween.threat.summary}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="mt-4 border-t border-white/10 pt-3 text-[11px] text-[#B8B1A6]">
+                      <span className="font-semibold text-[#EAE6DF]">Active Simulation Outcome: </span>
+                      {halloweenRitualChoice === 'wish' ? (
+                        <span>
+                          Win match under standard rules to unlock{' '}
+                          <strong className="text-[#D4AF37]">{selectedWishSet}</strong>.
+                        </span>
+                      ) : (
+                        <span>
+                          Survive match-wide curse ({SEASONAL_LIVE_OPS.eventQueueLineup.halloween.curses.join(' · ')}) to unlock{' '}
+                          <strong className="text-[#D4AF37]">{selectedWishSet}</strong> +{' '}
+                          <strong className="text-[#C4A1EA]">Exclusive Cursed VFX / Ether Seal Variant</strong> (Defeat = 24h lock).
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Midwinter — Dark Santa's Wish */}
+                  <div className="flex flex-col justify-between rounded-md border border-[#3E82C7]/45 bg-[#0F0F12] p-6 lg:col-span-5">
+                    <div>
+                      <p className="flex items-center gap-1.5 text-[11px] font-semibold tracking-wider text-[#6BA8E5] uppercase">
+                        <Gift className="h-3.5 w-3.5" aria-hidden="true" />
+                        <span>Pre-Match Wish UI · Social Hub Flex</span>
+                      </p>
+                      <h5 className="font-display mt-1 text-xl font-semibold text-[#F6EFE2]">
+                        {SEASONAL_LIVE_OPS.eventQueueLineup.midwinter.title}
+                      </h5>
+                      <p className="mt-3 text-xs leading-relaxed text-[#D4CEC3]">
+                        {SEASONAL_LIVE_OPS.eventQueueLineup.midwinter.summary}
+                      </p>
+                      <ul className="mt-4 space-y-2.5 border-t border-white/10 pt-4 text-xs leading-relaxed text-[#B8B1A6]">
+                        {SEASONAL_LIVE_OPS.eventQueueLineup.midwinter.highlights.map((item) => (
+                          <li key={item} className="flex items-start gap-2.5">
+                            <span
+                              className="mt-1.5 h-1 w-1 shrink-0 bg-[#3E82C7]"
+                              aria-hidden="true"
+                            />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="mt-5 border-t border-white/10 pt-3 text-[11px] text-[#9C968B]">
+                      <span>Defeat Cooldown · </span>
+                      <span className="font-semibold text-[#EAE6DF]">
+                        Strict 24-Hour Personal Lockout · Zero Paid Entry Resets
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
 

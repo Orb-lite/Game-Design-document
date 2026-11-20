@@ -1378,6 +1378,96 @@ export async function exportMainPageToPdf(
     const pLines = doc.splitTextToSize(pdfSafe(pt.detail), ptW - 6);
     doc.text(pLines.slice(0, 4), px + 3, y + 38.2);
   });
+  y += 61;
+
+  // Seasonal Event Lineup: 1 Attempt Every 24 Hours (Zero Pay-to-Win) (y = 199 to 278mm, safely < 281mm)
+  doc.setFillColor(18, 18, 22);
+  doc.setDrawColor(120, 96, 48);
+  doc.rect(MARGIN_X, y, CONTENT_W, 79, 'FD');
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(7.1);
+  doc.setTextColor(200, 155, 60);
+  doc.text('ALWAYS-OPEN 24/7 QUEUE  |  1-ENTRY-PER-24H PERSONAL COOLDOWN', MARGIN_X + 4, y + 5.5);
+
+  doc.setFont('times', 'bold');
+  doc.setFontSize(10.5);
+  doc.setTextColor(246, 239, 226);
+  doc.text(pdfSafe(SEASONAL_LIVE_OPS.eventQueueLineup.title), MARGIN_X + 4, y + 11.2);
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(6.5);
+  doc.setTextColor(212, 206, 195);
+  const qLead = doc.splitTextToSize(pdfSafe(SEASONAL_LIVE_OPS.eventQueueLineup.lead), CONTENT_W - 8);
+  doc.text(qLead.slice(0, 2), MARGIN_X + 4, y + 16);
+
+  const qColW = (CONTENT_W - 12) / 2;
+  // Left Box: Halloween — Wish or Threat
+  const hx = MARGIN_X + 4;
+  const qy = y + 25;
+  doc.setFillColor(15, 15, 18);
+  doc.setDrawColor(148, 97, 201);
+  doc.rect(hx, qy, qColW, 50, 'FD');
+
+  doc.setFont('times', 'bold');
+  doc.setFontSize(8.8);
+  doc.setTextColor(246, 239, 226);
+  doc.text(pdfSafe(SEASONAL_LIVE_OPS.eventQueueLineup.halloween.title), hx + 3, y + 30.2);
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(6.0);
+  doc.setTextColor(200, 155, 60);
+  doc.text('WISH (STANDARD RULES):', hx + 3, y + 35.5);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(5.7);
+  doc.setTextColor(184, 177, 166);
+  const wL = doc.splitTextToSize(
+    pdfSafe(SEASONAL_LIVE_OPS.eventQueueLineup.halloween.wish.summary),
+    qColW - 6
+  );
+  doc.text(wL.slice(0, 3), hx + 3, y + 39.2);
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(6.0);
+  doc.setTextColor(196, 161, 234);
+  doc.text('THREAT (CURSED STAKES / +VFX VARIANT):', hx + 3, y + 51.5);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(5.7);
+  doc.setTextColor(184, 177, 166);
+  const tL = doc.splitTextToSize(
+    pdfSafe(SEASONAL_LIVE_OPS.eventQueueLineup.halloween.threat.summary),
+    qColW - 6
+  );
+  doc.text(tL.slice(0, 4), hx + 3, y + 55.2);
+
+  // Right Box: Midwinter — Dark Santa's Wish
+  const mx = MARGIN_X + 8 + qColW;
+  doc.setFillColor(15, 15, 18);
+  doc.setDrawColor(62, 130, 199);
+  doc.rect(mx, qy, qColW, 50, 'FD');
+
+  doc.setFont('times', 'bold');
+  doc.setFontSize(8.8);
+  doc.setTextColor(246, 239, 226);
+  doc.text(pdfSafe(SEASONAL_LIVE_OPS.eventQueueLineup.midwinter.title), mx + 3, y + 30.2);
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(6.0);
+  doc.setTextColor(212, 206, 195);
+  const dsSum = doc.splitTextToSize(
+    pdfSafe(SEASONAL_LIVE_OPS.eventQueueLineup.midwinter.summary),
+    qColW - 6
+  );
+  doc.text(dsSum.slice(0, 5), mx + 3, y + 35.5);
+
+  let dhy = y + 52.5;
+  doc.setFontSize(5.7);
+  doc.setTextColor(184, 177, 166);
+  SEASONAL_LIVE_OPS.eventQueueLineup.midwinter.highlights.forEach((h) => {
+    const hl = doc.splitTextToSize(`- ${pdfSafe(h)}`, qColW - 6);
+    doc.text(hl.slice(0, 2), mx + 3, dhy);
+    dhy += hl.slice(0, 2).length * 2.8 + 1.1;
+  });
 
   onProgress?.(12, totalSteps);
 
