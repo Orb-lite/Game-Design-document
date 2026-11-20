@@ -475,6 +475,9 @@ export default function App() {
               <a href="#matematica" className="whitespace-nowrap shrink-0 hover:text-[#F6EFE2]">
                 UE5 Math &amp; Balance
               </a>
+              <a href="#seasonal-live-ops" className="whitespace-nowrap shrink-0 hover:text-[#F6EFE2]">
+                Seasonal Storms &amp; Live-Ops
+              </a>
               <a href="#pitch-deck" className="whitespace-nowrap shrink-0 hover:text-[#F6EFE2]">
                 Pitch Deck (12 Slides)
               </a>

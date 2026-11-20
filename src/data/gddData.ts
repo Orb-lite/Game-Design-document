@@ -10,6 +10,11 @@ export const GENERATED_ASSETS = {
   biomeForestSpires: '/src/assets/images/biome_forest_spires_1794869217760.jpg',
   gameLogo: '/assets/aistudio/image_c05930f7_b8d13f83.jpg',
   studioLogo: '/assets/aistudio/image_39f1f35b_65d24a02.jpg',
+  stormMiasmaBaseline: '/src/assets/images/storm_miasma_baseline_1795189921786.jpg',
+  stormWinterBlizzard: '/src/assets/images/storm_winter_blizzard_1795189920008.jpg',
+  stormSummerHeat: '/src/assets/images/storm_summer_heat_1795189920090.jpg',
+  skinDarkSantaFrost: '/src/assets/images/skin_dark_santa_frost_1795189919775.jpg',
+  skinSummerAshSolstice: '/src/assets/images/skin_summer_ash_solstice_1795189920293.jpg',
 } as const;
 
 export interface FichaEntry {
@@ -1754,5 +1759,98 @@ export const CO_PITCHING_ALLIANCE = {
     ],
   },
 } as const;
+
+export const SEASONAL_LIVE_OPS = {
+  eyebrow: 'Seasonal Live-Ops & Holiday Events',
+  title: '4-Season Dynamic Storm & World Cycle',
+  lead: 'To keep the world visually alive year-round without requiring our partner art studio to rebuild maps from scratch, Valdris Chronicle rotates its environmental storm hazard and atmospheric lighting across four real-world seasons:',
+  stormPhases: [
+    {
+      id: 'spring-autumn',
+      seasonLabel: 'Spring & Autumn',
+      title: 'Toxic Miasma Gas (Baseline)',
+      calendarWindow: 'March–May · September–November',
+      accentHex: '#4F9E68',
+      image: GENERATED_ASSETS.stormMiasmaBaseline,
+      description:
+        'The signature Valdris zone hazard—a creeping, toxic miasma fog rolling out from the Miasma Marshes with choking green-violet spores and low-visibility tension.',
+      ue5Tech:
+        'UE5 Volumetric Exponential Height Fog + modular emerald-violet Niagara spore ribbons.',
+      eventPairing: 'Baseline Blood-Moon Hunt & Miasma Alchemy Trials',
+    },
+    {
+      id: 'winter',
+      seasonLabel: 'Winter',
+      title: 'Glacial Ice Storm',
+      calendarWindow: 'December–February · Dark Santa’s Wish',
+      accentHex: '#3E82C7',
+      image: GENERATED_ASSETS.stormWinterBlizzard,
+      description:
+        'During the winter season (and the Dark Santa’s Wish event), the toxic gas gives way to a lethal sub-zero blizzard—bringing howling frost winds, freezing screen vignettes, and snow-dusted citadel architecture.',
+      ue5Tech:
+        'World-aligned snow/ice shader mask + Sub-Zero Blizzard Niagara VFX & Frost Vignette post-process.',
+      eventPairing: "Dark Santa's Wish Holiday Event & Frostbound Contracts",
+    },
+    {
+      id: 'summer',
+      seasonLabel: 'Summer',
+      title: 'Scorching Heat Storm',
+      calendarWindow: 'June–August · Solar-Ash Solstice',
+      accentHex: '#E06C5A',
+      image: GENERATED_ASSETS.stormSummerHeat,
+      description:
+        'In summer, the encroaching zone becomes a blistering heatwave and ember-ash tempest—featuring heat-haze post-processing, dried-earth lighting, and suffocating thermal distortion.',
+      ue5Tech:
+        'Refractive heat-haze post-process material + Scorched Directional Sun preset & ember-ash Niagara swirl.',
+      eventPairing: 'Solar-Ash Solstice Event & Sun-Baked Gauntlets',
+    },
+  ],
+  productionAdvantage: {
+    title: 'Why This Works for Production & Live-Ops',
+    summary:
+      'By leveraging modular Unreal Engine 5 Niagara VFX, weather shaders, and lighting presets over existing arenas, the game delivers dramatic seasonal freshness every quarter with a lean, predictable art pipeline.',
+    partnerPoints: [
+      {
+        audience: 'Partner Art Studio Advantage',
+        detail:
+          'Zero map geometry rebuilds across seasons—one master world morphs via reusable shader layers, volumetric fog profiles, and modular Niagara emitters.',
+      },
+      {
+        audience: 'Publisher Retention Driver',
+        detail:
+          'Four annual atmosphere resets + marquee holiday beats drive lapsed-player reactivation and high-intent seasonal Battle Pass & Skin cycles without inflating production headcount.',
+      },
+    ],
+  },
+  climateReactiveSkins: {
+    eyebrow: 'Art Direction Synergy · Weather-Responsive Cosmetics',
+    title: 'Climate-Reactive Seasonal Event Skins',
+    summary:
+      'Limited-time cosmetics earned through Seasonal Live-Ops feature lightweight UE5 Material Parameter Collections that react dynamically to the active match storm—maximizing visual cohesion while keeping canonical hitboxes and combat timing 100% untouched.',
+    showcase: [
+      {
+        id: 'dark-santas-wish',
+        eventTitle: "Dark Santa's Wish · Winter Holiday Event",
+        skinName: 'Frostbound Hearth-Breaker Set',
+        seasonTag: 'Reactive Under Glacial Ice Storm',
+        accentHex: '#3E82C7',
+        image: GENERATED_ASSETS.skinDarkSantaFrost,
+        detail:
+          'Blackened gothic wrought iron layered with wolf-fur-trimmed crimson wool. Inside Winter’s Glacial Ice Storm, rime frost crystals and glacial rune-glow intensify across pauldrons and axe edges.',
+      },
+      {
+        id: 'solar-ash-solstice',
+        eventTitle: 'Solar-Ash Solstice · Summer Event',
+        skinName: 'Sun-Baked Eclipse Sentinel Set',
+        seasonTag: 'Reactive Under Scorching Heat Storm',
+        accentHex: '#C89B3C',
+        image: GENERATED_ASSETS.skinSummerAshSolstice,
+        detail:
+          'Tarnished eclipse gold and scorched obsidian armor wielding Dual Hand Crossbows (1 per hand). Under Summer’s Scorching Heat Storm, engraved solar veins ignite with live ember trails and rising cinders.',
+      },
+    ],
+  },
+} as const;
+
 
 

@@ -16,6 +16,7 @@ import {
   PROFESSION_SET_LIST,
   PVE_DIFFICULTY_TIERS,
   QUALITY_TIERS,
+  SEASONAL_LIVE_OPS,
   UE5_PILLARS,
   UNIVERSAL_SLOTS,
   VICTORY_HIERARCHY_RANKS,
@@ -155,23 +156,40 @@ export async function exportMainPageToPdf(
     format: 'a4',
   });
 
-  const totalSteps = 11;
+  const totalSteps = 12;
   let pageCount = 1;
   onProgress?.(0, totalSteps);
 
   // Preload visual assets used across pages
-  const [heroArt, biomesArt, siegeArt, catacombsArt, gameLogoArt, studioLogoArt, ...profThumbs] =
-    await Promise.all([
-      loadCroppedJpeg(GENERATED_ASSETS.heroCitadel, 16 / 9, false),
-      loadCroppedJpeg(GENERATED_ASSETS.biomesVista, 16 / 9, false),
-      loadCroppedJpeg(GENERATED_ASSETS.siegeBridge, 16 / 9, false),
-      loadCroppedJpeg(GENERATED_ASSETS.catacombsAltar, 16 / 9, false),
-      loadCroppedJpeg(GENERATED_ASSETS.gameLogo, 4 / 3, false),
-      loadCroppedJpeg(GENERATED_ASSETS.studioLogo, 4 / 3, false),
-      ...PROFESSION_SET_LIST.map((p) =>
-        loadCroppedJpeg(PROFESSION_3D_RENDER_ASSETS[p.id], 4 / 3, true)
-      ),
-    ]);
+  const [
+    heroArt,
+    biomesArt,
+    siegeArt,
+    catacombsArt,
+    gameLogoArt,
+    studioLogoArt,
+    stormMiasmaArt,
+    stormWinterArt,
+    stormSummerArt,
+    skinWinterArt,
+    skinSummerArt,
+    ...profThumbs
+  ] = await Promise.all([
+    loadCroppedJpeg(GENERATED_ASSETS.heroCitadel, 16 / 9, false),
+    loadCroppedJpeg(GENERATED_ASSETS.biomesVista, 16 / 9, false),
+    loadCroppedJpeg(GENERATED_ASSETS.siegeBridge, 16 / 9, false),
+    loadCroppedJpeg(GENERATED_ASSETS.catacombsAltar, 16 / 9, false),
+    loadCroppedJpeg(GENERATED_ASSETS.gameLogo, 4 / 3, false),
+    loadCroppedJpeg(GENERATED_ASSETS.studioLogo, 4 / 3, false),
+    loadCroppedJpeg(GENERATED_ASSETS.stormMiasmaBaseline, 16 / 9, false),
+    loadCroppedJpeg(GENERATED_ASSETS.stormWinterBlizzard, 16 / 9, false),
+    loadCroppedJpeg(GENERATED_ASSETS.stormSummerHeat, 16 / 9, false),
+    loadCroppedJpeg(GENERATED_ASSETS.skinDarkSantaFrost, 4 / 3, true),
+    loadCroppedJpeg(GENERATED_ASSETS.skinSummerAshSolstice, 4 / 3, true),
+    ...PROFESSION_SET_LIST.map((p) =>
+      loadCroppedJpeg(PROFESSION_3D_RENDER_ASSETS[p.id], 4 / 3, true)
+    ),
+  ]);
   onProgress?.(2, totalSteps);
 
   const addNewPage = (headerLabel: string): number => {
@@ -1138,9 +1156,153 @@ export async function exportMainPageToPdf(
   onProgress?.(10, totalSteps);
 
   // ============================================================================
-  // PAGE 10: COMMERCIAL CO-PITCHING & STUDIO ALLIANCE MODEL (VERTICAL SLICE)
+  // PAGE 10: SEASONAL LIVE-OPS, 4-SEASON DYNAMIC STORM CYCLE & REACTIVE SKINS
   // ============================================================================
-  y = addNewPage('09 · Commercial Co-Pitching & Studio Alliance Model');
+  y = addNewPage('09 · Seasonal Live-Ops & 4-Season Storm Cycle');
+  y = drawSectionHeading(
+    doc,
+    y,
+    SEASONAL_LIVE_OPS.eyebrow,
+    SEASONAL_LIVE_OPS.title
+  );
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(7.4);
+  doc.setTextColor(212, 206, 195);
+  const seasonLeadLines = doc.splitTextToSize(pdfSafe(SEASONAL_LIVE_OPS.lead), CONTENT_W);
+  doc.text(seasonLeadLines.slice(0, 2), MARGIN_X, y);
+  y += 10.5;
+
+  const stormCardW = (CONTENT_W - 6) / 3;
+  const stormArts = [stormMiasmaArt, stormWinterArt, stormSummerArt];
+  SEASONAL_LIVE_OPS.stormPhases.forEach((phase, idx) => {
+    const sx = MARGIN_X + idx * (stormCardW + 3);
+    doc.setFillColor(20, 20, 23);
+    doc.setDrawColor(56, 52, 44);
+    doc.rect(sx, y, stormCardW, 74, 'FD');
+
+    const imgData = stormArts[idx];
+    if (imgData) {
+      doc.addImage(imgData, 'JPEG', sx + 1, y + 1, stormCardW - 2, 33);
+    }
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(6.5);
+    doc.setTextColor(200, 155, 60);
+    doc.text(pdfSafe(phase.seasonLabel.toUpperCase()), sx + 3, y + 38.5);
+
+    doc.setFont('times', 'bold');
+    doc.setFontSize(8.8);
+    doc.setTextColor(246, 239, 226);
+    const tLines = doc.splitTextToSize(pdfSafe(phase.title), stormCardW - 6);
+    doc.text(tLines.slice(0, 1), sx + 3, y + 43.2);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(6.1);
+    doc.setTextColor(184, 177, 166);
+    const dLines = doc.splitTextToSize(pdfSafe(phase.description), stormCardW - 6);
+    doc.text(dLines.slice(0, 4), sx + 3, y + 48);
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(5.7);
+    doc.setTextColor(212, 206, 195);
+    const uLines = doc.splitTextToSize(pdfSafe(phase.ue5Tech), stormCardW - 6);
+    doc.text(uLines.slice(0, 2), sx + 3, y + 66.5);
+  });
+  y += 79;
+
+  // Production & Live-Ops Advantage
+  doc.setFillColor(22, 20, 17);
+  doc.setDrawColor(120, 96, 48);
+  doc.rect(MARGIN_X, y, CONTENT_W, 42, 'FD');
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(7.1);
+  doc.setTextColor(200, 155, 60);
+  doc.text('ART PIPELINE & RETENTION STRATEGY', MARGIN_X + 4, y + 5.2);
+
+  doc.setFont('times', 'bold');
+  doc.setFontSize(10.5);
+  doc.setTextColor(246, 239, 226);
+  doc.text(pdfSafe(SEASONAL_LIVE_OPS.productionAdvantage.title), MARGIN_X + 4, y + 10.8);
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(6.8);
+  doc.setTextColor(212, 206, 195);
+  const advSumLines = doc.splitTextToSize(
+    pdfSafe(SEASONAL_LIVE_OPS.productionAdvantage.summary),
+    CONTENT_W - 8
+  );
+  doc.text(advSumLines.slice(0, 2), MARGIN_X + 4, y + 15.6);
+
+  const ptW = (CONTENT_W - 12) / 2;
+  SEASONAL_LIVE_OPS.productionAdvantage.partnerPoints.forEach((pt, idx) => {
+    const px = MARGIN_X + 4 + idx * (ptW + 4);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(6.5);
+    doc.setTextColor(200, 155, 60);
+    doc.text(pdfSafe(pt.audience), px, y + 25.5);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(6.0);
+    doc.setTextColor(184, 177, 166);
+    const pLines = doc.splitTextToSize(pdfSafe(pt.detail), ptW);
+    doc.text(pLines.slice(0, 3), px, y + 29.8);
+  });
+  y += 47;
+
+  // Climate-Reactive Seasonal Skins
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8.2);
+  doc.setTextColor(246, 239, 226);
+  doc.text(pdfSafe(SEASONAL_LIVE_OPS.climateReactiveSkins.title.toUpperCase()), MARGIN_X, y);
+  y += 3;
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(6.6);
+  doc.setTextColor(184, 177, 166);
+  const reactSum = doc.splitTextToSize(
+    pdfSafe(SEASONAL_LIVE_OPS.climateReactiveSkins.summary),
+    CONTENT_W
+  );
+  doc.text(reactSum.slice(0, 2), MARGIN_X, y + 2);
+  y += 10;
+
+  const skinCardW = (CONTENT_W - 4) / 2;
+  const skinArts = [skinWinterArt, skinSummerArt];
+  SEASONAL_LIVE_OPS.climateReactiveSkins.showcase.forEach((skin, idx) => {
+    const kx = MARGIN_X + idx * (skinCardW + 4);
+    doc.setFillColor(20, 20, 23);
+    doc.setDrawColor(56, 52, 44);
+    doc.rect(kx, y, skinCardW, 82, 'FD');
+
+    const imgData = skinArts[idx];
+    if (imgData) {
+      doc.addImage(imgData, 'JPEG', kx + 1.5, y + 1.5, skinCardW - 3, 48);
+    }
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(6.3);
+    doc.setTextColor(200, 155, 60);
+    doc.text(pdfSafe(skin.eventTitle.toUpperCase()), kx + 3, y + 54);
+
+    doc.setFont('times', 'bold');
+    doc.setFontSize(9.2);
+    doc.setTextColor(246, 239, 226);
+    doc.text(pdfSafe(skin.skinName), kx + 3, y + 59);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(6.1);
+    doc.setTextColor(184, 177, 166);
+    const sLines = doc.splitTextToSize(pdfSafe(skin.detail), skinCardW - 6);
+    doc.text(sLines.slice(0, 4), kx + 3, y + 64);
+  });
+
+  onProgress?.(11, totalSteps);
+
+  // ============================================================================
+  // PAGE 11: COMMERCIAL CO-PITCHING & STUDIO ALLIANCE MODEL (VERTICAL SLICE)
+  // ============================================================================
+  y = addNewPage('10 · Commercial Co-Pitching & Studio Alliance Model');
   y = drawSectionHeading(
     doc,
     y,

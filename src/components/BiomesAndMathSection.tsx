@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { CloudSnow, Flame, Layers, Sparkles, Wind } from 'lucide-react';
 import {
   BALANCE_POTIONS,
   BALANCE_RUNES,
@@ -9,6 +10,7 @@ import {
   GENERATED_ASSETS,
   MATH_FORMULAS,
   PROFESSION_SET_LIST,
+  SEASONAL_LIVE_OPS,
   UE5_PILLARS,
   computeDefenseStats,
   computeMatchmakingBracket,
@@ -56,8 +58,14 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
   const [attackFactor, setAttackFactor] = useState<number>(1.35);
   const [dmgSharePct, setDmgSharePct] = useState<number>(65);
   const [deltaBracket, setDeltaBracket] = useState<number>(1.25);
+  const [selectedSeasonId, setSelectedSeasonId] = useState<string>(
+    SEASONAL_LIVE_OPS.stormPhases[1].id
+  );
 
   const activeBiome = BIOMES.find((b) => b.id === selectedBiomeId) ?? BIOMES[0];
+  const activeSeason =
+    SEASONAL_LIVE_OPS.stormPhases.find((s) => s.id === selectedSeasonId) ??
+    SEASONAL_LIVE_OPS.stormPhases[0];
   const selectedWeapon =
     BALANCE_WEAPONS.find((w) => w.id === selectedWeaponId) ?? BALANCE_WEAPONS[0];
   const selectedDefenseSet =
@@ -939,6 +947,258 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
                     </p>
                   </article>
                 ))}
+              </div>
+            </div>
+
+            {/* Seasonal Live-Ops & Holiday Events: 4-Season Dynamic Storm & World Cycle */}
+            <div
+              id="seasonal-live-ops"
+              className="space-y-8 border-t border-white/10 pt-10"
+            >
+              <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+                <div>
+                  <p className="text-xs tracking-widest text-[#C89B3C] uppercase">
+                    {SEASONAL_LIVE_OPS.eyebrow}
+                  </p>
+                  <h3 className="font-display mt-2 text-2xl font-semibold text-[#F6EFE2] text-balance lg:text-3xl">
+                    {SEASONAL_LIVE_OPS.title}
+                  </h3>
+                </div>
+                <p className="max-w-xl text-sm leading-relaxed text-[#B8B1A6]">
+                  {SEASONAL_LIVE_OPS.lead}
+                </p>
+              </div>
+
+              {/* Interactive Storm Season Selector + Spotlight Preview */}
+              <div className="rounded-lg border border-white/10 bg-[#141417] p-6 lg:p-8">
+                <div className="flex flex-col gap-4 border-b border-white/10 pb-6 lg:flex-row lg:items-center lg:justify-between">
+                  <div className="flex items-center gap-2 text-xs font-medium text-[#D4CEC3]">
+                    <Layers className="h-4 w-4 text-[#C89B3C]" aria-hidden="true" />
+                    <span>Real-World Calendar Environmental Storm &amp; Lighting Variants</span>
+                  </div>
+
+                  <div
+                    className="grid grid-cols-1 gap-1.5 rounded-lg border border-white/10 bg-[#0F0F12] p-1 sm:grid-cols-3"
+                    role="tablist"
+                    aria-label="Select seasonal storm variant"
+                  >
+                    {SEASONAL_LIVE_OPS.stormPhases.map((phase) => {
+                      const isActive = phase.id === activeSeason.id;
+                      return (
+                        <button
+                          key={phase.id}
+                          type="button"
+                          role="tab"
+                          aria-selected={isActive}
+                          onClick={() => setSelectedSeasonId(phase.id)}
+                          className={`inline-flex items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold whitespace-nowrap shrink-0 transition-colors ${
+                            isActive
+                              ? 'bg-[#C89B3C] text-[#0B0B0D]'
+                              : 'text-[#B8B1A6] hover:text-[#F6EFE2]'
+                          }`}
+                        >
+                          {phase.id === 'winter' ? (
+                            <CloudSnow className="h-3.5 w-3.5" aria-hidden="true" />
+                          ) : phase.id === 'summer' ? (
+                            <Flame className="h-3.5 w-3.5" aria-hidden="true" />
+                          ) : (
+                            <Wind className="h-3.5 w-3.5" aria-hidden="true" />
+                          )}
+                          <span>{phase.seasonLabel}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Active Season Spotlight Split */}
+                <div className="mt-6 grid grid-cols-1 items-stretch gap-6 lg:grid-cols-12">
+                  <div className="lg:col-span-7">
+                    <MediaFrame
+                      key={activeSeason.id}
+                      src={activeSeason.image}
+                      alt={`${activeSeason.seasonLabel} — ${activeSeason.title}`}
+                      caption={`${activeSeason.seasonLabel} Storm Variant · ${activeSeason.ue5Tech}`}
+                      aspectClass="aspect-video lg:h-full"
+                    />
+                  </div>
+
+                  <div className="flex flex-col justify-between rounded-md border border-white/10 bg-[#0F0F12] p-6 lg:col-span-5">
+                    <div>
+                      <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-[#9C968B]">
+                        <span
+                          className="font-semibold"
+                          style={{ color: activeSeason.accentHex }}
+                        >
+                          {activeSeason.seasonLabel}
+                        </span>
+                        <span aria-hidden="true">·</span>
+                        <span className="font-mono-tabular">{activeSeason.calendarWindow}</span>
+                      </div>
+
+                      <h4 className="font-display mt-2.5 text-2xl font-semibold text-[#F6EFE2]">
+                        {activeSeason.title}
+                      </h4>
+
+                      <p className="mt-3 text-sm leading-relaxed text-[#D4CEC3]">
+                        {activeSeason.description}
+                      </p>
+                    </div>
+
+                    <dl className="mt-6 space-y-3 border-t border-white/10 pt-4 text-xs">
+                      <div>
+                        <dt className="text-[#9C968B]">UE5 Niagara VFX &amp; Shader Layer</dt>
+                        <dd className="mt-0.5 font-medium text-[#EAE6DF]">
+                          {activeSeason.ue5Tech}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt className="text-[#9C968B]">Seasonal Live-Ops Event Pairing</dt>
+                        <dd className="mt-0.5 font-semibold text-[#C89B3C]">
+                          {activeSeason.eventPairing}
+                        </dd>
+                      </div>
+                    </dl>
+                  </div>
+                </div>
+
+                {/* Full 3-Season Storm Matrix Cards */}
+                <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
+                  {SEASONAL_LIVE_OPS.stormPhases.map((phase) => {
+                    const isSelected = phase.id === activeSeason.id;
+                    return (
+                      <button
+                        key={phase.id}
+                        type="button"
+                        onClick={() => setSelectedSeasonId(phase.id)}
+                        className={`flex flex-col overflow-hidden rounded-md border text-left transition-colors ${
+                          isSelected
+                            ? 'border-[#C89B3C]/70 bg-[#18181D]'
+                            : 'border-white/10 bg-[#0F0F12] hover:border-white/25'
+                        }`}
+                      >
+                        <div className="aspect-video w-full overflow-hidden bg-[#0B0B0D]">
+                          <img
+                            src={phase.image}
+                            alt={`${phase.seasonLabel}: ${phase.title}`}
+                            loading="lazy"
+                            referrerPolicy="no-referrer"
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
+                        <div className="flex flex-1 flex-col justify-between p-4">
+                          <div>
+                            <div className="flex items-center gap-2 text-[11px] text-[#9C968B]">
+                              <span
+                                className="font-semibold"
+                                style={{ color: phase.accentHex }}
+                              >
+                                {phase.seasonLabel}
+                              </span>
+                              <span aria-hidden="true">·</span>
+                              <span className="truncate">{phase.calendarWindow}</span>
+                            </div>
+                            <h5 className="font-display mt-1 text-base font-semibold text-[#F6EFE2]">
+                              {phase.title}
+                            </h5>
+                            <p className="mt-1.5 text-xs leading-relaxed text-[#B8B1A6]">
+                              {phase.description}
+                            </p>
+                          </div>
+                          <p className="mt-3 border-t border-white/[0.08] pt-2.5 text-[11px] font-medium text-[#D4CEC3]">
+                            {phase.ue5Tech}
+                          </p>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Why This Works for Production & Live-Ops */}
+              <div className="rounded-lg border border-[#C89B3C]/35 bg-[#141417] p-6 lg:p-8">
+                <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
+                  <div className="lg:col-span-5">
+                    <p className="text-xs font-semibold tracking-wider text-[#C89B3C] uppercase">
+                      Art Pipeline &amp; Retention Strategy
+                    </p>
+                    <h4 className="font-display mt-2 text-2xl font-semibold text-[#F6EFE2]">
+                      {SEASONAL_LIVE_OPS.productionAdvantage.title}
+                    </h4>
+                    <p className="mt-3 text-sm leading-relaxed text-[#D4CEC3]">
+                      {SEASONAL_LIVE_OPS.productionAdvantage.summary}
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-7">
+                    {SEASONAL_LIVE_OPS.productionAdvantage.partnerPoints.map((pt) => (
+                      <div
+                        key={pt.audience}
+                        className="rounded-md border border-white/10 bg-[#0F0F12] p-5"
+                      >
+                        <p className="text-xs font-semibold text-[#C89B3C]">{pt.audience}</p>
+                        <p className="mt-2 text-xs leading-relaxed text-[#B8B1A6]">
+                          {pt.detail}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Climate-Reactive Seasonal Event Skins */}
+              <div className="rounded-lg border border-white/10 bg-[#141417] p-6 lg:p-8">
+                <div className="flex flex-col gap-3 border-b border-white/10 pb-6 md:flex-row md:items-end md:justify-between">
+                  <div>
+                    <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-[#C89B3C] uppercase">
+                      <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+                      <span>{SEASONAL_LIVE_OPS.climateReactiveSkins.eyebrow}</span>
+                    </div>
+                    <h4 className="font-display mt-2 text-2xl font-semibold text-[#F6EFE2]">
+                      {SEASONAL_LIVE_OPS.climateReactiveSkins.title}
+                    </h4>
+                  </div>
+                  <p className="max-w-lg text-xs leading-relaxed text-[#B8B1A6]">
+                    {SEASONAL_LIVE_OPS.climateReactiveSkins.summary}
+                  </p>
+                </div>
+
+                <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+                  {SEASONAL_LIVE_OPS.climateReactiveSkins.showcase.map((skin) => (
+                    <article
+                      key={skin.id}
+                      className="grid grid-cols-1 overflow-hidden rounded-md border border-white/10 bg-[#0F0F12] sm:grid-cols-12"
+                    >
+                      <div className="aspect-[4/3] w-full overflow-hidden bg-[#08080A] sm:col-span-5 sm:aspect-auto sm:h-full">
+                        <img
+                          src={skin.image}
+                          alt={`${skin.eventTitle} — ${skin.skinName}`}
+                          loading="lazy"
+                          referrerPolicy="no-referrer"
+                          className="h-full w-full object-cover object-top"
+                        />
+                      </div>
+                      <div className="flex flex-col justify-between p-5 sm:col-span-7">
+                        <div>
+                          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-[#9C968B]">
+                            <span className="font-semibold" style={{ color: skin.accentHex }}>
+                              {skin.eventTitle}
+                            </span>
+                          </div>
+                          <h5 className="font-display mt-1.5 text-lg font-semibold text-[#F6EFE2]">
+                            {skin.skinName}
+                          </h5>
+                          <p className="mt-2.5 text-xs leading-relaxed text-[#D4CEC3]">
+                            {skin.detail}
+                          </p>
+                        </div>
+                        <p className="mt-4 border-t border-white/10 pt-3 text-[11px] font-medium text-[#9C968B]">
+                          Storm Reaction · <span className="text-[#EAE6DF]">{skin.seasonTag}</span>
+                        </p>
+                      </div>
+                    </article>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
