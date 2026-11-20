@@ -1089,7 +1089,7 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
                       <div>
                         <p className="flex items-center gap-1.5 text-[11px] font-semibold tracking-wider text-[#C4A1EA] uppercase">
                           <Skull className="h-3.5 w-3.5" aria-hidden="true" />
-                          <span>Pre-Match Risk-Reward Choice</span>
+                          <span>{SEASONAL_LIVE_OPS.eventQueueLineup.halloween.durationLabel}</span>
                         </p>
                         <h5 className="font-display mt-1 text-xl font-semibold text-[#F6EFE2]">
                           {SEASONAL_LIVE_OPS.eventQueueLineup.halloween.title}
@@ -1208,7 +1208,7 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
                     <div>
                       <p className="flex items-center gap-1.5 text-[11px] font-semibold tracking-wider text-[#6BA8E5] uppercase">
                         <Gift className="h-3.5 w-3.5" aria-hidden="true" />
-                        <span>Pre-Match Wish UI · Social Hub Flex</span>
+                        <span>{SEASONAL_LIVE_OPS.eventQueueLineup.midwinter.durationLabel}</span>
                       </p>
                       <h5 className="font-display mt-1 text-xl font-semibold text-[#F6EFE2]">
                         {SEASONAL_LIVE_OPS.eventQueueLineup.midwinter.title}

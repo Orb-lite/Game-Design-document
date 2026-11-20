@@ -1462,9 +1462,9 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
     title: "Halloween, Dark Santa's Wish & Summer Solstice Live-Ops",
     keyMessage: 'Always-Open 24/7 Queue + 1 Attempt Every 24 Hours turns daily holiday runs into high-stakes streamable rituals.',
     bullets: [
-      '24/7 Queue & 24h Personal Cooldown (Zero Pay-to-Win): Instant global matchmaking paired with a strict 1-Entry-Per-24h ritual cooldown across flagship holiday queues.',
-      'Halloween — Wish or Threat: Pick WISH (target Gold-Tier Spectral Harvester Plate or Hollow Executioner Cloak under standard rules) or THREAT (accept cursed blood-fog, disabled radar, enraged Boss, or bounty mark to win the set + exclusive Cursed VFX / Ether Seal variant; defeat locks out 24h).',
-      "Midwinter — Dark Santa's Wish & Summer Solar-Ash: Lock in a Gold-Tier set via Wish UI to slay Dark Santa & showcase spoils in the Social Hub (24h loss cooldown), paired with reactive Winter Frost, Halloween Miasma & Summer Ember skins.",
+      'Halloween — Wish or Threat (1 Week · Halloween Week · 1 Attempt / 24h): Pick WISH (Gold-Tier Spectral Harvester Plate or Hollow Executioner Cloak) or THREAT (blood-fog, disabled radar, enraged Boss, or bounty mark for the set + exclusive Cursed VFX / Ether Seal variant; defeat locks out 24h).',
+      "Midwinter — Dark Santa's Wish (2 Weeks · Christmas & New Year through Jan 7 · 1 Attempt / 24h): Lock in a Gold-Tier set via the Wish UI to defeat Dark Santa & claim instant Social Hub showcase (24h loss cooldown).",
+      'Summer Solstice — Solar-Ash Reckoning (1 Week · June Summer Kickoff): Solar Eclipse Altars & Sun-Baked Eclipse Sentinel Dual-Crossbow skin (ignites embers under Heat Storms), paired with Winter Frost & Halloween Miasma reactive shaders.',
     ],
     image: GENERATED_ASSETS.eventHalloweenValdris,
     showcaseTitle: 'Holiday Event Arenas & Climate-Reactive Event Skins',
@@ -1864,6 +1864,7 @@ export const SEASONAL_LIVE_OPS = {
     ],
     halloween: {
       title: 'Halloween — Wish or Threat',
+      durationLabel: '1-Week Event · Halloween Week (Oct 25 – Nov 1)',
       prompt: 'Before entering their daily run, the UI forces a risk-reward choice:',
       targetSets: ['Spectral Harvester Plate', 'Hollow Executioner Cloak'],
       curses: [
@@ -1885,11 +1886,12 @@ export const SEASONAL_LIVE_OPS = {
     },
     midwinter: {
       title: "Midwinter — Dark Santa's Wish",
+      durationLabel: '2-Week Event · Christmas & New Year (Dec 24 – Jan 7)',
       summary:
         'Players lock in their desired Gold-Tier cosmetic set via the pre-match Wish UI and enter a winter-transformed dark fantasy arena to defeat the Dark Santa encounter. Winners claim their selected set immediately to showcase in the Social Hub; losers wait 24 hours for their next attempt.',
       highlights: [
+        'Event Window: Active for 2 full weeks across Christmas & New Year through January 7.',
         'Pre-Match Wish UI: Lock in your target Gold-Tier Winter set before queuing.',
-        'Winter Arena & Boss: Glacial blizzard dressing culminating in the Dark Santa encounter.',
         'Victory & Cooldown Rule: Instant unlock & Social Hub showcase on win; 24-hour lockout on defeat.',
       ],
     },
@@ -1899,7 +1901,7 @@ export const SEASONAL_LIVE_OPS = {
       id: 'halloween-hollow-bell',
       seasonTag: 'Autumn · Halloween Event',
       title: 'Night of the Hollow Bell (Wish or Threat)',
-      window: 'Always-Open 24/7 Queue · 1 Entry / 24h',
+      window: '1 Week · Halloween Week (Oct 25 – Nov 1) · 1 Entry / 24h',
       stormPairing: 'Toxic Miasma Gas (Crimson Harvest Moon)',
       accentHex: '#9461C9',
       image: GENERATED_ASSETS.eventHalloweenValdris,
@@ -1913,7 +1915,7 @@ export const SEASONAL_LIVE_OPS = {
       id: 'dark-santas-wish',
       seasonTag: 'Midwinter · Holiday Event',
       title: "Dark Santa's Wish",
-      window: 'Always-Open 24/7 Queue · 1 Entry / 24h',
+      window: '2 Weeks · Dec 24 – Jan 7 (Christmas & New Year) · 1 Entry / 24h',
       stormPairing: 'Glacial Ice Storm (Sub-Zero Blizzard)',
       accentHex: '#3E82C7',
       image: GENERATED_ASSETS.stormWinterBlizzard,
@@ -1927,14 +1929,14 @@ export const SEASONAL_LIVE_OPS = {
       id: 'solar-ash-solstice',
       seasonTag: 'Summer · Solstice Event',
       title: 'Solar-Ash Reckoning',
-      window: 'Jul 1 – Jul 21 · Daily Contract Queue',
+      window: '1 Week · Early Summer Kickoff (Jun 21 – Jun 28)',
       stormPairing: 'Scorching Heat Storm (Ember-Ash Tempest)',
       accentHex: '#E06C5A',
       image: GENERATED_ASSETS.stormSummerHeat,
       atmosphere:
         'Eclipse-scorched directional sun lighting, parched obsidian flagstones, thermal heat-haze distortion, and drifting ember cascades sweep the Forest of Spires and Citadel walls.',
       gameplayTwist:
-        'Solar Eclipse Altars ignite dual-xp Duel Bounties and Ash-Guardian gauntlets that feed direct Solstice Skin progression.',
+        '1-week summer solstice opening event: Solar Eclipse Altars ignite Duel Bounties and Ash-Guardian gauntlets that feed direct Solstice Skin progression.',
       rewardSkin: 'Sun-Baked Eclipse Sentinel Set (Solar Gold Plate & Dual Hand Crossbows)',
     },
   ],
@@ -1943,40 +1945,40 @@ export const SEASONAL_LIVE_OPS = {
       id: 'spring-autumn',
       seasonLabel: 'Spring & Autumn',
       title: 'Toxic Miasma Gas (Baseline)',
-      calendarWindow: 'March–May · September–November',
+      calendarWindow: 'March–May · Sept–Nov (Halloween Week)',
       accentHex: '#4F9E68',
       image: GENERATED_ASSETS.stormMiasmaBaseline,
       description:
         'The signature Valdris zone hazard—a creeping, toxic miasma fog rolling out from the Miasma Marshes with choking green-violet spores and low-visibility tension.',
       ue5Tech:
         'UE5 Volumetric Exponential Height Fog + modular emerald-violet Niagara spore ribbons.',
-      eventPairing: "Night of the Hollow Bell (Halloween) & Blood-Moon Hunts",
+      eventPairing: "Night of the Hollow Bell (1-Week Halloween Event) & Blood-Moon Hunts",
     },
     {
       id: 'winter',
       seasonLabel: 'Winter',
       title: 'Glacial Ice Storm',
-      calendarWindow: 'December–February · Dark Santa’s Wish',
+      calendarWindow: 'Dec–Feb · Dark Santa (Dec 24 – Jan 7)',
       accentHex: '#3E82C7',
       image: GENERATED_ASSETS.stormWinterBlizzard,
       description:
         'During the winter season (and the Dark Santa’s Wish event), the toxic gas gives way to a lethal sub-zero blizzard—bringing howling frost winds, freezing screen vignettes, and snow-dusted citadel architecture.',
       ue5Tech:
         'World-aligned snow/ice shader mask + Sub-Zero Blizzard Niagara VFX & Frost Vignette post-process.',
-      eventPairing: "Dark Santa's Wish Holiday Event & Frostbound Contracts",
+      eventPairing: "Dark Santa's Wish (2 Weeks: Christmas & New Year until Jan 7)",
     },
     {
       id: 'summer',
       seasonLabel: 'Summer',
       title: 'Scorching Heat Storm',
-      calendarWindow: 'June–August · Solar-Ash Solstice',
+      calendarWindow: 'Jun–Aug · Summer Kickoff (Jun 21 – Jun 28)',
       accentHex: '#E06C5A',
       image: GENERATED_ASSETS.stormSummerHeat,
       description:
         'In summer, the encroaching zone becomes a blistering heatwave and ember-ash tempest—featuring heat-haze post-processing, dried-earth lighting, and suffocating thermal distortion.',
       ue5Tech:
         'Refractive heat-haze post-process material + Scorched Directional Sun preset & ember-ash Niagara swirl.',
-      eventPairing: 'Solar-Ash Reckoning Event & Sun-Baked Gauntlets',
+      eventPairing: 'Solar-Ash Reckoning (1-Week June Summer Solstice Kickoff)',
     },
   ],
   productionAdvantage: {

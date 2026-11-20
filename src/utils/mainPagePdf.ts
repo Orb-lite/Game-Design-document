@@ -1412,33 +1412,37 @@ export async function exportMainPageToPdf(
   doc.setFont('times', 'bold');
   doc.setFontSize(8.8);
   doc.setTextColor(246, 239, 226);
-  doc.text(pdfSafe(SEASONAL_LIVE_OPS.eventQueueLineup.halloween.title), hx + 3, y + 30.2);
+  doc.text(pdfSafe(SEASONAL_LIVE_OPS.eventQueueLineup.halloween.title), hx + 3, y + 29.8);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(5.4);
+  doc.setTextColor(196, 161, 234);
+  doc.text(pdfSafe(SEASONAL_LIVE_OPS.eventQueueLineup.halloween.durationLabel), hx + 3, y + 33.0);
 
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(6.0);
+  doc.setFontSize(5.9);
   doc.setTextColor(200, 155, 60);
-  doc.text('WISH (STANDARD RULES):', hx + 3, y + 35.5);
+  doc.text('WISH (STANDARD RULES):', hx + 3, y + 37.2);
   doc.setFont('helvetica', 'normal');
-  doc.setFontSize(5.7);
+  doc.setFontSize(5.6);
   doc.setTextColor(184, 177, 166);
   const wL = doc.splitTextToSize(
     pdfSafe(SEASONAL_LIVE_OPS.eventQueueLineup.halloween.wish.summary),
     qColW - 6
   );
-  doc.text(wL.slice(0, 3), hx + 3, y + 39.2);
+  doc.text(wL.slice(0, 3), hx + 3, y + 40.6);
 
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(6.0);
+  doc.setFontSize(5.9);
   doc.setTextColor(196, 161, 234);
-  doc.text('THREAT (CURSED STAKES / +VFX VARIANT):', hx + 3, y + 51.5);
+  doc.text('THREAT (CURSED STAKES / +VFX VARIANT):', hx + 3, y + 52.2);
   doc.setFont('helvetica', 'normal');
-  doc.setFontSize(5.7);
+  doc.setFontSize(5.6);
   doc.setTextColor(184, 177, 166);
   const tL = doc.splitTextToSize(
     pdfSafe(SEASONAL_LIVE_OPS.eventQueueLineup.halloween.threat.summary),
     qColW - 6
   );
-  doc.text(tL.slice(0, 4), hx + 3, y + 55.2);
+  doc.text(tL.slice(0, 4), hx + 3, y + 55.6);
 
   // Right Box: Midwinter — Dark Santa's Wish
   const mx = MARGIN_X + 8 + qColW;
@@ -1449,16 +1453,20 @@ export async function exportMainPageToPdf(
   doc.setFont('times', 'bold');
   doc.setFontSize(8.8);
   doc.setTextColor(246, 239, 226);
-  doc.text(pdfSafe(SEASONAL_LIVE_OPS.eventQueueLineup.midwinter.title), mx + 3, y + 30.2);
+  doc.text(pdfSafe(SEASONAL_LIVE_OPS.eventQueueLineup.midwinter.title), mx + 3, y + 29.8);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(5.4);
+  doc.setTextColor(107, 168, 229);
+  doc.text(pdfSafe(SEASONAL_LIVE_OPS.eventQueueLineup.midwinter.durationLabel), mx + 3, y + 33.0);
 
   doc.setFont('helvetica', 'normal');
-  doc.setFontSize(6.0);
+  doc.setFontSize(5.8);
   doc.setTextColor(212, 206, 195);
   const dsSum = doc.splitTextToSize(
     pdfSafe(SEASONAL_LIVE_OPS.eventQueueLineup.midwinter.summary),
     qColW - 6
   );
-  doc.text(dsSum.slice(0, 5), mx + 3, y + 35.5);
+  doc.text(dsSum.slice(0, 4), mx + 3, y + 37.2);
 
   let dhy = y + 52.5;
   doc.setFontSize(5.7);
