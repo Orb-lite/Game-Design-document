@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CloudSnow, Flame, Layers, Sparkles, Wind } from 'lucide-react';
+import { Calendar, CloudSnow, Flame, Ghost, Gift, Layers, Sparkles, Sun, Wind } from 'lucide-react';
 import {
   BALANCE_POTIONS,
   BALANCE_RUNES,
@@ -969,6 +969,85 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
                 </p>
               </div>
 
+              {/* Marquee Holiday Events: Halloween & Dark Santa's Wish */}
+              <div className="rounded-lg border border-white/10 bg-[#141417] p-6 lg:p-8">
+                <div className="flex flex-col gap-2 border-b border-white/10 pb-5 md:flex-row md:items-end md:justify-between">
+                  <div>
+                    <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-[#C89B3C] uppercase">
+                      <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
+                      <span>Limited-Time World Events &amp; Cosmetic Contracts</span>
+                    </div>
+                    <h4 className="font-display mt-1.5 text-2xl font-semibold text-[#F6EFE2]">
+                      Annual Holiday Live-Ops Beats — Halloween &amp; Dark Santa&apos;s Wish
+                    </h4>
+                  </div>
+                  <p className="max-w-md text-xs leading-relaxed text-[#B8B1A6]">
+                    Fair-match PvPvE twists, themed boss variants, and direct cosmetic contract unlocks—zero stat or mastery pay-to-win.
+                  </p>
+                </div>
+
+                <div className="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-3">
+                  {SEASONAL_LIVE_OPS.holidayEvents.map((ev) => (
+                    <article
+                      key={ev.id}
+                      className="flex flex-col overflow-hidden rounded-md border border-white/10 bg-[#0F0F12]"
+                    >
+                      <div className="aspect-video w-full overflow-hidden bg-[#08080A]">
+                        <img
+                          src={ev.image}
+                          alt={`${ev.seasonTag} — ${ev.title}`}
+                          loading="lazy"
+                          referrerPolicy="no-referrer"
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                      <div className="flex flex-1 flex-col justify-between p-5">
+                        <div>
+                          <div className="flex items-center justify-between gap-2 text-[11px] text-[#9C968B]">
+                            <span
+                              className="inline-flex items-center gap-1.5 font-semibold"
+                              style={{ color: ev.accentHex }}
+                            >
+                              {ev.id === 'halloween-hollow-bell' ? (
+                                <Ghost className="h-3.5 w-3.5" aria-hidden="true" />
+                              ) : ev.id === 'dark-santas-wish' ? (
+                                <Gift className="h-3.5 w-3.5" aria-hidden="true" />
+                              ) : (
+                                <Sun className="h-3.5 w-3.5" aria-hidden="true" />
+                              )}
+                              <span>{ev.seasonTag}</span>
+                            </span>
+                            <span className="font-mono-tabular whitespace-nowrap">{ev.window}</span>
+                          </div>
+
+                          <h5 className="font-display mt-1.5 text-xl font-semibold text-[#F6EFE2]">
+                            {ev.title}
+                          </h5>
+                          <p className="mt-2.5 text-xs leading-relaxed text-[#D4CEC3]">
+                            {ev.atmosphere}
+                          </p>
+                          <p className="mt-2.5 text-xs leading-relaxed text-[#B8B1A6]">
+                            <strong className="text-[#EAE6DF]">PvPvE Event Twist: </strong>
+                            {ev.gameplayTwist}
+                          </p>
+                        </div>
+
+                        <dl className="mt-4 space-y-2 border-t border-white/10 pt-3 text-[11px]">
+                          <div>
+                            <dt className="text-[#9C968B]">Active Storm Pairing</dt>
+                            <dd className="font-medium text-[#EAE6DF]">{ev.stormPairing}</dd>
+                          </div>
+                          <div>
+                            <dt className="text-[#9C968B]">Event Cosmetic Reward</dt>
+                            <dd className="font-semibold text-[#C89B3C]">{ev.rewardSkin}</dd>
+                          </div>
+                        </dl>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+
               {/* Interactive Storm Season Selector + Spotlight Preview */}
               <div className="rounded-lg border border-white/10 bg-[#141417] p-6 lg:p-8">
                 <div className="flex flex-col gap-4 border-b border-white/10 pb-6 lg:flex-row lg:items-center lg:justify-between">
@@ -1163,13 +1242,13 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
                   </p>
                 </div>
 
-                <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
+                <div className="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-3">
                   {SEASONAL_LIVE_OPS.climateReactiveSkins.showcase.map((skin) => (
                     <article
                       key={skin.id}
-                      className="grid grid-cols-1 overflow-hidden rounded-md border border-white/10 bg-[#0F0F12] sm:grid-cols-12"
+                      className="flex flex-col overflow-hidden rounded-md border border-white/10 bg-[#0F0F12]"
                     >
-                      <div className="aspect-[4/3] w-full overflow-hidden bg-[#08080A] sm:col-span-5 sm:aspect-auto sm:h-full">
+                      <div className="aspect-[4/3] w-full overflow-hidden bg-[#08080A]">
                         <img
                           src={skin.image}
                           alt={`${skin.eventTitle} — ${skin.skinName}`}
@@ -1178,7 +1257,7 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
                           className="h-full w-full object-cover object-top"
                         />
                       </div>
-                      <div className="flex flex-col justify-between p-5 sm:col-span-7">
+                      <div className="flex flex-1 flex-col justify-between p-5">
                         <div>
                           <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-[#9C968B]">
                             <span className="font-semibold" style={{ color: skin.accentHex }}>

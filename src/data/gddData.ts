@@ -15,6 +15,8 @@ export const GENERATED_ASSETS = {
   stormSummerHeat: '/src/assets/images/storm_summer_heat_1795189920090.jpg',
   skinDarkSantaFrost: '/src/assets/images/skin_dark_santa_frost_1795189919775.jpg',
   skinSummerAshSolstice: '/src/assets/images/skin_summer_ash_solstice_1795189920293.jpg',
+  eventHalloweenValdris: '/src/assets/images/event_halloween_valdris_1795190239316.jpg',
+  skinHalloweenWarden: '/src/assets/images/skin_halloween_warden_1795190239202.jpg',
 } as const;
 
 export interface FichaEntry {
@@ -1762,8 +1764,52 @@ export const CO_PITCHING_ALLIANCE = {
 
 export const SEASONAL_LIVE_OPS = {
   eyebrow: 'Seasonal Live-Ops & Holiday Events',
-  title: '4-Season Dynamic Storm & World Cycle',
-  lead: 'To keep the world visually alive year-round without requiring our partner art studio to rebuild maps from scratch, Valdris Chronicle rotates its environmental storm hazard and atmospheric lighting across four real-world seasons:',
+  title: 'Holiday Events, 4-Season Storm Cycle & Reactive Skins',
+  lead: 'To keep the world visually alive year-round without requiring our partner art studio to rebuild maps from scratch, Valdris Chronicle pairs marquee dark-fantasy Holiday Events—like Halloween and Dark Santa’s Wish—with a quarterly Dynamic Storm & World Cycle:',
+  holidayEvents: [
+    {
+      id: 'halloween-hollow-bell',
+      seasonTag: 'Autumn · Halloween Event',
+      title: 'Night of the Hollow Bell',
+      window: 'Oct 24 – Nov 7',
+      stormPairing: 'Toxic Miasma Gas (Crimson Harvest Moon)',
+      accentHex: '#9461C9',
+      image: GENERATED_ASSETS.eventHalloweenValdris,
+      atmosphere:
+        'A giant blood-orange harvest moon hangs above Valdris while wrought-iron jack-o’-lantern braziers line Citadel drawbridges and spectral Miasma wisps haunt the Catacomb vaults.',
+      gameplayTwist:
+        'Wraith-Lantern Stashes spawn haunted cosmetic contracts across outer camps, and the Act IV–V raid boss rises as the cursed Hollow Reaper Executioner.',
+      rewardSkin: 'Hollow Lantern Warden Set (Earned via Haunted Bounties — Zero Pay-to-Win)',
+    },
+    {
+      id: 'dark-santas-wish',
+      seasonTag: 'Winter · Holiday Event',
+      title: "Dark Santa's Wish",
+      window: 'Dec 15 – Jan 7',
+      stormPairing: 'Glacial Ice Storm (Sub-Zero Blizzard)',
+      accentHex: '#3E82C7',
+      image: GENERATED_ASSETS.stormWinterBlizzard,
+      atmosphere:
+        'Snow blankets the Citadel battlements and howling freezing winds replace the toxic mist as crimson-iron Yule banners and frozen courtyard shrines transform the warzone.',
+      gameplayTwist:
+        'Cursed Gift Reliquaries drop inside snowbound courtyards guarded by the Frost Bell-Keeper (Dark Santa Boss Variant), awarding Frostbound Wish Tokens for direct event skin unlocks.',
+      rewardSkin: 'Frostbound Hearth-Breaker Set (Dark Santa Armor + Runic Ice Axe)',
+    },
+    {
+      id: 'solar-ash-solstice',
+      seasonTag: 'Summer · Solstice Event',
+      title: 'Solar-Ash Reckoning',
+      window: 'Jul 1 – Jul 21',
+      stormPairing: 'Scorching Heat Storm (Ember-Ash Tempest)',
+      accentHex: '#E06C5A',
+      image: GENERATED_ASSETS.stormSummerHeat,
+      atmosphere:
+        'Eclipse-scorched directional sun lighting, parched obsidian flagstones, thermal heat-haze distortion, and drifting ember cascades sweep the Forest of Spires and Citadel walls.',
+      gameplayTwist:
+        'Solar Eclipse Altars ignite dual-xp Duel Bounties and Ash-Guardian gauntlets that feed direct Solstice Skin progression.',
+      rewardSkin: 'Sun-Baked Eclipse Sentinel Set (Solar Gold Plate & Dual Hand Crossbows)',
+    },
+  ],
   stormPhases: [
     {
       id: 'spring-autumn',
@@ -1776,7 +1822,7 @@ export const SEASONAL_LIVE_OPS = {
         'The signature Valdris zone hazard—a creeping, toxic miasma fog rolling out from the Miasma Marshes with choking green-violet spores and low-visibility tension.',
       ue5Tech:
         'UE5 Volumetric Exponential Height Fog + modular emerald-violet Niagara spore ribbons.',
-      eventPairing: 'Baseline Blood-Moon Hunt & Miasma Alchemy Trials',
+      eventPairing: "Night of the Hollow Bell (Halloween) & Blood-Moon Hunts",
     },
     {
       id: 'winter',
@@ -1802,7 +1848,7 @@ export const SEASONAL_LIVE_OPS = {
         'In summer, the encroaching zone becomes a blistering heatwave and ember-ash tempest—featuring heat-haze post-processing, dried-earth lighting, and suffocating thermal distortion.',
       ue5Tech:
         'Refractive heat-haze post-process material + Scorched Directional Sun preset & ember-ash Niagara swirl.',
-      eventPairing: 'Solar-Ash Solstice Event & Sun-Baked Gauntlets',
+      eventPairing: 'Solar-Ash Reckoning Event & Sun-Baked Gauntlets',
     },
   ],
   productionAdvantage: {
@@ -1818,7 +1864,7 @@ export const SEASONAL_LIVE_OPS = {
       {
         audience: 'Publisher Retention Driver',
         detail:
-          'Four annual atmosphere resets + marquee holiday beats drive lapsed-player reactivation and high-intent seasonal Battle Pass & Skin cycles without inflating production headcount.',
+          'Four annual atmosphere resets + marquee holiday beats (Halloween & Dark Santa’s Wish) drive lapsed-player reactivation and high-intent seasonal skin cycles without inflating production headcount.',
       },
     ],
   },
@@ -1826,11 +1872,21 @@ export const SEASONAL_LIVE_OPS = {
     eyebrow: 'Art Direction Synergy · Weather-Responsive Cosmetics',
     title: 'Climate-Reactive Seasonal Event Skins',
     summary:
-      'Limited-time cosmetics earned through Seasonal Live-Ops feature lightweight UE5 Material Parameter Collections that react dynamically to the active match storm—maximizing visual cohesion while keeping canonical hitboxes and combat timing 100% untouched.',
+      'Limited-time cosmetics earned during Holiday Events feature lightweight UE5 Material Parameter Collections that react dynamically to the active match storm—maximizing visual cohesion while keeping canonical hitboxes and combat timing 100% untouched.',
     showcase: [
       {
+        id: 'halloween-lantern-warden',
+        eventTitle: 'Halloween · Night of the Hollow Bell',
+        skinName: 'Hollow Lantern Warden Set',
+        seasonTag: 'Reactive Under Toxic Miasma Gas',
+        accentHex: '#9461C9',
+        image: GENERATED_ASSETS.skinHalloweenWarden,
+        detail:
+          'Carved iron jack-o’-lantern skull visor and jagged blackened plate housing a spirit-lit ribcage. Inside Autumn’s Toxic Miasma Gas, emerald-violet soul flames and blade runes surge brighter.',
+      },
+      {
         id: 'dark-santas-wish',
-        eventTitle: "Dark Santa's Wish · Winter Holiday Event",
+        eventTitle: "Winter · Dark Santa's Wish Event",
         skinName: 'Frostbound Hearth-Breaker Set',
         seasonTag: 'Reactive Under Glacial Ice Storm',
         accentHex: '#3E82C7',
@@ -1840,7 +1896,7 @@ export const SEASONAL_LIVE_OPS = {
       },
       {
         id: 'solar-ash-solstice',
-        eventTitle: 'Solar-Ash Solstice · Summer Event',
+        eventTitle: 'Summer · Solar-Ash Reckoning Event',
         skinName: 'Sun-Baked Eclipse Sentinel Set',
         seasonTag: 'Reactive Under Scorching Heat Storm',
         accentHex: '#C89B3C',
