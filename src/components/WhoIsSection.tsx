@@ -6,6 +6,7 @@ import {
   Globe,
   Laptop,
   Mail,
+  Phone,
   RefreshCw,
   Smartphone,
   Tablet,
@@ -512,6 +513,20 @@ export function WhoIsSection({
               >
                 <Mail className="h-3.5 w-3.5 text-[#C89B3C]" aria-hidden="true" />
                 <span>{STUDIO_IDENTITY.contactEmail}</span>
+              </a>
+              <a
+                href={`mailto:${STUDIO_IDENTITY.secondaryEmail}`}
+                className="inline-flex items-center gap-1.5 text-[#D4CEC3] hover:text-[#C89B3C]"
+              >
+                <Mail className="h-3.5 w-3.5 text-[#C89B3C]" aria-hidden="true" />
+                <span>{STUDIO_IDENTITY.secondaryEmail}</span>
+              </a>
+              <a
+                href={`tel:${STUDIO_IDENTITY.phone}`}
+                className="font-mono-tabular inline-flex items-center gap-1.5 text-[#D4CEC3] hover:text-[#C89B3C]"
+              >
+                <Phone className="h-3.5 w-3.5 text-[#C89B3C]" aria-hidden="true" />
+                <span>{STUDIO_IDENTITY.phoneDisplay}</span>
               </a>
               <a
                 href={STUDIO_IDENTITY.githubUrl}

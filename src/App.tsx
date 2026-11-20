@@ -897,11 +897,26 @@ export default function App() {
               className="h-7 w-10 rounded border border-white/15 bg-[#08080A] object-cover"
             />
             <div>
-              <span className="font-display font-semibold text-[#EAE6DF]">The Last Relic</span>
-              <span className="mx-2" aria-hidden="true">·</span>
-              <span className="font-semibold text-[#C89B3C]">Dimpz Games</span>
-              <span className="mx-2" aria-hidden="true">·</span>
-              <span>Original IP Edition · World of Valdris</span>
+              <div>
+                <span className="font-display font-semibold text-[#EAE6DF]">The Last Relic</span>
+                <span className="mx-2" aria-hidden="true">·</span>
+                <span className="font-semibold text-[#C89B3C]">Dimpz Games</span>
+                <span className="mx-2" aria-hidden="true">·</span>
+                <span>Original IP Edition · World of Valdris</span>
+              </div>
+              <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-[#B8B1A6]">
+                <a href="mailto:ventas@orb-lite.com" className="hover:text-[#C89B3C]">
+                  ventas@orb-lite.com
+                </a>
+                <span aria-hidden="true">·</span>
+                <a href="mailto:isaacgestrada94@gmail.com" className="hover:text-[#C89B3C]">
+                  isaacgestrada94@gmail.com
+                </a>
+                <span aria-hidden="true">·</span>
+                <a href="tel:+523318359421" className="font-mono-tabular hover:text-[#C89B3C]">
+                  +52 33 1835 9421
+                </a>
+              </div>
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-5">

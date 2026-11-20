@@ -80,7 +80,7 @@ function drawSlideChrome(doc: jsPDF, W: number, H: number, footerRight: string) 
 
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(156, 150, 139);
-  doc.text('Dimpz Games · Original IP Edition · World of Valdris', 74, H - 9.5);
+  doc.text('Dimpz Games · ventas@orb-lite.com · isaacgestrada94@gmail.com · +52 33 1835 9421', 74, H - 9.5);
   doc.text(footerRight, W - 14, H - 9.5, { align: 'right' });
 }
 

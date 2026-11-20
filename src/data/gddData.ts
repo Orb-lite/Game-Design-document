@@ -19,7 +19,10 @@ export interface FichaEntry {
 
 export const FICHA_TECNICA: FichaEntry[] = [
   { label: 'Work Title', value: 'Valdris Chronicle: Last Relic (Episode I) — The Last Relic' },
-  { label: 'Studio / Developer', value: 'Dimpz Games' },
+  {
+    label: 'Studio & Contact',
+    value: 'Dimpz Games · ventas@orb-lite.com · isaacgestrada94@gmail.com · +52 33 1835 9421',
+  },
   {
     label: 'Classification',
     value: 'Literary Work / Master Video Game Design Document',
@@ -1622,5 +1625,8 @@ export const STUDIO_IDENTITY = {
   franchiseTitle: 'Valdris Chronicle: Last Relic (Episode I)',
   githubUrl: 'https://github.com/Orb-lite/Game-Design-document',
   contactEmail: 'ventas@orb-lite.com',
+  secondaryEmail: 'isaacgestrada94@gmail.com',
+  phone: '+523318359421',
+  phoneDisplay: '+52 33 1835 9421',
 } as const;
 
