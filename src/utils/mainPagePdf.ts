@@ -1160,14 +1160,14 @@ export async function exportMainPageToPdf(
   onProgress?.(10, totalSteps);
 
   // ============================================================================
-  // PAGE 10: HOLIDAY LIVE-OPS EVENTS (HALLOWEEN, DARK SANTA'S WISH) & REACTIVE SKINS
+  // PAGE 10: HOLIDAY LOOT EVENTS (MARKED DATES ONLY) & CLIMATE-REACTIVE SKINS
   // ============================================================================
-  y = addNewPage('09 · Holiday Events & Climate-Reactive Skins');
+  y = addNewPage('09 · Limited-Time Holiday Loot Events & Reactive Skins');
   y = drawSectionHeading(
     doc,
     y,
     SEASONAL_LIVE_OPS.eyebrow,
-    "Annual Holiday Events — Halloween & Dark Santa's Wish"
+    "Limited-Time Holiday Loot Events (1-2w) Inside Full-Season Worlds"
   );
 
   doc.setFont('helvetica', 'normal');
@@ -1276,13 +1276,13 @@ export async function exportMainPageToPdf(
   onProgress?.(11, totalSteps);
 
   // ============================================================================
-  // PAGE 11: 4-SEASON DYNAMIC STORM & WORLD CYCLE + PRODUCTION ADVANTAGE
+  // PAGE 11: FULL-SEASON DYNAMIC STORM & WORLD CYCLE + PRODUCTION ADVANTAGE
   // ============================================================================
-  y = addNewPage('10 · 4-Season Dynamic Storm & World Cycle');
+  y = addNewPage('10 · Full-Season World Storms & Timed Loot Rituals');
   y = drawSectionHeading(
     doc,
     y,
-    'UE5 Environment Pipeline · Quarterly Atmosphere Rotation',
+    'Full-Season Environment Scenarios (All Winter / Summer / Spring-Autumn)',
     '4-Season Dynamic Storm & World Cycle'
   );
 
@@ -1388,7 +1388,7 @@ export async function exportMainPageToPdf(
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(7.1);
   doc.setTextColor(200, 155, 60);
-  doc.text('ALWAYS-OPEN 24/7 QUEUE  |  1-ENTRY-PER-24H PERSONAL COOLDOWN', MARGIN_X + 4, y + 5.5);
+  doc.text('24/7 QUEUE  |  MARKED LOOT DATES ONLY (1W HALLOWEEN · 2W DEC 24-JAN 7)  |  1 ENTRY / 24H', MARGIN_X + 4, y + 5.5);
 
   doc.setFont('times', 'bold');
   doc.setFontSize(10.5);

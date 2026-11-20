@@ -973,20 +973,48 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
                 </p>
               </div>
 
-              {/* Marquee Holiday Events: Halloween & Dark Santa's Wish */}
+              {/* Dual Cadence Strip: Full-Season Environment vs. Marked-Date Loot Contracts */}
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                {SEASONAL_LIVE_OPS.cadenceRule.map((rule, idx) => (
+                  <div
+                    key={rule.layer}
+                    className={`rounded-md border p-5 ${
+                      idx === 0
+                        ? 'border-[#3E82C7]/40 bg-[#141417]'
+                        : 'border-[#C89B3C]/40 bg-[#141417]'
+                    }`}
+                  >
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <p
+                        className={`text-xs font-semibold tracking-wider uppercase ${
+                          idx === 0 ? 'text-[#6BA8E5]' : 'text-[#C89B3C]'
+                        }`}
+                      >
+                        {rule.layer}
+                      </p>
+                      <span className="font-mono-tabular text-xs font-semibold text-[#F6EFE2]">
+                        {rule.duration}
+                      </span>
+                    </div>
+                    <p className="mt-2 text-xs leading-relaxed text-[#D4CEC3]">{rule.detail}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Marquee Holiday Loot Events: Halloween & Dark Santa's Wish */}
               <div className="rounded-lg border border-white/10 bg-[#141417] p-6 lg:p-8">
                 <div className="flex flex-col gap-2 border-b border-white/10 pb-5 md:flex-row md:items-end md:justify-between">
                   <div>
                     <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-[#C89B3C] uppercase">
                       <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
-                      <span>Limited-Time World Events &amp; Cosmetic Contracts</span>
+                      <span>Limited-Time Loot &amp; Boss Contracts (Marked Dates Only)</span>
                     </div>
                     <h4 className="font-display mt-1.5 text-2xl font-semibold text-[#F6EFE2]">
-                      Annual Holiday Live-Ops Beats — Halloween &amp; Dark Santa&apos;s Wish
+                      Holiday Loot Windows — Halloween, Dark Santa&apos;s Wish &amp; Summer Solstice
                     </h4>
                   </div>
                   <p className="max-w-md text-xs leading-relaxed text-[#B8B1A6]">
-                    Fair-match PvPvE twists, themed boss variants, and direct cosmetic contract unlocks—zero stat or mastery pay-to-win.
+                    Fair-match PvPvE twists, themed boss encounters, and Gold-Tier cosmetic contracts open strictly for 1–2 weeks inside their matching full-season storm world.
                   </p>
                 </div>
 
@@ -1038,7 +1066,7 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
 
                         <dl className="mt-4 space-y-2 border-t border-white/10 pt-3 text-[11px]">
                           <div>
-                            <dt className="text-[#9C968B]">Active Storm Pairing</dt>
+                            <dt className="text-[#9C968B]">Host Full-Season Environment</dt>
                             <dd className="font-medium text-[#EAE6DF]">{ev.stormPairing}</dd>
                           </div>
                           <div>
@@ -1058,7 +1086,7 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
                   <div>
                     <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-[#C89B3C] uppercase">
                       <Clock className="h-3.5 w-3.5" aria-hidden="true" />
-                      <span>Always-Open 24/7 Queue · High-Stakes Daily Ritual</span>
+                      <span>Always-Open 24/7 Queue · Marked-Date Loot Rituals</span>
                     </div>
                     <h4 className="font-display mt-2 text-2xl font-semibold text-[#F6EFE2]">
                       {SEASONAL_LIVE_OPS.eventQueueLineup.title}
@@ -1244,7 +1272,7 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
                 <div className="flex flex-col gap-4 border-b border-white/10 pb-6 lg:flex-row lg:items-center lg:justify-between">
                   <div className="flex items-center gap-2 text-xs font-medium text-[#D4CEC3]">
                     <Layers className="h-4 w-4 text-[#C89B3C]" aria-hidden="true" />
-                    <span>Real-World Calendar Environmental Storm &amp; Lighting Variants</span>
+                    <span>Full-Season Environmental Storm &amp; Lighting Variants (Active All Winter, Summer &amp; Autumn/Spring)</span>
                   </div>
 
                   <div
@@ -1323,7 +1351,7 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
                         </dd>
                       </div>
                       <div>
-                        <dt className="text-[#9C968B]">Seasonal Live-Ops Event Pairing</dt>
+                        <dt className="text-[#9C968B]">Hosted Limited-Time Loot Event</dt>
                         <dd className="mt-0.5 font-semibold text-[#C89B3C]">
                           {activeSeason.eventPairing}
                         </dd>
