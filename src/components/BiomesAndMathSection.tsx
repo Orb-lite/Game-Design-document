@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Calendar, Clock, CloudSnow, Flame, Ghost, Gift, Layers, ShieldAlert, Skull, Sparkles, Sun, Wind } from 'lucide-react';
+import { Calendar, Clock, CloudSnow, Flame, Ghost, Gift, Layers, RefreshCw, ShieldAlert, Skull, Sparkles, Sun, Trophy, Wind } from 'lucide-react';
 import {
   BALANCE_POTIONS,
   BALANCE_RUNES,
@@ -65,6 +65,7 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
   const [selectedWishSet, setSelectedWishSet] = useState<string>(
     SEASONAL_LIVE_OPS.eventQueueLineup.halloween.targetSets[0]
   );
+  const [hasWonEventThisYear, setHasWonEventThisYear] = useState<boolean>(false);
 
   const activeBiome = BIOMES.find((b) => b.id === selectedBiomeId) ?? BIOMES[0];
   const activeSeason =
@@ -1214,20 +1215,67 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
                       </div>
                     </div>
 
-                    <div className="mt-4 border-t border-white/10 pt-3 text-[11px] text-[#B8B1A6]">
-                      <span className="font-semibold text-[#EAE6DF]">Active Simulation Outcome: </span>
-                      {halloweenRitualChoice === 'wish' ? (
-                        <span>
-                          Win match under standard rules to unlock{' '}
-                          <strong className="text-[#D4AF37]">{selectedWishSet}</strong>.
-                        </span>
-                      ) : (
-                        <span>
-                          Survive match-wide curse ({SEASONAL_LIVE_OPS.eventQueueLineup.halloween.curses.join(' · ')}) to unlock{' '}
-                          <strong className="text-[#D4AF37]">{selectedWishSet}</strong> +{' '}
-                          <strong className="text-[#C4A1EA]">Exclusive Cursed VFX / Ether Seal Variant</strong> (Defeat = 24h lock).
-                        </span>
-                      )}
+                    <div className="mt-4 space-y-2.5 border-t border-white/10 pt-3 text-[11px] text-[#B8B1A6]">
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <span className="font-semibold text-[#EAE6DF]">Prior Same-Year Event Status:</span>
+                        <div
+                          className="inline-flex items-center gap-1 rounded border border-white/10 bg-[#141417] p-0.5"
+                          role="group"
+                          aria-label="Simulate first win or repeat win in the current year"
+                        >
+                          <button
+                            type="button"
+                            onClick={() => setHasWonEventThisYear(false)}
+                            className={`rounded px-2 py-1 text-[10px] font-semibold transition-colors ${
+                              !hasWonEventThisYear
+                                ? 'bg-[#C89B3C] text-[#0B0B0D]'
+                                : 'text-[#9C968B] hover:text-[#F6EFE2]'
+                            }`}
+                          >
+                            1st Win This Year
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setHasWonEventThisYear(true)}
+                            className={`rounded px-2 py-1 text-[10px] font-semibold transition-colors ${
+                              hasWonEventThisYear
+                                ? 'bg-[#4F9E68] text-[#0B0B0D]'
+                                : 'text-[#9C968B] hover:text-[#F6EFE2]'
+                            }`}
+                          >
+                            Already Won This Year (Repeat)
+                          </button>
+                        </div>
+                      </div>
+
+                      <div>
+                        <span className="font-semibold text-[#EAE6DF]">Active Simulation Outcome: </span>
+                        {hasWonEventThisYear ? (
+                          <span>
+                            Victory awards{' '}
+                            <strong className="text-[#4F9E68]">2x Match EXP (This Winning Match Only)</strong>
+                            {halloweenRitualChoice === 'threat'
+                              ? ' after surviving the match-wide curse'
+                              : ''}
+                            —current year&apos;s loot &amp; trophy are already claimed. Next year resets the ledger with{' '}
+                            <strong className="text-[#D4AF37]">brand-new designed loot</strong>.
+                          </span>
+                        ) : halloweenRitualChoice === 'wish' ? (
+                          <span>
+                            First win this year unlocks{' '}
+                            <strong className="text-[#D4AF37]">{selectedWishSet}</strong> +{' '}
+                            <strong className="text-[#F6EFE2]">Unique Season Trophy</strong>. Any repeat win later this same year earns{' '}
+                            <strong className="text-[#4F9E68]">2x Match EXP (that match only)</strong>.
+                          </span>
+                        ) : (
+                          <span>
+                            Survive match-wide curse ({SEASONAL_LIVE_OPS.eventQueueLineup.halloween.curses.join(' · ')}) on first win this year to unlock{' '}
+                            <strong className="text-[#D4AF37]">{selectedWishSet}</strong> +{' '}
+                            <strong className="text-[#C4A1EA]">Exclusive Cursed VFX / Ether Seal</strong> +{' '}
+                            <strong className="text-[#F6EFE2]">Unique Season Trophy</strong> (Defeat = 24h lock; repeat same-year win = 2x Match EXP for that match only).
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
 
@@ -1264,6 +1312,31 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
                       </span>
                     </div>
                   </div>
+                </div>
+
+                {/* Annual Reset, Repeat-Win Single-Match 2x EXP & Unique Seasonal Trophies */}
+                <div className="mt-6 grid grid-cols-1 gap-4 border-t border-white/10 pt-6 lg:grid-cols-3">
+                  {SEASONAL_LIVE_OPS.eventQueueLineup.annualProgression.map((rule, idx) => (
+                    <div
+                      key={rule.id}
+                      className="rounded-md border border-white/10 bg-[#0F0F12] p-5"
+                    >
+                      <div className="flex items-center gap-2 text-[11px] font-semibold tracking-wider text-[#C89B3C] uppercase">
+                        {idx === 0 ? (
+                          <Sparkles className="h-3.5 w-3.5 text-[#4F9E68]" aria-hidden="true" />
+                        ) : idx === 1 ? (
+                          <RefreshCw className="h-3.5 w-3.5 text-[#6BA8E5]" aria-hidden="true" />
+                        ) : (
+                          <Trophy className="h-3.5 w-3.5 text-[#D4AF37]" aria-hidden="true" />
+                        )}
+                        <span>{rule.tag}</span>
+                      </div>
+                      <h5 className="font-display mt-1.5 text-lg font-semibold text-[#F6EFE2]">
+                        {rule.title}
+                      </h5>
+                      <p className="mt-2 text-xs leading-relaxed text-[#B8B1A6]">{rule.detail}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
 

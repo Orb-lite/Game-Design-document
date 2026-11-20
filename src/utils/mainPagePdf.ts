@@ -1273,6 +1273,32 @@ export async function exportMainPageToPdf(
     doc.text(pdfSafe(skin.seasonTag), kx + 3, y + 87.5);
   });
 
+  // Annual Reset, Repeat-Win 2x Match EXP & Unique Seasonal Trophies Strip (y = 254.2 to 279.2mm, < 281mm)
+  y += 96;
+  doc.setFillColor(18, 18, 22);
+  doc.setDrawColor(120, 96, 48);
+  doc.rect(MARGIN_X, y, CONTENT_W, 25, 'FD');
+
+  const apW = (CONTENT_W - 8) / 3;
+  SEASONAL_LIVE_OPS.eventQueueLineup.annualProgression.forEach((rule, idx) => {
+    const ax = MARGIN_X + 2 + idx * (apW + 2);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(5.3);
+    doc.setTextColor(200, 155, 60);
+    doc.text(pdfSafe(rule.tag.toUpperCase()), ax + 1.5, y + 4.4);
+
+    doc.setFont('times', 'bold');
+    doc.setFontSize(7.1);
+    doc.setTextColor(246, 239, 226);
+    doc.text(pdfSafe(rule.title), ax + 1.5, y + 8.3);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(5.2);
+    doc.setTextColor(184, 177, 166);
+    const apLines = doc.splitTextToSize(pdfSafe(rule.detail), apW - 3);
+    doc.text(apLines.slice(0, 4), ax + 1.5, y + 12.0);
+  });
+
   onProgress?.(11, totalSteps);
 
   // ============================================================================
@@ -1386,9 +1412,13 @@ export async function exportMainPageToPdf(
   doc.rect(MARGIN_X, y, CONTENT_W, 79, 'FD');
 
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(7.1);
+  doc.setFontSize(6.6);
   doc.setTextColor(200, 155, 60);
-  doc.text('24/7 QUEUE  |  MARKED LOOT DATES ONLY (1W HALLOWEEN · 2W DEC 24-JAN 7)  |  1 ENTRY / 24H', MARGIN_X + 4, y + 5.5);
+  doc.text(
+    '24/7 QUEUE  |  1 ENTRY / 24H  |  SAME-YEAR REPEAT WIN: 2X MATCH EXP (1 MATCH)  |  ANNUAL NEW LOOT & TROPHIES',
+    MARGIN_X + 4,
+    y + 5.5
+  );
 
   doc.setFont('times', 'bold');
   doc.setFontSize(10.5);

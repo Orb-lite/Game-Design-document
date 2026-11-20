@@ -1460,11 +1460,11 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
     code: '13 / 14',
     section: "Limited-Time Loot Events · Halloween, Dark Santa & Reactive Skins",
     title: "Limited-Time Holiday Loot Rituals (1–2 Weeks) & Reactive Skins",
-    keyMessage: 'Always-Open 24/7 Queue + 1 Attempt Every 24h runs strictly during marked loot dates inside each full-season storm world.',
+    keyMessage: '24/7 Queue + 1 Entry / 24h on marked dates; repeat wins within the same year award 2x Match EXP (that match only), resetting yearly with brand-new loot & unique seasonal trophies.',
     bullets: [
-      'Halloween — Wish or Threat Loot Event (1 Week: Oct 25 – Nov 1 · 1 Entry / 24h): Runs inside Full-Autumn Miasma. Pick WISH (Spectral Harvester Plate or Hollow Executioner Cloak) or THREAT (curses + exclusive Cursed VFX / Ether Seal; loss locks out 24h).',
-      "Midwinter — Dark Santa's Wish Loot Event (2 Weeks: Dec 24 – Jan 7 · 1 Entry / 24h): Timed 2-week loot ritual inside the full-winter Glacial Ice Storm—defeat Dark Santa to claim your Wish UI Gold-Tier set immediately (24h loss cooldown).",
-      'Summer Solstice — Solar-Ash Loot Event (1 Week: Jun 21 – Jun 28): Timed summer kickoff inside the full-summer Scorching Heat Storm—Solar Eclipse Altars unlock climate-reactive skins that glow brightest in their matching seasonal storm.',
+      'Halloween & Midwinter Loot Rituals (1 Entry / 24h): Halloween Wish or Threat (1w: Oct 25–Nov 1) & Dark Santa’s Wish (2w: Dec 24–Jan 7) unlock Gold-Tier sets on win (24h loss cooldown).',
+      'Repeat-Win Double XP (Current Year · Single Match): Winning a Seasonal Loot Event after already winning it earlier in the same year awards 2x Match EXP strictly for that winning match.',
+      'Annual Reset, Fresh Loot & Unique Trophies: Each new year resets win ledgers with newly designed exclusive loot and awards unique collectible seasonal trophies to showcase permanently.',
     ],
     image: GENERATED_ASSETS.eventHalloweenValdris,
     showcaseTitle: 'Limited-Time Loot Arenas & Climate-Reactive Event Skins',
@@ -1869,12 +1869,35 @@ export const SEASONAL_LIVE_OPS = {
   ],
   eventQueueLineup: {
     title: 'Limited-Time Loot Lineup: 1 Attempt Every 24 Hours (Zero Pay-to-Win)',
-    lead: 'While each seasonal weather scenario lasts the entire quarter, these marquee Loot Events open exclusively during their marked calendar dates on an Always-Open 24/7 Queue with a strict 1-Entry-Per-24h Personal Cooldown:',
+    lead: 'While each seasonal weather scenario lasts the entire quarter, these marquee Loot Events open exclusively during their marked calendar dates on an Always-Open 24/7 Queue with a strict 1-Entry-Per-24h Personal Cooldown, single-match 2x Match EXP for repeat same-year winners, annual fresh loot resets, and unique seasonal trophies:',
     queueMetrics: [
       { label: 'Matchmaking Queue', value: 'Always-Open 24/7' },
       { label: 'Entry Cadence', value: '1 Attempt / 24h' },
-      { label: 'Loot Event Windows', value: '1w–2w Marked Dates' },
-      { label: 'World Storm Cycle', value: 'Full Season Active' },
+      { label: 'Same-Year Repeat Win', value: '2x Match EXP (1 Match)' },
+      { label: 'Annual Loot & Trophies', value: 'Yearly Reset + New Loot' },
+    ],
+    annualProgression: [
+      {
+        id: 'repeat-win-double-xp',
+        tag: 'Same-Year Repeat Win',
+        title: 'Double XP (That Match Only)',
+        detail:
+          'If a player wins a Seasonal Loot Event match and had already won that same Seasonal Loot Event earlier in the current calendar year, they earn 2x Match EXP—counting strictly for that single winning match (not on defeat, and never a permanent buff).',
+      },
+      {
+        id: 'annual-fresh-loot',
+        tag: 'Every New Year Resets',
+        title: 'Brand-New Loot Designed Yearly',
+        detail:
+          'When the next calendar year arrives, the event win ledger resets completely. Every year introduces newly designed seasonal Gold-Tier sets and cosmetics, letting returning winners compete again to claim that year’s brand-new loot.',
+      },
+      {
+        id: 'seasonal-trophies',
+        tag: 'Permanent Legacy Collection',
+        title: 'Unique Collectible Trophies Every Season',
+        detail:
+          'Every season awards distinct, year-stamped collectible trophies (displayed permanently in the player’s Profile & Social Hub Trophy Hall), letting dedicated warriors collect unique seasonal trophies across every chapter and year.',
+      },
     ],
     halloween: {
       title: 'Halloween — Wish or Threat',
@@ -1890,23 +1913,23 @@ export const SEASONAL_LIVE_OPS = {
       wish: {
         label: 'WISH',
         summary:
-          'Pick your target Halloween Gold-Tier cosmetic set (e.g., Spectral Harvester Plate or Hollow Executioner Cloak) and fight under standard rules to claim it on victory.',
+          'Pick this year’s target Halloween Gold-Tier cosmetic set (e.g., Spectral Harvester Plate or Hollow Executioner Cloak) and claim it plus the season’s Unique Trophy on first win—or earn 2x Match EXP (for that winning match only) on repeat wins within the same year.',
       },
       threat: {
         label: 'THREAT',
         summary:
-          'Voluntarily accept a match-wide curse (such as cursed blood-fog, disabled radar, enraged World Boss, or public bounty mark). Triumphing under Threat awards the chosen Gold-Tier set plus an exclusive Cursed VFX / Ether Seal variant—while defeat locks the player out for 24 hours.',
+          'Voluntarily accept a match-wide curse (cursed blood-fog, disabled radar, enraged World Boss, or public bounty mark). Triumphing under Threat awards the year’s Gold-Tier set + exclusive Cursed VFX / Ether Seal + Seasonal Trophy (or 2x Match EXP for that match on same-year repeat wins)—while defeat locks the player out for 24h.',
       },
     },
     midwinter: {
       title: "Midwinter — Dark Santa's Wish",
       durationLabel: 'Loot Event Window · 2 Weeks Only (Dec 24 – Jan 7)',
       summary:
-        'Players lock in their desired Gold-Tier cosmetic set via the pre-match Wish UI and enter the full-winter snow arena during the 2-week Christmas & New Year loot window to defeat the Dark Santa encounter. Winners claim their selected set immediately to showcase in the Social Hub; losers wait 24 hours for their next attempt.',
+        'Players lock in their desired current-year Gold-Tier cosmetic set via the pre-match Wish UI and enter the full-winter snow arena during the 2-week Christmas & New Year loot window to defeat Dark Santa. First-time winners unlock the set & unique Winter Trophy immediately; same-year repeat winners earn 2x Match EXP for that winning match; next year resets with brand-new loot. Losers wait 24h.',
       highlights: [
         'Loot Contract Window: Strictly 2 weeks (Christmas & New Year through Jan 7) inside the full-winter storm.',
-        'Pre-Match Wish UI: Lock in your target Gold-Tier Winter set before queuing.',
-        'Victory & Cooldown Rule: Instant unlock & Social Hub showcase on win; 24-hour lockout on defeat.',
+        'Repeat-Win 2x EXP (Single Match): Already won Dark Santa’s Wish this year? Another win grants 2x Match EXP for that match only.',
+        'Annual Reset + Unique Trophies: Resets each year with freshly designed Winter loot & collectible season-unique trophies.',
       ],
     },
   },
@@ -1922,8 +1945,8 @@ export const SEASONAL_LIVE_OPS = {
       atmosphere:
         'A giant blood-orange harvest moon hangs above Valdris while wrought-iron jack-o’-lantern braziers line Citadel drawbridges inside Autumn’s baseline Miasma haze.',
       gameplayTwist:
-        'Pre-match Wish or Threat loot ritual (1 week only): fight normally for a Gold-Tier set (Spectral Harvester Plate / Hollow Executioner Cloak) or accept a Threat curse for an exclusive Cursed VFX / Ether Seal.',
-      rewardSkin: 'Gold-Tier Halloween Set + Optional Threat Cursed VFX / Ether Seal',
+        'Pre-match Wish or Threat loot ritual (1 week only): claim this year’s Gold-Tier set & Unique Autumn Trophy on first win; repeat wins in the same year award 2x Match EXP (that match only), resetting next year with brand-new loot.',
+      rewardSkin: 'Yearly Gold-Tier Halloween Set + Unique Season Trophy (2x Match EXP on Repeat Same-Year Win)',
     },
     {
       id: 'dark-santas-wish',
@@ -1936,8 +1959,8 @@ export const SEASONAL_LIVE_OPS = {
       atmosphere:
         'Framed inside the all-winter snowbound Citadel blizzard, crimson-iron Yule banners and Dark Santa altars spawn strictly for the 2-week Christmas & New Year loot run.',
       gameplayTwist:
-        'During this 2-week loot window, players lock in a desired Gold-Tier set via the Wish UI and defeat Dark Santa inside the winter storm; defeat triggers a 24-hour personal cooldown.',
-      rewardSkin: 'Chosen Gold-Tier Set + Instant Social Hub Showcase (Frostbound Hearth-Breaker)',
+        'During this 2-week loot window, lock in your current-year Gold-Tier set via the Wish UI and defeat Dark Santa. Repeat wins in the same year grant 2x Match EXP (this match only); next year resets with brand-new loot. Loss = 24h cooldown.',
+      rewardSkin: 'Yearly Winter Gold Set + Unique Winter Trophy (2x Match EXP on Repeat Same-Year Win)',
     },
     {
       id: 'solar-ash-solstice',
@@ -1950,8 +1973,8 @@ export const SEASONAL_LIVE_OPS = {
       atmosphere:
         'Kicking off inside the all-summer Scorching Heat Storm, Solar Eclipse shrines ignite duel bounties across parched Citadel flagstones for one high-intensity opening week.',
       gameplayTwist:
-        '1-week Summer opening loot contract: Solar Eclipse Altars fuel Ash-Guardian gauntlets for direct Solstice Skin progression while the Heat Storm remains active all summer.',
-      rewardSkin: 'Sun-Baked Eclipse Sentinel Set (Solar Gold Plate & Dual Hand Crossbows)',
+        '1-week Summer opening loot contract: Solar Eclipse Altars unlock this year’s Solstice set & Unique Summer Trophy; same-year repeat wins grant 2x Match EXP for that match only, resetting next year with newly designed loot.',
+      rewardSkin: 'Yearly Solstice Gold Set + Unique Summer Trophy (2x Match EXP on Repeat Same-Year Win)',
     },
   ],
   stormPhases: [
