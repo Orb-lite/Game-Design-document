@@ -1128,7 +1128,7 @@ export async function exportMainPageToPdf(
   doc.setTextColor(234, 230, 223);
   doc.text(
     pdfSafe(
-      `${STUDIO_IDENTITY.studioName}  |  ${STUDIO_IDENTITY.contactEmail}  |  ${STUDIO_IDENTITY.secondaryEmail}  |  ${STUDIO_IDENTITY.phoneDisplay}`
+      `${STUDIO_IDENTITY.studioName}  |  ${STUDIO_IDENTITY.contactEmail}  |  ${STUDIO_IDENTITY.phoneDisplay}  |  ${STUDIO_IDENTITY.githubUrl}`
     ),
     MARGIN_X + 36,
     whoY + 5.4

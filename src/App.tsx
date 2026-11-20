@@ -905,10 +905,6 @@ export default function App() {
                 <span>Original IP Edition · World of Valdris</span>
               </div>
               <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-[#B8B1A6]">
-                <a href="mailto:ventas@orb-lite.com" className="hover:text-[#C89B3C]">
-                  ventas@orb-lite.com
-                </a>
-                <span aria-hidden="true">·</span>
                 <a href="mailto:isaacgestrada94@gmail.com" className="hover:text-[#C89B3C]">
                   isaacgestrada94@gmail.com
                 </a>
