@@ -8,6 +8,8 @@ export const GENERATED_ASSETS = {
   biomesVista: '/src/assets/images/fig7_biomas_marismas_agujas.jpg',
   biomeMiasmaMarshes: '/src/assets/images/biome_miasma_marshes_1794869216604.jpg',
   biomeForestSpires: '/src/assets/images/biome_forest_spires_1794869217760.jpg',
+  gameLogo: '/assets/aistudio/image_c05930f7_b8d13f83.jpg',
+  studioLogo: '/assets/aistudio/image_39f1f35b_65d24a02.jpg',
 } as const;
 
 export interface FichaEntry {
@@ -16,7 +18,8 @@ export interface FichaEntry {
 }
 
 export const FICHA_TECNICA: FichaEntry[] = [
-  { label: 'Work Title', value: 'The Last Relic' },
+  { label: 'Work Title', value: 'Valdris Chronicle: Last Relic (Episode I) — The Last Relic' },
+  { label: 'Studio / Developer', value: 'Dimpz Games' },
   {
     label: 'Classification',
     value: 'Literary Work / Master Video Game Design Document',
@@ -154,7 +157,7 @@ export const MATCH_ACTS: MatchAct[] = [
     keyEvents: [
       'Permanent death: every elimination is final in both Oath Mode and Wanderer Mode.',
       'Desperate ascent up the 3 sole escape stairways before subterranean sealing.',
-      'Global compass marker reveals the Black Bell Executioner (3.00x HP, up to 35% Gold Tier).',
+      'Global compass marker reveals the Black Bell Executioner (3.00x HP, 35% base / 50% Omni-Lv.100 Gold Tier).',
     ],
     image: GENERATED_ASSETS.throneDuel,
     caption: 'Figure 6: Acts IV–V — Toll of the Black Bell echoing through the Citadel vaults.',
@@ -312,9 +315,9 @@ export const QUALITY_TIERS: QualityTier[] = [
     colorName: 'Gold — Unique',
     hex: '#D4AF37',
     badgeText: 'Gold · Unique',
-    subtitle: 'Match-unique legendary pieces',
+    subtitle: 'Match-unique legendary stat data',
     description:
-      'Unique legendary relics per match that reshape character silhouette and grant ultimate abilities.',
+      'Unique legendary combat data per match granting maximum stats, affixes, and ultimate abilities—completely decoupled from equipped Cosmetic Skins.',
   },
 ];
 
@@ -411,6 +414,7 @@ export interface PlayerCombatProfile {
   distanceLevel: number;
   magicLevel: number;
   defenseLevel: number;
+  weaponMasteryPct: number;
   swordXp: number;
   clubXp: number;
   axeXp: number;
@@ -419,6 +423,65 @@ export interface PlayerCombatProfile {
   defenseXp: number;
   offensiveSpellCasts: number;
   supportSpellCasts: number;
+}
+
+export function hasOmniMastery100(profile: PlayerCombatProfile): boolean {
+  return (
+    profile.swordLevel >= 100 &&
+    profile.clubLevel >= 100 &&
+    profile.axeLevel >= 100 &&
+    profile.distanceLevel >= 100 &&
+    profile.magicLevel >= 100 &&
+    profile.defenseLevel >= 100
+  );
+}
+
+export function getGoldLootCapPct(profile: PlayerCombatProfile): number {
+  return hasOmniMastery100(profile) ? 50 : 35;
+}
+
+export function computeMatchmakingBracket(profile: PlayerCombatProfile) {
+  const topAttackSkill = Math.max(
+    profile.swordLevel,
+    profile.clubLevel,
+    profile.axeLevel,
+    profile.distanceLevel,
+    profile.magicLevel
+  );
+  const omniUnlocked = hasOmniMastery100(profile);
+  const weaponMasteryWeight = profile.weaponMasteryPct * 0.25;
+  const combatPowerIndex = Math.round(
+    profile.generalLevel * 0.55 +
+      topAttackSkill * 0.45 +
+      profile.defenseLevel * 0.35 +
+      weaponMasteryWeight +
+      (omniUnlocked ? 35 : 0)
+  );
+
+  let bracketLabel = 'Bracket I · Novice Vanguard (Lv. 1–39 Band)';
+  let queueParityNote =
+    'Paired strictly against low-level Warriors & matched Weapon Mastery tiers (35% Gold Cap lobby).';
+
+  if (omniUnlocked || combatPowerIndex >= 175) {
+    bracketLabel = 'Bracket IV · Omni-Master Apex (50% Gold Cap Parity)';
+    queueParityNote =
+      'Matched exclusively against high-mastery Warriors with full Lv.100+ & 100% Weapon Mastery parity—zero mismatch vs newcomers.';
+  } else if (combatPowerIndex >= 130 || profile.weaponMasteryPct >= 100) {
+    bracketLabel = 'Bracket III · Mastered Citadel Tier (Equalized Mastery)';
+    queueParityNote =
+      'Any 100% Weapon Mastery (bought via Skin or organic) elevates MMR into Mastered lobbies where opponents also field max Weapon Mastery.';
+  } else if (combatPowerIndex >= 85) {
+    bracketLabel = 'Bracket II · Proven Challenger (Lv. 40–79 Band)';
+    queueParityNote =
+      'Balanced mid-tier Valdris lobby enforcing tight ±15 Combat Index variance and highest-squadmate anti-smurf anchoring.';
+  }
+
+  return {
+    combatPowerIndex,
+    bracketLabel,
+    queueParityNote,
+    goldCapParity: getGoldLootCapPct(profile),
+  };
 }
 
 export const WARRIOR_ARCHETYPES: Record<WarriorArchetypeId, WarriorArchetypeSpec> = {
@@ -554,19 +617,19 @@ export const COMBAT_SKILLS: CombatSkillSpec[] = [
 
 export const UNIVERSAL_SLOTS = [
   {
-    slot: 'Base Designation: Warrior',
+    slot: 'Base Designation & Separate Mastery Axes',
     detail:
-      'Every player begins as an unspecialized Warrior. Combat hits train your weapon mastery (Sword, Club, Axe, Distance) while spell casts raise Magic Level—letting you pivot roles live mid-match.',
+      'Every Warrior trains 3 isolated progression tracks: (1) Attack Type Level (Sword, Club, Axe, Distance, Magic), (2) Defense Level, and (3) Standalone Weapon Mastery (0%–100%), kept completely separate from Attack Type and Defense levels.',
   },
   {
-    slot: 'Two Quick-Swap Weapons',
+    slot: 'Logical Gear Data Slots (Stats & Synergies Only)',
     detail:
-      'Instantly toggle between melee and ranged/magic kits (e.g., Greatsword, War Mace, or Greataxe + Dual Crossbows or Scepter) tuned to your highest mastery.',
+      '2 Quick-Swap Weapons, 4 Armor Data Slots (Helm, Cuirass, Greaves, Boots), Shield/Off-hand, and 4 Vial Belt Slots strictly modify numerical Attack, Defense, Block %, Affixes, and Build Synergies—never altering your visible 3D mesh by default.',
   },
   {
-    slot: '4 Armor Pieces & Belt of Vials (Keys 1–4)',
+    slot: 'Cosmetic Slots & Dual Weapon Mastery Unlock',
     detail:
-      'Helm, Cuirass, Greaves, and hybrid Boots plus the 4-slot Vial Belt (1. Vitality, 2. Ether, 3. Stamina, 4. Purifying Elixir).',
+      'All 90 Episode I skins live in independent Transmog Slots unrelated to gear stats. Buying a skin auto-masterizes its weapon to Max Weapon Attack inside the separate Weapon Mastery track (without altering Attack Type or Defense Level); earning that Weapon Mastery organically unlocks the weapon skin for free.',
   },
 ];
 
@@ -754,7 +817,8 @@ export const PVE_DIFFICULTY_TIERS: PveTierSpec[] = [
     pvpRisk: '120m + Stairway Echo Ping',
     hpMultiplierMax: 2.2,
     drops: { gris: 0, verde: 5, azul: 32, morado: 49, dorado: 14 },
-    guaranteedRule: 'Minimum 1 Cursed Relic (Purple) + 14% base Gold Tier (35% max cap with Mastery).',
+    guaranteedRule:
+      'Minimum 1 Cursed Relic (Purple) + 14% base Gold Tier (35% cap -> 50% if all Attack, Magic & Defense ≥ Lv.100).',
   },
   {
     id: 'tier-4',
@@ -762,13 +826,15 @@ export const PVE_DIFFICULTY_TIERS: PveTierSpec[] = [
     difficulty: 'Difficulty IV — Extreme (Black Bell)',
     acts: 'Acts IV–V',
     enemies: 'Herald of The Abyssal Ash (Black Bell Executioner 3.00x HP)',
-    chestMechanic: 'Instant direct drop on killing blow; Gold Tier scales up to strict 35% cap.',
+    chestMechanic:
+      'Instant direct drop on killing blow; Gold Tier scales up to 35% base cap, rising to 50% at All Masteries Lv.100+.',
     scalingErrante: '1x HP',
     scalingJuramento: 'Duo 1.35x / Trio 1.75x / Quad 2.2x HP',
     pvpRisk: 'Global (permanent Citadel compass marker)',
     hpMultiplierMax: 3.0,
     drops: { gris: 0, verde: 0, azul: 0, morado: 78, dorado: 22 },
-    guaranteedRule: 'Guaranteed Cursed Relic + 22% base Gold Tier (35% strict cap) + Vials.',
+    guaranteedRule:
+      'Guaranteed Cursed Relic + 22% base Gold Tier (35% cap -> 50% w/ All Attack, Magic & Defense Lv.100+) + Vials.',
   },
 ];
 
@@ -806,7 +872,7 @@ export const BIOMES: BiomeSpec[] = [
     caption: 'The Citadel of Valdris — Battlements, drawbridges, and Throne Hall.',
     elevationProfile: '3 Vertical Fortress Tiers + Central Throne Hall Arena',
     ashClosureWindow: 'Safe Center through Act V (Throne Hall Sudden Death)',
-    lootFocus: 'Tier III–IV Endgame Spoils · Up to 35% Gold Tier Cap',
+    lootFocus: 'Tier III–IV Endgame Spoils · 35% Base -> 50% Omni-Mastery Gold Cap',
     environmentalHazards: [
       'Retracting Drawbridges & Narrow Rampart Chokepoints under crossbow fire',
       'Throne Hall Pillar Collapse & Tightening Abyssal Ash Ring in Act V',
@@ -907,10 +973,10 @@ export const MATH_FORMULAS = [
     note: 'Scales linearly with effective level to sustain 3-Seal tactical spell rotations.',
   },
   {
-    title: 'Weapon Damage by Mastery & General Level',
+    title: 'Weapon Damage by Attack Type, Separate Weapon Mastery & General Level',
     formula:
-      'Net_Dmg = [Weapon_Atk * (1 + Mastery * 0.015) + General_Lv * 0.35] * Attack_Factor * 0.60 * (100 / (100 + Armor))',
-    note: 'Mastery maps to Sword, Club, Axe, or Distance Level depending on equipped weapon. Each strike earns skill EXP.',
+      'Net_Dmg = [(Weapon_Atk * (1 + Weapon_Mastery * 0.12)) * (1 + Attack_Type_Lv * 0.015) + General_Lv * 0.35] * Factor * 0.60 * (100 / (100 + Armor))',
+    note: 'Attack_Type_Lv (Sword/Club/Axe/Distance) and Defense_Level are earned strictly in combat. Separate Weapon_Mastery (0.00–1.00) auto-maxes to 1.00 (Max Weapon Attack) on Skin purchase or unlocks the Weapon Skin for free at 100% organic completion.',
   },
   {
     title: 'Spell Output & Healing Power (Magic Level)',
@@ -935,10 +1001,16 @@ export const MATH_FORMULAS = [
     note: 'Orders the winning squad: #1 is crowned King, #2 Captain, #3 Colonel, and Last/4th Sergeant. Assists & Team Healing Magic count alongside Kills.',
   },
   {
-    title: 'Match EXP from Kills, Assists, Healing Magic & Time Alive',
+    title: 'Match EXP & Omni-Mastery Gold Loot Cap (35% → 50%)',
     formula:
-      'Match_EXP = [(Kills * 140) + (Assists * 65) + (Team_Healing / 15) + (Minutes_Alive * 20)] * (1 + Rank_Bonus)',
-    note: 'Every minute alive continuously grants +20 General EXP; team healing casts (Seal of Restoration / Aegis) & assists directly convert into EXP and squad rank.',
+      'Match_EXP = [(Kills * 140) + (Assists * 65) + (Healing / 15) + (Min * 20)] * (1 + Rank)   |   Gold_Cap = 50% if All_Atk & Mag & Def >= 100 else 35%',
+    note: 'Reaching Lv.100+ organically in ALL Attack Types (Sword, Club, Axe, Distance), Magic, and Defense elevates the Gold Tier drop cap from 35% to 50%. Every minute alive awards +20 EXP.',
+  },
+  {
+    title: 'Fair-Match Power Matchmaking (Zero Store Advantage)',
+    formula:
+      'MM_Index = 0.55*GenLv + 0.45*TopAtk + 0.35*DefLv + 0.25*WeaponMastery% + (Omni100 ? 35 : 0)   |   Oath Anchor = Max_Squad_MM',
+    note: 'Matchmaking includes Weapon Mastery % & Omni-Lv.100 status. Buying a skin (100% Weapon Mastery) or reaching 50% Gold Cap places you vs. equally maxed opponents (±15 band, anti-smurf Oath Anchor).',
   },
 ];
 
@@ -1028,6 +1100,57 @@ export const BALANCE_POTIONS: BalancePotionRow[] = [
   { name: 'Starter Minor Crimson Vial', tier: 'Tier B', reqLevel: 'Lv. 1', scalingPerLv: '+0.50 / lv', effectLv100_200: '130 / 180 HP', useTiming: '1.0s CD / 0.8s Cast' },
 ];
 
+export interface DecoupledPillarSpec {
+  id: string;
+  code: string;
+  title: string;
+  subtitle: string;
+  summary: string;
+  bullets: string[];
+}
+
+export const DECOUPLED_SYSTEM_PILLARS: DecoupledPillarSpec[] = [
+  {
+    id: 'stats-vs-visuals',
+    code: 'PILLAR A',
+    title: 'Decoupled Modular Progression & 3 Separate Mastery Axes',
+    subtitle: 'Stats vs. Visuals · Isolated Weapon Mastery vs. Attack Type & Defense',
+    summary:
+      'Valdris Chronicle: Last Relic (Episode I) decouples in-match Logical Gear Data from independent Cosmetic Slots (the 90 launch 3D skins) and isolates a dedicated Weapon Mastery track completely separate from Attack Type Level and Defense Level.',
+    bullets: [
+      'Logical Gear vs. Launch Skins: Equipped gear modifies numerical Attack, Defense, Block %, and affixes only—leaving your 3D mesh unchanged. The 90 3D designs serve independently as Episode I Launch Cosmetic Skins with zero stat binding.',
+      'Separate Weapon Mastery Track: Every weapon features a standalone Weapon Mastery gauge strictly isolated from Attack Type Level (Sword/Club/Axe/Distance/Magic) and Defense Level.',
+      'Dual Unlock Symmetry: Purchasing a weapon skin immediately masterizes that weapon’s separate Weapon Mastery to 100% Max Weapon Attack (without modifying Attack Type or Defense Level); completing that Weapon Mastery organically unlocks the weapon’s Cosmetic Skin for free.',
+    ],
+  },
+  {
+    id: 'technical-combat-integrity',
+    code: 'PILLAR B',
+    title: 'Technical Architecture & Tactical Combat Precision',
+    subtitle: 'Visual Mesh Override vs. Invariant Hitboxes & Frame Data',
+    summary:
+      'To safeguard high-precision PvPvE duels across 200 concurrent Warriors in Unreal Engine 5, Skins alter client visuals only and Weapon Mastery remains strictly capped at each weapon’s canonical organic ceiling.',
+    bullets: [
+      'Rendering-Only Overrides: Equipped skins swap only Modular Skeletal Mesh components, PBR material instances, textures, and non-intrusive GPU Niagara VFX trails.',
+      'Locked Collision & Frame Data: Canonical Hitboxes, Hurtboxes, swing arc geometry, active Parry windows, Riposte recovery timings, and Dodge Invulnerability Frames (i-Frames) remain 100% invariant and server-authoritative.',
+      'Bounded Parity & Fair-Match Matchmaking: Whenever a Skin auto-maxes Weapon Mastery to 100% (or a Warrior unlocks Omni-Lv.100’s 50% Gold Cap), Server Matchmaking updates their Combat Power Index—pairing them strictly with equivalent-power opponents inside tight Lv_avg lobbies.',
+    ],
+  },
+  {
+    id: 'ethical-live-ops',
+    code: 'PILLAR C',
+    title: 'Ethical Monetization & Fair-Match Live-Ops',
+    subtitle: 'Power-Weighted Lobby Parity + Direct Skin Storefront',
+    summary:
+      'True Zero Pay-to-Win requires Fair-Match Matchmaking: any purchased Skin granting 100% Separate Weapon Mastery immediately queues that Warrior into Mastered Brackets alongside equal-power organic players, while Attack Type, Defense Level, and Anti-Smurf squad anchoring protect every lobby.',
+    bullets: [
+      'Fair-Match Bracket Isolation: MM_Index weighs General Level, Attack/Defense Levels, active Weapon Mastery %, and Omni-Lv.100 50%-cap status—preventing maxed veterans or skin-mastered buyers from facing unmastered newcomers.',
+      'Anti-Smurf Oath Squad Anchor: In Oath Mode (Duos/Trios/Quads), matchmaking anchors to the highest-rated squadmate so veterans cannot smurf into beginner lobbies.',
+      'Protected Progression & Multi-Episode Scale: Attack Type Level, Defense Level, and the 50% Omni-Lv.100 Gold Cap remain strictly non-purchasable across Episode I and future Valdris Chronicle Episodes.',
+    ],
+  },
+];
+
 export const UE5_PILLARS = [
   {
     title: 'Replication Graph & Spatial Relevancy (50–80m)',
@@ -1035,14 +1158,14 @@ export const UE5_PILLARS = [
       'High-frequency replication for parry frames, dual-crossbow bolts, and Ether Seals inside a 50–80m combat radius, conserving bandwidth across the rest of the 200-player map.',
   },
   {
-    title: 'Server Authority, Coronation Ledger & Time Alive EXP',
+    title: 'Fair-Match Server Authority & 3-Track Mastery Ledger',
     detail:
-      'Full server-side authority over Match-Up brackets (Lv_avg), Warrior HP curves, PvE monsters at Lv_avg + 100, Retroactive EXP Ledger, Assists & Team Healing tracking, Time Alive EXP ticks, and the Winning Squad Coronation (King, Captain, Colonel, Sergeant).',
+      'Server authority enforces power-weighted MM_Index lobby brackets (matching Weapon Mastery %, Attack Type, Defense Level & 35%/50% Gold Cap parity), anti-smurf Oath squad anchoring, Lv_avg + 100 PvE scaling, and Coronation.',
   },
   {
-    title: 'Modular Skeletal Mesh & Niagara GPU VFX',
+    title: 'Decoupled Cosmetic Mesh Swapping & Canonical Frame Data',
     detail:
-      'One unified base Skeletal Mesh dynamically swaps all 4 armor slots across the 90 armor sets and 5 Quality Tiers with GPU-driven Niagara elemental emitters.',
+      'Cosmetic Skins swap Modular Skeletal Meshes, PBR materials, textures, and non-intrusive Niagara VFX via independent Transmog Slots—while Hitboxes, Hurtboxes, Animation Timings, and Invulnerability Frames remain 100% locked and unaffected.',
   },
   {
     title: 'Multi-Layer Anti-Cheat Defense',
@@ -1091,9 +1214,9 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
     title: 'Bridging High-Tempo Battle Royale & Tactical Action Combat',
     keyMessage: 'Capturing players underserved by modern military gunplay shooters.',
     bullets: [
-      'Saturated firearm BR market leaves massive whitespace for a 200-player dark-medieval combat title with physical hitboxes.',
-      'Classless live match progression: every player enters identically as a Warrior and evolves dynamically via the weapons or spells they use.',
-      'Ethical Zero Pay-to-Win commerce: revenue driven strictly by cosmetic 3D armor skins, weapon variants, and seasonal Battle Passes.',
+      'Saturated firearm BR market leaves massive whitespace for a 200-player dark-medieval combat title with server-authoritative physical hitboxes.',
+      'Decoupled Logical Gear vs. 90 Launch Skins + Separate Weapon Mastery: buying a skin maxes its isolated Weapon Mastery only (never Attack Type or Defense Level), while organic Weapon Mastery unlocks that skin for free.',
+      'Ethical Live-Ops in Valdris Chronicle: Last Relic (Episode I) scales cleanly across future Episodes without selling Attack Type Level, Defense Level, or loot drop rates.',
     ],
     image: GENERATED_ASSETS.siegeBridge,
   },
@@ -1178,44 +1301,44 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
   {
     index: 6,
     code: '06 / 12',
-    section: 'Pillar 2: 90 Modular 3D Armor Sets (Lv. 1–100+)',
-    title: '15 Distinct Sets per Profession with Attack & Defense Perks',
-    keyMessage: '90 unique armor sets scaling from Rusted Forge (Grey) to Royal Vestige (Gold).',
+    section: 'Pillar 2: Decoupled Stats Data, Separate Mastery & 90 Launch Skins',
+    title: 'Unrelated Logical Gear Sets, Launch Skins & Dual Weapon Mastery',
+    keyMessage: '90 Launch Skins unlock organically via Weapon Mastery OR auto-max Weapon Mastery upon purchase.',
     bullets: [
-      'Each of the 6 professions unlocks 15 progressive armor sets (Lv. 1 to Lv. 100+) gated by General Level, Weapon Mastery, and Defense Level.',
-      'True tactical specialization: every set explicitly boosts Attack (bleed, embers, piercing), Defense (block, reflect, anti-Miasma), or Hybrid play.',
-      'Weapon-accurate & Tier-accurate 3D renders: helms, pauldrons, shields, and signature weapons (e.g., Archer dual crossbows) transform visually at every tier.',
+      'Complete Visual/Logic Separation: equipping in-match gear alters numerical stats, affixes, and synergies only (never default 3D visuals), while 90 3D designs form Episode I’s independent Launch Skins.',
+      'Separate Weapon Mastery Track: isolated from Attack Type Level (Sword/Club/Axe/Distance/Magic) and Defense Level—preventing any bypass of core combat skill progression.',
+      'Dual-Path Symmetry: buying a weapon skin auto-masterizes its Weapon Mastery to Max Weapon Attack immediately; earning that Weapon Mastery organically unlocks that weapon’s skin for free.',
     ],
     image: GENERATED_ASSETS.relicLoot,
-    showcaseTitle: 'Visual Quality Tier Progression (Common Grey → Royal Gold)',
+    showcaseTitle: 'Episode I Launch Cosmetic Skins (Unrelated to Logical Gear Stats)',
     showcaseItems: [
       {
         label: 'Tier 1 · Grey',
-        sublabel: 'Rusted Forge (Lv. 1+)',
+        sublabel: 'Rusted Forge (Skin Line)',
         image: '/src/assets/images/axe_common_gris_1794866767001.jpg',
         accentHex: '#8C929A',
       },
       {
         label: 'Tier 2 · Green',
-        sublabel: 'Tempered Steel (Lv. 15+)',
+        sublabel: 'Tempered Steel (Skin Line)',
         image: '/src/assets/images/design_green_hammer_1794866345927.jpg',
         accentHex: '#4F9E68',
       },
       {
         label: 'Tier 3 · Blue',
-        sublabel: 'Astral Alchemy (Lv. 38+)',
+        sublabel: 'Astral Alchemy (Skin Line)',
         image: '/src/assets/images/blue_frost_knight_1794866405059.jpg',
         accentHex: '#3E82C7',
       },
       {
         label: 'Tier 4 · Purple',
-        sublabel: 'Cursed Relic (Lv. 64+)',
+        sublabel: 'Cursed Relic (Skin Line)',
         image: '/src/assets/images/archer_purple_dual_1794866401837.jpg',
         accentHex: '#9461C9',
       },
       {
         label: 'Tier 5 · Gold',
-        sublabel: 'Royal Vestige (Lv. 88+)',
+        sublabel: 'Royal Vestige (Skin Line)',
         image: '/src/assets/images/gold_titan_mace_1794866403815.jpg',
         accentHex: '#D4AF37',
       },
@@ -1251,11 +1374,11 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
     index: 9,
     code: '09 / 12',
     section: 'Pillar 5: PvPvE Ecosystem & Warrior HP Curve',
-    title: '4 PvE Difficulty Tiers, Warrior HP Curve & 35% Gold Cap',
-    keyMessage: 'Endgame relics require defeating guardians dynamically scaled at Lv_avg + 100.',
+    title: '4 PvE Difficulty Tiers, Warrior HP Curve & 50% Omni-Mastery Gold Cap',
+    keyMessage: 'Endgame relics scale Lv_avg + 100, and true Omni-Mastery Lv.100 elevates Gold drops to 50%.',
     bullets: [
       'Universal Warrior HP Curve: HP(Lv≤8) = 150 + (Lv-1)*5; HP(Lv≥9) = 185 + (Lv-8)*10 (Lv. 100 = 1,105 HP · Lv. 200 = 2,105 HP).',
-      '4 dynamic PvE tiers ranging from Marauders (0.45x HP) to the Black Bell Executioner (3.00x HP), with Gold Tier drops strictly capped at 35%.',
+      '4 dynamic PvE tiers up to Black Bell Executioner (3.00x HP): Gold Tier loot starts capped at 35% and unlocks up to 50% when all Attack Types, Magic & Defense reach Lv.100.',
       'Total Contribution EXP & Coronation: Kills, Assists, Squad Healing Magic (Druid/Wizard support), and Survival Time Alive all feed EXP and determine King / Captain / Colonel / Sergeant honors.',
     ],
     image: GENERATED_ASSETS.catacombsAltar,
@@ -1277,26 +1400,26 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
   {
     index: 11,
     code: '11 / 12',
-    section: 'UE5 Engineering & Anti-Cheat',
-    title: 'Authoritative Architecture for 200 Concurrent Warriors',
-    keyMessage: 'Locked 60+ FPS scalability, modular 3D gear, and competitive security.',
+    section: 'UE5 Engineering, Hitbox Integrity & Anti-Cheat',
+    title: 'Decoupled Skin Rendering & Server-Authoritative Combat Precision',
+    keyMessage: 'Skins alter visual meshes, materials & VFX only—preserving exact Hitboxes, Timings & i-Frames.',
     bullets: [
-      'Replication Graph (50–80m) paired with Modular Skeletal Meshes & Niagara GPU VFX to render 90 armor sets seamlessly.',
-      '100% Server Authority over Retroactive EXP Ledger payouts, Weapon Mastery, Defense Level mitigation, and loot drops.',
-      'Multi-layer Anti-Cheat: kernel memory protection, server-side anti-ESP occlusion culling, and <80ms auto-parry heuristic telemetry.',
+      'Strict Render-Layer Isolation: Cosmetic Slots swap only Skeletal Meshes, PBR materials, textures, and non-intrusive Niagara VFX trails.',
+      'Invariant Combat Frame Data: Canonical Hitboxes, Hurtboxes, swing arcs, active Parry windows, and Dodge i-Frames stay 100% locked for PvPvE integrity.',
+      'Replication Graph (50–80m) + Multi-Layer Anti-Cheat: kernel protection, server anti-ESP occlusion culling, and <80ms auto-parry telemetry.',
     ],
     image: GENERATED_ASSETS.siegeBridge,
   },
   {
     index: 12,
     code: '12 / 12',
-    section: 'Roadmap & Commercial Model',
-    title: 'Go-To-Market Plan & Ethical Zero Pay-to-Win Economy',
-    keyMessage: '100% fair competitive play driven strictly by skill, build craft, and teamwork.',
+    section: 'Live-Ops Monetization, Fair Matchmaking & Episode Scale',
+    title: 'Valdris Chronicle: Last Relic (Episode I) — Fair-Match Ethical Economy',
+    keyMessage: 'Power-weighted Matchmaking guarantees every 200-player lobby stays 100% Fair Match.',
     bullets: [
-      'Closed Beta milestone validating live balance telemetry across all 6 professions, 90 sets, and full 200-Warrior matches.',
-      'Seasonal Battle Pass & Storefront featuring cosmetic 3D armor skins, dual-crossbow finishes, shields, and Niagara Ether auras.',
-      'Ironclad Zero Pay-to-Win Pledge: zero Attack, Defense, Shield Block, or Magic Level advantages can ever be purchased.',
+      'Fair-Match Bracket Parity: Separate Weapon Mastery % (whether purchased via Skin or organic) and Omni-Lv.100 50% Loot status are weighted in MM_Index—zero unfair power mismatch inside any lobby.',
+      'Anti-Smurf Squad Anchor: Oath Mode queues anchor to the highest squadmate rating so maxed veterans & buyers match strictly against equivalent rivals.',
+      'Multi-Episode Scalability: Attack Type Level, Defense Level & 50% Gold Cap stay strictly combat-earned while direct Skins scale sustainably across Episode I and future Episodes.',
     ],
     image: GENERATED_ASSETS.throneDuel,
   },
@@ -1442,7 +1565,7 @@ export const BESTIARY_CREATURES: BestiaryCreature[] = [
     ],
     counterplayTip: 'Bait the triple combo inside wide crypt junctions; drop Seal of Bastion to seal side tunnels against third-party PvP squads.',
     weakness: 'Armor-Piercing Riposte & Guard Break (-25% Armor)',
-    guaranteedDrops: 'Drops Ossuary Key (unlocks 3-chest Vault: 49% Purple, 14% base Gold -> 35% cap w/ Mastery).',
+    guaranteedDrops: 'Drops Ossuary Key (unlocks 3-chest Vault: 49% Purple, 14% base Gold -> 35% base cap / 50% w/ Omni-Lv.100).',
   },
   {
     id: 'catacomb-wyrm',
@@ -1490,7 +1613,7 @@ export const BESTIARY_CREATURES: BestiaryCreature[] = [
     ],
     counterplayTip: 'Assign a high-Defense Club/Sword tank with a Tower Shield & Seal of Aegis while Druid supports with Seal of Restoration (+Team Healing EXP) and Wizards cast from ramparts.',
     weakness: 'Coordinated Squad Focus & Mastery +15%/+30% PvE Bonus',
-    guaranteedDrops: 'Direct Spoils on Kill: 1+ Cursed Relic + 22% Base Gold Tier (up to 35% Cap w/ Mastery) + Master Elixirs.',
+    guaranteedDrops: 'Direct Spoils on Kill: 1+ Cursed Relic + 22% Base Gold Tier (35% cap -> 50% w/ Omni-Lv.100 Mastery) + Master Elixirs.',
   },
 ];
 

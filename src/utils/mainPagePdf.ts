@@ -5,6 +5,7 @@ import {
   BALANCE_WEAPONS,
   BIOMES,
   CONTAINER_DROP_TABLE,
+  DECOUPLED_SYSTEM_PILLARS,
   EQUIPMENT_SETS,
   ETHER_SEALS,
   FICHA_TECNICA,
@@ -122,7 +123,7 @@ function drawPageChrome(doc: jsPDF, sectionHeader: string, pageNum: number) {
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(7.5);
   doc.setTextColor(156, 150, 139);
-  doc.text('Original IP Edition  ·  World of Valdris  ·  Unreal Engine 5', MARGIN_X, PAGE_H - 8.5);
+  doc.text('Dimpz Games  ·  Original IP Edition  ·  World of Valdris  ·  Unreal Engine 5', MARGIN_X, PAGE_H - 8.5);
   doc.text(`Page ${pageNum}`, PAGE_W - MARGIN_X, PAGE_H - 8.5, { align: 'right' });
 }
 
@@ -157,15 +158,18 @@ export async function exportMainPageToPdf(
   onProgress?.(0, totalSteps);
 
   // Preload visual assets used across pages
-  const [heroArt, biomesArt, siegeArt, catacombsArt, ...profThumbs] = await Promise.all([
-    loadCroppedJpeg(GENERATED_ASSETS.heroCitadel, 16 / 9, false),
-    loadCroppedJpeg(GENERATED_ASSETS.biomesVista, 16 / 9, false),
-    loadCroppedJpeg(GENERATED_ASSETS.siegeBridge, 16 / 9, false),
-    loadCroppedJpeg(GENERATED_ASSETS.catacombsAltar, 16 / 9, false),
-    ...PROFESSION_SET_LIST.map((p) =>
-      loadCroppedJpeg(PROFESSION_3D_RENDER_ASSETS[p.id], 4 / 3, true)
-    ),
-  ]);
+  const [heroArt, biomesArt, siegeArt, catacombsArt, gameLogoArt, studioLogoArt, ...profThumbs] =
+    await Promise.all([
+      loadCroppedJpeg(GENERATED_ASSETS.heroCitadel, 16 / 9, false),
+      loadCroppedJpeg(GENERATED_ASSETS.biomesVista, 16 / 9, false),
+      loadCroppedJpeg(GENERATED_ASSETS.siegeBridge, 16 / 9, false),
+      loadCroppedJpeg(GENERATED_ASSETS.catacombsAltar, 16 / 9, false),
+      loadCroppedJpeg(GENERATED_ASSETS.gameLogo, 4 / 3, false),
+      loadCroppedJpeg(GENERATED_ASSETS.studioLogo, 4 / 3, false),
+      ...PROFESSION_SET_LIST.map((p) =>
+        loadCroppedJpeg(PROFESSION_3D_RENDER_ASSETS[p.id], 4 / 3, true)
+      ),
+    ]);
   onProgress?.(2, totalSteps);
 
   const addNewPage = (headerLabel: string): number => {
@@ -182,7 +186,7 @@ export async function exportMainPageToPdf(
   let y = TOP_Y;
 
   // Hero visual banner
-  const heroH = 62;
+  const heroH = 56;
   doc.setFillColor(20, 20, 23);
   doc.setDrawColor(200, 155, 60);
   doc.setLineWidth(0.45);
@@ -191,42 +195,55 @@ export async function exportMainPageToPdf(
   if (heroArt) {
     doc.addImage(heroArt, 'JPEG', MARGIN_X + 0.6, y + 0.6, CONTENT_W - 1.2, heroH - 1.2);
     doc.setFillColor(11, 11, 13);
-    doc.setGState(doc.GState({ opacity: 0.72 }));
-    doc.rect(MARGIN_X + 0.6, y + 0.6, 114, heroH - 1.2, 'F');
+    doc.setGState(doc.GState({ opacity: 0.78 }));
+    doc.rect(MARGIN_X + 0.6, y + 0.6, 118, heroH - 1.2, 'F');
     doc.setGState(doc.GState({ opacity: 1 }));
   }
 
+  if (gameLogoArt) {
+    doc.setFillColor(12, 12, 15);
+    doc.setDrawColor(200, 155, 60);
+    doc.rect(MARGIN_X + 123, y + 5, 29, 22, 'FD');
+    doc.addImage(gameLogoArt, 'JPEG', MARGIN_X + 123.5, y + 5.5, 28, 21);
+  }
+  if (studioLogoArt) {
+    doc.setFillColor(12, 12, 15);
+    doc.setDrawColor(140, 126, 98);
+    doc.rect(MARGIN_X + 154.5, y + 5, 29, 22, 'FD');
+    doc.addImage(studioLogoArt, 'JPEG', MARGIN_X + 155, y + 5.5, 28, 21);
+  }
+
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(7.5);
+  doc.setFontSize(7.2);
   doc.setTextColor(200, 155, 60);
-  doc.text('ORIGINAL IP EDITION · 2026-11-16 · WORLD OF VALDRIS', MARGIN_X + 5, y + 10);
+  doc.text('DIMPZ GAMES  ·  ORIGINAL IP EDITION  ·  WORLD OF VALDRIS', MARGIN_X + 5, y + 9.5);
 
   doc.setFont('times', 'bold');
-  doc.setFontSize(26);
+  doc.setFontSize(24);
   doc.setTextColor(246, 239, 226);
-  doc.text('The Last Relic', MARGIN_X + 5, y + 21);
+  doc.text('The Last Relic', MARGIN_X + 5, y + 19.5);
 
   doc.setFont('helvetica', 'normal');
-  doc.setFontSize(8.8);
+  doc.setFontSize(8.4);
   doc.setTextColor(225, 220, 210);
   const heroDesc = doc.splitTextToSize(
     'Tactical TPS Battle Royale / Dark Medieval Action / PvPvE for 200 Players in Unreal Engine 5. Two hundred souls descend upon Valdris beneath The Abyssal Ash to claim The Iron Crown.',
-    104
+    108
   );
-  doc.text(heroDesc, MARGIN_X + 5, y + 29);
+  doc.text(heroDesc, MARGIN_X + 5, y + 26.5);
 
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(7.5);
+  doc.setFontSize(7.2);
   doc.setTextColor(200, 155, 60);
-  doc.text('Figure 1: Key Art — The Citadel of Valdris under The Abyssal Ash', MARGIN_X + 5, y + heroH - 4);
+  doc.text('Figure 1: Key Art & Official Dimpz Games / Title Emblems', MARGIN_X + 5, y + heroH - 3.5);
 
-  y += heroH + 5;
+  y += heroH + 4;
 
   // 4-Column Structural Strip
   const statStrip = [
     ['Match Scale', '200 Players'],
     ['5-Act Match Loop', '15–18 Minutes'],
-    ['Gold Tier Cap (Mastery)', '35% Maximum'],
+    ['Gold Cap (Mastery)', '35% -> 50% @ Lv.100'],
     ['Engine & Replication', 'UE5 · 50–80m'],
   ];
   const statW = (CONTENT_W - 9) / 4;
@@ -235,46 +252,46 @@ export async function exportMainPageToPdf(
     doc.setFillColor(20, 20, 23);
     doc.setDrawColor(48, 48, 56);
     doc.setLineWidth(0.25);
-    doc.rect(sx, y, statW, 14, 'FD');
+    doc.rect(sx, y, statW, 13, 'FD');
 
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(6.8);
     doc.setTextColor(156, 150, 139);
-    doc.text(label, sx + 3, y + 5);
+    doc.text(label, sx + 3, y + 4.6);
 
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(9.5);
+    doc.setFontSize(9.2);
     doc.setTextColor(idx === 2 ? 212 : 246, idx === 2 ? 175 : 239, idx === 2 ? 55 : 226);
-    doc.text(val, sx + 3, y + 11);
+    doc.text(val, sx + 3, y + 10.4);
   });
-  y += 20;
+  y += 17.5;
 
   // Work Identification Sheet
   y = drawSectionHeading(doc, y, 'Registry & Technical Specification', 'Work Identification Sheet');
   doc.setFillColor(20, 20, 23);
   doc.setDrawColor(48, 48, 56);
   const fichaStartY = y;
-  let fy = y + 4;
+  let fy = y + 3.6;
   FICHA_TECNICA.forEach((entry, i) => {
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(7.5);
+    doc.setFontSize(7.2);
     doc.setTextColor(156, 150, 139);
     doc.text(pdfSafe(entry.label), MARGIN_X + 4, fy);
 
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(8);
+    doc.setFontSize(7.6);
     doc.setTextColor(234, 230, 223);
     const valLines = doc.splitTextToSize(pdfSafe(entry.value), CONTENT_W - 44);
     doc.text(valLines, MARGIN_X + 40, fy);
-    fy += Math.max(5.5, valLines.length * 4 + 2);
+    fy += Math.max(4.9, valLines.length * 3.6 + 1.5);
     if (i < FICHA_TECNICA.length - 1) {
       doc.setDrawColor(36, 36, 42);
-      doc.line(MARGIN_X + 4, fy - 1.5, PAGE_W - MARGIN_X - 4, fy - 1.5);
+      doc.line(MARGIN_X + 4, fy - 1.2, PAGE_W - MARGIN_X - 4, fy - 1.2);
     }
   });
   doc.setDrawColor(48, 48, 56);
   doc.rect(MARGIN_X, fichaStartY, CONTENT_W, fy - fichaStartY + 1, 'D');
-  y = fy + 6;
+  y = fy + 5;
 
   // Section 01: Universe & Game Modes
   y = drawSectionHeading(
@@ -445,12 +462,12 @@ export async function exportMainPageToPdf(
   // ============================================================================
   // PAGE 3: WARRIOR PROGRESSION, 6 SPECIALIZATIONS, LOOT TIERS & DROP RATES
   // ============================================================================
-  y = addNewPage('03 · Dynamic Warrior, 6 Specializations & Loot Tiers');
+  y = addNewPage('03 · Decoupled Slots, Specializations & Loot Data');
   y = drawSectionHeading(
     doc,
     y,
-    '03 · Dynamic Progression & Combat Mastery',
-    'Base Warrior Identity & 6 Evolving Specializations'
+    '03 · Decoupled Progression & Combat Mastery',
+    'Base Warrior, Unrelated Stat Data Slots vs. Cosmetic Slots'
   );
 
   // Universal slots strip
@@ -517,7 +534,7 @@ export async function exportMainPageToPdf(
     doc,
     y,
     '5 Quality Tiers & Loot Economy',
-    'Grey Common -> Royal Gold (35% Strict Gold Cap)'
+    'Grey Common -> Royal Gold (35% Base · 50% Omni-Mastery Lv.100)'
   );
 
   const tierW = (CONTENT_W - 8) / 5;
@@ -593,7 +610,12 @@ export async function exportMainPageToPdf(
     subTitle: string
   ) => {
     y = addNewPage(headerText);
-    y = drawSectionHeading(doc, y, '03B · 90 Modular 3D Armor & Weapon Sets', subTitle);
+    y = drawSectionHeading(
+      doc,
+      y,
+      '03B · Logical Gear Sets (Stats) + 90 Episode I Launch Skins (Visual Only — Unrelated)',
+      subTitle
+    );
 
     profIds.forEach((pid) => {
       const profInfo = PROFESSION_SET_LIST.find((p) => p.id === pid);
@@ -686,15 +708,15 @@ export async function exportMainPageToPdf(
 
   renderProfessionBatch(
     ['sword-warrior', 'club-warrior', 'axe-warrior'],
-    '03B · 90 Armor Sets (Melee Specializations)',
-    'Sword Warrior, Club Warrior & Axe Warrior (45 Melee Sets)'
+    '03B · 45 Melee Logical Sets & Launch Skins',
+    'Sword, Club & Axe — Pure Stat Data Unlinked From Visual Skins'
   );
   onProgress?.(6, totalSteps);
 
   renderProfessionBatch(
     ['archer', 'wizard', 'druid'],
-    '03B · 90 Armor Sets (Ranged & Arcane)',
-    'Dual-Crossbow Archer (1/Hand), Wizard & Druid (45 Sets)'
+    '03B · 45 Ranged & Arcane Logical Sets & Launch Skins',
+    'Dual-Crossbow Archer (1/Hand), Wizard & Druid (Data vs. Visuals)'
   );
   onProgress?.(7, totalSteps);
 
@@ -863,24 +885,24 @@ export async function exportMainPageToPdf(
   MATH_FORMULAS.forEach((f) => {
     doc.setFillColor(18, 18, 21);
     doc.setDrawColor(46, 46, 54);
-    doc.rect(MARGIN_X, y, CONTENT_W, 12.2, 'FD');
+    doc.rect(MARGIN_X, y, CONTENT_W, 11.4, 'FD');
 
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(7);
+    doc.setFontSize(6.8);
     doc.setTextColor(246, 239, 226);
-    doc.text(pdfSafe(f.title), MARGIN_X + 3, y + 3.8);
+    doc.text(pdfSafe(f.title), MARGIN_X + 3, y + 3.5);
 
     doc.setFont('courier', 'bold');
-    doc.setFontSize(6.4);
+    doc.setFontSize(6.1);
     doc.setTextColor(200, 155, 60);
-    doc.text(pdfSafe(f.formula), MARGIN_X + 3, y + 7.4);
+    doc.text(pdfSafe(f.formula), MARGIN_X + 3, y + 6.9);
 
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(6);
+    doc.setFontSize(5.8);
     doc.setTextColor(172, 166, 156);
     const nLines = doc.splitTextToSize(pdfSafe(f.note), CONTENT_W - 6);
-    doc.text(nLines[0] ?? '', MARGIN_X + 3, y + 10.6);
-    y += 13.2;
+    doc.text(nLines[0] ?? '', MARGIN_X + 3, y + 10.1);
+    y += 12.2;
   });
 
   onProgress?.(9, totalSteps);
@@ -1016,12 +1038,55 @@ export async function exportMainPageToPdf(
   });
   y += 7;
 
-  // Section 08: UE5 Engineering & Anti-Cheat Pillars
+  // Page 9: Section 08 — Decoupled Progression, Combat Integrity, Live-Ops & UE5 Architecture
+  y = addNewPage('08 · Decoupled Gear, Combat Integrity & Live-Ops');
   y = drawSectionHeading(
     doc,
     y,
-    '08 · Unreal Engine 5 Architecture & Competitive Security',
-    'Replication Graph, Server Authority & Multi-Layer Anti-Cheat'
+    '08 · Decoupled Modular Architecture & Live-Ops (Episode I)',
+    'Logical Gear Data vs. Launch Cosmetic Skins — Zero Pay-to-Win'
+  );
+
+  DECOUPLED_SYSTEM_PILLARS.forEach((pillar) => {
+    doc.setFillColor(20, 20, 23);
+    doc.setDrawColor(84, 70, 42);
+    doc.rect(MARGIN_X, y, CONTENT_W, 53.5, 'FD');
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(7.1);
+    doc.setTextColor(200, 155, 60);
+    doc.text(pdfSafe(`${pillar.code}  ·  ${pillar.subtitle.toUpperCase()}`), MARGIN_X + 4, y + 5.2);
+
+    doc.setFont('times', 'bold');
+    doc.setFontSize(11);
+    doc.setTextColor(246, 239, 226);
+    doc.text(pdfSafe(pillar.title), MARGIN_X + 4, y + 10.8);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7);
+    doc.setTextColor(212, 206, 195);
+    const sumLines = doc.splitTextToSize(pdfSafe(pillar.summary), CONTENT_W - 8);
+    doc.text(sumLines.slice(0, 2), MARGIN_X + 4, y + 15.8);
+
+    let by = y + 23.5;
+    doc.setFontSize(6.5);
+    doc.setTextColor(184, 177, 166);
+    pillar.bullets.forEach((b) => {
+      const bLines = doc.splitTextToSize(`- ${pdfSafe(b)}`, CONTENT_W - 10);
+      const shown = bLines.slice(0, 2);
+      doc.text(shown, MARGIN_X + 5, by);
+      by += shown.length * 3.5 + 2.2;
+    });
+
+    y += 55.5;
+  });
+
+  y += 2;
+  y = drawSectionHeading(
+    doc,
+    y,
+    'Unreal Engine 5 Networking & Authoritative Security',
+    'Replication Graph, Canonical Hitboxes & Multi-Layer Anti-Cheat'
   );
 
   const pilW = (CONTENT_W - 4) / 2;

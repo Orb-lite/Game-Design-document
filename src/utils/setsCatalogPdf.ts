@@ -35,7 +35,7 @@ function drawCatalogChrome(
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(7.5);
   doc.setTextColor(200, 155, 60);
-  doc.text('THE LAST RELIC  |  MODULAR 3D SET DESIGNS CATALOG', MARGIN_X, 12.5);
+  doc.text('VALDRIS CHRONICLE: LAST RELIC  |  90 LAUNCH SKINS & UNRELATED LOGICAL DATA', MARGIN_X, 12.5);
 
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(156, 150, 139);
@@ -119,9 +119,9 @@ export async function exportSetsCatalogToPdf(
       doc.rect(artX, artY + artH + 2.5, artW, 20.5, 'FD');
 
       doc.setFont('helvetica', 'bold');
-      doc.setFontSize(6.4);
+      doc.setFontSize(6.1);
       doc.setTextColor(200, 155, 60);
-      doc.text('REQUIREMENTS & FOCUS', artX + 2.5, artY + artH + 7);
+      doc.text('DATA REQS (UNLINKED TO SKIN)', artX + 2.5, artY + artH + 7);
 
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(6.5);
@@ -150,7 +150,7 @@ export async function exportSetsCatalogToPdf(
       doc.setTextColor(200, 155, 60);
       doc.text(
         pdfSafe(
-          `SET #${String(set.setNumber).padStart(2, '0')}/15  ·  ${set.professionLabel.toUpperCase()}  ·  ${set.tierLabel.toUpperCase()}`
+          `LAUNCH SKIN #${String(set.setNumber).padStart(2, '0')}/15  ·  ${set.professionLabel.toUpperCase()}  ·  VISUAL LAYER`
         ),
         rx,
         cardY + 7.5
@@ -210,9 +210,13 @@ export async function exportSetsCatalogToPdf(
       iy += 13;
       // Set perk & tactical explanation
       doc.setFont('helvetica', 'bold');
-      doc.setFontSize(6.7);
+      doc.setFontSize(6.3);
       doc.setTextColor(212, 175, 55);
-      doc.text(pdfSafe(`Tactical Specialty: ${set.focusTarget}`), rx, iy + 1.5);
+      doc.text(
+        pdfSafe(`Logical Data & Dual Unlock (Organic 100% Weapon Mastery OR Store Auto-Max): ${set.focusTarget}`),
+        rx,
+        iy + 1.5
+      );
 
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(6.9);

@@ -4,12 +4,14 @@ import {
   BALANCE_RUNES,
   BALANCE_WEAPONS,
   BIOMES,
+  DECOUPLED_SYSTEM_PILLARS,
   EQUIPMENT_SETS,
   GENERATED_ASSETS,
   MATH_FORMULAS,
   PROFESSION_SET_LIST,
   UE5_PILLARS,
   computeDefenseStats,
+  computeMatchmakingBracket,
   getWarriorArchetype,
   type CombatSkillKey,
   type PlayerCombatProfile,
@@ -61,6 +63,7 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
   const selectedDefenseSet =
     EQUIPMENT_SETS.find((s) => s.id === selectedDefenseSetId) ?? EQUIPMENT_SETS[0];
   const activeArchetype = getWarriorArchetype(profile);
+  const matchmakingInfo = computeMatchmakingBracket(profile);
 
   const activeSkillLv = getMasteryLevel(profile, selectedWeapon.skillType);
 
@@ -86,8 +89,10 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
       : 185 + (pveEffectiveLv - 8) * 10;
   const armorMitigation = 100 / (100 + effectiveArmor);
 
+  const weaponMasteryFactor = 1 + (profile.weaponMasteryPct / 100) * 0.12;
   const rawWeaponPower =
-    selectedWeapon.attackLevel * (1 + activeSkillLv * 0.015) + profile.generalLevel * 0.35;
+    selectedWeapon.attackLevel * weaponMasteryFactor * (1 + activeSkillLv * 0.015) +
+    profile.generalLevel * 0.35;
   const netPvpWeaponDmg = rawWeaponPower * attackFactor * 0.6 * armorMitigation;
   const netRiposte =
     rawWeaponPower * 1.6 * 0.6 * (100 / (100 + effectiveArmor * 0.65));
@@ -416,6 +421,29 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
                   </div>
                 </div>
 
+                <div>
+                  <div className="flex justify-between">
+                    <label htmlFor="sim-weapon-mastery" className="text-[#D4CEC3]">
+                      Separate Weapon Mastery (Distinct from Attack Type &amp; Defense Lv)
+                    </label>
+                    <span className="font-mono-tabular font-semibold text-[#D4AF37]">
+                      {profile.weaponMasteryPct}% (×{weaponMasteryFactor.toFixed(2)} Base Atk
+                      {profile.weaponMasteryPct >= 100 ? ' · Skin Unlocked' : ''})
+                    </span>
+                  </div>
+                  <input
+                    id="sim-weapon-mastery"
+                    type="range"
+                    min={0}
+                    max={100}
+                    value={profile.weaponMasteryPct}
+                    onChange={(e) =>
+                      onChangeProfile({ ...profile, weaponMasteryPct: Number(e.target.value) })
+                    }
+                    className="mt-1.5 w-full accent-[#D4AF37]"
+                  />
+                </div>
+
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                   <div>
                     <label htmlFor="sim-factor" className="block text-[#D4CEC3]">
@@ -530,9 +558,26 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
                 </div>
               </dl>
 
-              {/* Cross-Mastery Comparison */}
+              {/* Cross-Mastery Comparison & Fair-Match Matchmaking Bracket */}
               <div className="mt-5 border-t border-white/10 pt-4">
-                <p className="text-[11px] font-medium text-[#9C968B] uppercase">
+                <div className="rounded-md border border-[#C89B3C]/30 bg-[#0F0F12] p-3.5 text-xs">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <span className="font-semibold text-[#C89B3C]">
+                      Fair-Match Matchmaking · Index {matchmakingInfo.combatPowerIndex}
+                    </span>
+                    <span className="font-mono-tabular text-[11px] text-[#4F9E68]">
+                      Lobby Cap Parity: {matchmakingInfo.goldCapParity}% Gold
+                    </span>
+                  </div>
+                  <p className="mt-1 font-semibold text-[#F6EFE2]">
+                    {matchmakingInfo.bracketLabel}
+                  </p>
+                  <p className="mt-1 text-[11px] leading-relaxed text-[#9C968B]">
+                    {matchmakingInfo.queueParityNote}
+                  </p>
+                </div>
+
+                <p className="mt-4 text-[11px] font-medium text-[#9C968B] uppercase">
                   Cross-Mastery Output (vs {selectedDefenseSet.name}) · EXP{' '}
                   {retroExp.toLocaleString('en-US')}
                 </p>
@@ -834,26 +879,67 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
             </div>
           </div>
 
-          {/* Section 08: UE5 Engineering & Anti-Cheat */}
-          <div>
-            <p className="text-xs tracking-widest text-[#9C968B] uppercase">
-              08 · Unreal Engine 5 Architecture, Networking (200 Players) &amp; Anti-Cheat
-            </p>
-            <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2">
-              {UE5_PILLARS.map((pillar, idx) => (
-                <article
-                  key={pillar.title}
-                  className="rounded-lg border border-white/10 bg-[#141417] p-6"
-                >
-                  <p className="font-mono-tabular text-xs text-[#C89B3C]">0{idx + 1}</p>
-                  <h3 className="font-display mt-2 text-lg font-semibold text-[#F6EFE2]">
-                    {pillar.title}
-                  </h3>
-                  <p className="mt-2.5 text-sm leading-relaxed text-[#B8B1A6]">
-                    {pillar.detail}
-                  </p>
-                </article>
-              ))}
+          {/* Section 08: Decoupled Architecture, UE5 Networking & Ethical Live-Ops */}
+          <div className="space-y-10">
+            <div>
+              <p className="text-xs tracking-widest text-[#C89B3C] uppercase">
+                08 · Decoupled Equipment, Combat Frame Integrity &amp; Live-Ops (Episode I)
+              </p>
+              <h2 className="font-display mt-2 text-2xl font-semibold text-[#F6EFE2] lg:text-3xl">
+                Logical Gear Data vs. Cosmetic Skin Layer — Zero Pay-to-Win Architecture
+              </h2>
+              <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-3">
+                {DECOUPLED_SYSTEM_PILLARS.map((item) => (
+                  <article
+                    key={item.id}
+                    className="flex flex-col justify-between rounded-lg border border-[#C89B3C]/25 bg-[#141417] p-6"
+                  >
+                    <div>
+                      <p className="font-mono-tabular text-[11px] font-semibold text-[#C89B3C]">
+                        {item.code}
+                      </p>
+                      <h3 className="font-display mt-1.5 text-lg font-semibold text-[#F6EFE2]">
+                        {item.title}
+                      </h3>
+                      <p className="mt-1 text-xs font-medium text-[#D4AF37]">{item.subtitle}</p>
+                      <p className="mt-3 text-xs leading-relaxed text-[#D4CEC3]">{item.summary}</p>
+                      <ul className="mt-4 space-y-2 border-t border-white/10 pt-4 text-xs leading-relaxed text-[#B8B1A6]">
+                        {item.bullets.map((b) => (
+                          <li key={b} className="flex items-start gap-2">
+                            <span
+                              className="mt-1.5 h-1 w-1 shrink-0 bg-[#C89B3C]"
+                              aria-hidden="true"
+                            />
+                            <span>{b}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <p className="text-xs tracking-widest text-[#9C968B] uppercase">
+                Unreal Engine 5 Architecture, Networking (200 Players) &amp; Anti-Cheat
+              </p>
+              <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+                {UE5_PILLARS.map((pillar, idx) => (
+                  <article
+                    key={pillar.title}
+                    className="rounded-lg border border-white/10 bg-[#141417] p-6"
+                  >
+                    <p className="font-mono-tabular text-xs text-[#C89B3C]">0{idx + 1}</p>
+                    <h3 className="font-display mt-2 text-lg font-semibold text-[#F6EFE2]">
+                      {pillar.title}
+                    </h3>
+                    <p className="mt-2.5 text-sm leading-relaxed text-[#B8B1A6]">
+                      {pillar.detail}
+                    </p>
+                  </article>
+                ))}
+              </div>
             </div>
           </div>
         </div>

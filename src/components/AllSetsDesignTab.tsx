@@ -109,7 +109,7 @@ function SetDesignCard({ set }: { set: EquipmentSetSpec }) {
               aria-hidden="true"
             />
             <span className="font-mono-tabular text-[11px] font-semibold text-[#C89B3C]">
-              #{String(set.setNumber).padStart(2, '0')}/15
+              SKIN #{String(set.setNumber).padStart(2, '0')}/15
             </span>
             <span className="truncate text-[11px] text-[#B8B1A6]">{set.professionLabel}</span>
           </div>
@@ -130,7 +130,7 @@ function SetDesignCard({ set }: { set: EquipmentSetSpec }) {
         <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#09090C]">
           <img
             src={artworkUrl}
-            alt={`${set.name} (${set.professionLabel}) — ${set.visualDesignNote}`}
+            alt={`${set.name} (${set.professionLabel}) Launch Cosmetic Skin — ${set.visualDesignNote}`}
             loading="lazy"
             referrerPolicy="no-referrer"
             className="h-full w-full object-cover object-top"
@@ -141,10 +141,10 @@ function SetDesignCard({ set }: { set: EquipmentSetSpec }) {
           />
           <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 px-3.5 pb-2.5 text-[11px]">
             <span className="font-semibold" style={{ color: set.tierHex }}>
-              {set.tierLabel}
+              Cosmetic Skin · Zero Stat Lock
             </span>
             <span className="font-mono-tabular text-[#F6EFE2]">
-              Req Lv.{set.minGeneralLevel}
+              Visual Mesh Only
             </span>
           </div>
         </div>
@@ -153,12 +153,18 @@ function SetDesignCard({ set }: { set: EquipmentSetSpec }) {
         <div className="p-4">
           <h3 className="font-display text-lg font-semibold text-[#F6EFE2]">{set.name}</h3>
           <p className="mt-1 text-[11px] font-semibold text-[#C89B3C]">
-            Material Finish: {styleProfile.materialLabel}
+            Skin Material Finish: {styleProfile.materialLabel}
           </p>
           <p className="mt-2 text-xs leading-relaxed text-[#D4CEC3]">{set.visualDesignNote}</p>
 
-          {/* Pieces Breakdown */}
+          {/* Logical Data Reference (Unrelated to Cosmetic Skin) */}
           <dl className="mt-3.5 space-y-1.5 rounded-md border border-white/10 bg-[#0F0F12] p-3 text-[11px]">
+            <div className="mb-1.5 flex items-center justify-between border-b border-white/10 pb-1 text-[10px]">
+              <span className="font-semibold uppercase tracking-wider text-[#9C968B]">
+                Unrelated Logical Stat Data ({set.tierLabel})
+              </span>
+              <span className="font-mono-tabular text-[#D4AF37]">Zero Skin Coupling</span>
+            </div>
             <div className="flex items-start justify-between gap-2">
               <dt className="shrink-0 text-[#9C968B]">Weapon</dt>
               <dd className="text-right font-medium text-[#EAE6DF]">
@@ -192,7 +198,7 @@ function SetDesignCard({ set }: { set: EquipmentSetSpec }) {
             <p className="mt-1 text-xs leading-relaxed text-[#B8B1A6]">{set.focusAdvantage}</p>
             <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2 border-t border-white/10 pt-2 text-[10px] text-[#9C968B]">
               <span>
-                Req: Lv.{set.minGeneralLevel} · {set.attackSkillLabel} {set.minAttackMastery} ·
+                Data Req: Lv.{set.minGeneralLevel} · {set.attackSkillLabel} {set.minAttackMastery} ·
                 Def Lv.{set.minDefenseLevel}
               </span>
               <span className="font-mono-tabular text-[#EAE6DF]">
@@ -275,15 +281,21 @@ export function AllSetsDesignTab() {
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <p className="text-xs tracking-widest text-[#C89B3C] uppercase">
-                Complete Modular Armory · 6 Professions × 15 Tiers = 90 Sets
+                Episode I Launch Cosmetic Catalog · 6 Professions × 15 Skins = 90 Visual Designs
               </p>
               <h1 className="font-display mt-2 text-3xl font-bold text-[#F6EFE2] text-balance lg:text-4xl">
-                All 90 Armor &amp; Weapon Set Designs
+                90 Launch Cosmetic Skins (Dual Unlock · Unrelated to Gear Data)
               </h1>
               <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#B8B1A6]">
-                Every progressive set from Level 1 to Level 100+ unfolded with its unique 3D
-                render, craftsmanship material notes, Attack/Defense stats, Shield Block %, and
-                direct download options (.jpg artwork and A4 .pdf spec sheets).
+                Equipped match gear alters{' '}
+                <strong className="text-[#EAE6DF]">Logical Stats &amp; Build Data only</strong>.
+                All 90 3D designs form Episode I&apos;s{' '}
+                <strong className="text-[#EAE6DF]">Launch Cosmetic Skins</strong> with a{' '}
+                <strong className="text-[#EAE6DF]">Separate Weapon Mastery Track</strong> (isolated
+                from Attack Type Level &amp; Defense Level): earning organic Weapon Mastery unlocks
+                that weapon&apos;s Skin for free, while direct Skin purchase immediately masterizes
+                that weapon&apos;s Separate Mastery to its max attack tier without touching Attack
+                Type or Defense Level.
               </p>
             </div>
 
@@ -294,14 +306,14 @@ export function AllSetsDesignTab() {
                 onClick={() =>
                   handleDownloadCatalogPdf(
                     EQUIPMENT_SETS,
-                    'Complete 90-Set Visual Catalog',
-                    'The_Last_Relic_All_90_Set_Designs_EN.pdf'
+                    'Episode I Launch Cosmetic Skins Catalog (90 Designs)',
+                    'The_Last_Relic_90_Launch_Cosmetic_Skins_EN.pdf'
                   )
                 }
                 className="inline-flex items-center gap-2 rounded-md bg-[#C89B3C] px-4 py-2.5 text-xs font-semibold text-[#0B0B0D] transition-colors hover:bg-[#D9AC4A] disabled:opacity-60"
               >
                 <FileText className="h-4 w-4" aria-hidden="true" />
-                <span>{catalogPdfProgress ?? 'Download All 90 Sets Catalog (PDF)'}</span>
+                <span>{catalogPdfProgress ?? 'Download All 90 Skins Catalog (PDF)'}</span>
               </button>
 
               {filteredSets.length !== EQUIPMENT_SETS.length && filteredSets.length > 0 && (

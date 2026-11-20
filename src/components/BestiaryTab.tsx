@@ -95,8 +95,8 @@ export function BestiaryTab({ onOpenBiomes }: BestiaryTabProps) {
               <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#B8B1A6]">
                 Every monster and boss in The Last Relic scales dynamically against the lobby&apos;s
                 average level (<span className="font-mono-tabular text-[#EAE6DF]">Lv_avg + 100</span>)
-                and squad size, feeding the Retroactive Damage Ledger and the strict 35% Gold Tier
-                drop cap.
+                and squad size, feeding the Retroactive Damage Ledger and the Gold Tier drop cap
+                (35% base, rising to 50% at All Attack Types, Magic &amp; Defense Lv. 100+).
               </p>
             </div>
 
@@ -394,7 +394,8 @@ export function BestiaryTab({ onOpenBiomes }: BestiaryTabProps) {
             <p>
               <span className="font-semibold text-[#F6EFE2]">Mastery PvE Advantage:</span>{' '}
               Warriors reaching General Lv.100 deal +15% PvE damage (+30% at Lv.200) and scale
-              Tier III–IV Gold drop chances up to the strict 35% cap.
+              Tier III–IV Gold drop chances up to 35% base cap—rising to 50% upon reaching Lv.100
+              in all Attack Types, Magic, and Defense.
             </p>
           </div>
           <span className="inline-flex items-center gap-1.5 shrink-0 font-mono-tabular text-[#C89B3C]">

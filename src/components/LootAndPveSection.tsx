@@ -11,7 +11,9 @@ import {
   QUALITY_TIERS,
   UNIVERSAL_SLOTS,
   computeDefenseStats,
+  getGoldLootCapPct,
   getWarriorArchetype,
+  hasOmniMastery100,
   type CombatSkillKey,
   type PlayerCombatProfile,
   type QualityTierKey,
@@ -95,9 +97,13 @@ export function LootAndPveSection({
   const activeArchetype = getWarriorArchetype(profile);
   const masteryRank = Math.floor(profile.generalLevel / 100);
   const pveDamageBonus = masteryRank * 15;
+  const omniMasteryUnlocked = hasOmniMastery100(profile);
+  const activeGoldCap = getGoldLootCapPct(profile);
   const rawBoostedGold =
-    activeContainer.dorado > 0 ? activeContainer.dorado + masteryRank * 4 : 0;
-  const effectiveGoldChance = Math.min(35, rawBoostedGold);
+    activeContainer.dorado > 0
+      ? activeContainer.dorado + masteryRank * 4 + (omniMasteryUnlocked ? 24 : 0)
+      : 0;
+  const effectiveGoldChance = Math.min(activeGoldCap, rawBoostedGold);
   const goldDelta = effectiveGoldChance - activeContainer.dorado;
   const effectiveMorado = Math.max(0, activeContainer.morado - goldDelta);
 
@@ -649,6 +655,67 @@ export function LootAndPveSection({
                   className="mt-1.5 w-full accent-[#3E82C7]"
                 />
               </div>
+
+              <div className="sm:col-span-2 rounded-md border border-[#C89B3C]/30 bg-[#0F0F12] p-3.5">
+                <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+                  <label htmlFor="prof-weapon-mastery" className="font-semibold text-[#F6EFE2]">
+                    Separate Weapon Mastery (Isolated from Attack Type &amp; Defense Lv)
+                  </label>
+                  <span
+                    className={`font-mono-tabular font-semibold ${
+                      profile.weaponMasteryPct >= 100 ? 'text-[#4F9E68]' : 'text-[#C89B3C]'
+                    }`}
+                  >
+                    {profile.weaponMasteryPct}%{' '}
+                    {profile.weaponMasteryPct >= 100
+                      ? '· MAX ATTACK · SKIN UNLOCKED'
+                      : '· In Progress'}
+                  </span>
+                </div>
+                <input
+                  id="prof-weapon-mastery"
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={profile.weaponMasteryPct}
+                  onChange={(e) =>
+                    onChangeProfile({ ...profile, weaponMasteryPct: Number(e.target.value) })
+                  }
+                  className="mt-2 w-full accent-[#C89B3C]"
+                />
+                <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2 text-[11px] text-[#B8B1A6]">
+                  <span>
+                    Organic 100% mastery unlocks the Weapon Skin for free; Store purchase
+                    auto-maxes this separate track without touching Attack Type or Defense Level.
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        onChangeProfile({
+                          ...profile,
+                          weaponMasteryPct: Math.min(100, profile.weaponMasteryPct + 25),
+                        })
+                      }
+                      className="rounded border border-white/15 bg-white/[0.04] px-2.5 py-1 text-[11px] font-medium text-[#EAE6DF] hover:bg-white/[0.09]"
+                    >
+                      +25% Organic Mastery
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        onChangeProfile({
+                          ...profile,
+                          weaponMasteryPct: 100,
+                        })
+                      }
+                      className="rounded border border-[#C89B3C]/50 bg-[#C89B3C]/15 px-2.5 py-1 text-[11px] font-semibold text-[#F6EFE2] hover:bg-[#C89B3C]/25"
+                    >
+                      Buy Skin (Auto-Max Weapon Mastery Only)
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Live Loot Priority Ranking */}
@@ -705,15 +772,16 @@ export function LootAndPveSection({
             <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
               <div>
                 <p className="text-xs tracking-wider text-[#9C968B] uppercase">
-                  Complete Valdris Armory · 90 Sets (15 per Profession · Lv. 1 to Lv. 100+)
+                  Decoupled Data &amp; Visual Catalog · 90 Sets (Stats) + 90 Launch Skins (Visual)
                 </p>
                 <h3 className="font-display mt-1 text-2xl font-semibold text-[#F6EFE2]">
-                  15 Sets per Profession with Attack/Defense Perks &amp; 3D Renders
+                  Logical Stat Sets &amp; Unrelated Episode I Launch Cosmetic Skins
                 </h3>
                 <p className="mt-1 text-xs text-[#9C968B]">
-                  Every profession has 15 progressive armor sets (Common to Gold) tailored to boost
-                  specific attack styles or defensive strategies, complete with distinct high-res 3D
-                  weapon/armor renders and real mitigation math.
+                  In-match looted Sets modify combat stats, affixes, and build synergies only—never
+                  altering default 3D visuals. All 90 3D designs shown below serve independently as
+                  Valdris&apos;s first visible Launch Cosmetic Skins inside Cosmetic Transmog Slots
+                  (completely unrelated to equipped gear stats).
                 </p>
               </div>
               <div className="font-mono-tabular text-xs text-[#C89B3C]">
@@ -1103,7 +1171,7 @@ export function LootAndPveSection({
           {/* Universal Character Slots */}
           <div className="rounded-lg border border-white/10 bg-[#141417] p-6 lg:col-span-5">
             <h3 className="font-display text-lg font-semibold text-[#F6EFE2]">
-              Universal Warrior Slots
+              Decoupled Warrior Slots (Data vs. Cosmetics)
             </h3>
             <dl className="mt-4 divide-y divide-white/[0.08]">
               {UNIVERSAL_SLOTS.map((item) => (
@@ -1174,14 +1242,70 @@ export function LootAndPveSection({
           <div className="flex flex-col justify-between rounded-lg border border-white/10 bg-[#141417] p-6 lg:col-span-5">
             <div>
               <h3 className="font-display text-lg font-semibold text-[#F6EFE2]">
-                Loot Simulator &amp; Mastery Cap (35% Max)
+                Loot Simulator &amp; Omni-Mastery Cap (35% → 50%)
               </h3>
               <p className="mt-1 text-xs leading-relaxed text-[#9C968B]">
-                Every 100 General Levels unlocks a Mastery rank (+15% PvE damage), while Gold Tier
-                drop rate stays hard-capped at 35% and evaluates affinity with your active build.
+                Base Gold Tier drop rate caps at 35%, expanding to{' '}
+                <strong className="text-[#D4AF37]">50%</strong> once all Attack Types (Sword, Club,
+                Axe, Distance), Magic, and Defense organically reach Lv. 100+.
               </p>
 
-              <div className="mt-5 space-y-4">
+              <div className="mt-4 rounded-md border border-white/10 bg-[#0F0F12] p-3 text-[11px]">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="font-semibold text-[#EAE6DF]">
+                    All Attack, Magic &amp; Defense ≥ Lv. 100
+                  </span>
+                  <span
+                    className={`font-mono-tabular font-semibold ${
+                      omniMasteryUnlocked ? 'text-[#4F9E68]' : 'text-[#C89B3C]'
+                    }`}
+                  >
+                    {omniMasteryUnlocked ? 'UNLOCKED · 50% CAP' : 'LOCKED · 35% BASE CAP'}
+                  </span>
+                </div>
+                <div className="mt-2 grid grid-cols-3 gap-1.5 font-mono-tabular text-[10px]">
+                  {[
+                    ['Sword', profile.swordLevel],
+                    ['Club', profile.clubLevel],
+                    ['Axe', profile.axeLevel],
+                    ['Dist.', profile.distanceLevel],
+                    ['Magic', profile.magicLevel],
+                    ['Def.', profile.defenseLevel],
+                  ].map(([lbl, val]) => (
+                    <span
+                      key={String(lbl)}
+                      className={`rounded px-1.5 py-0.5 ${
+                        Number(val) >= 100
+                          ? 'bg-[#4F9E68]/15 text-[#7AD696]'
+                          : 'bg-white/[0.04] text-[#9C968B]'
+                      }`}
+                    >
+                      {lbl} {val}/100
+                    </span>
+                  ))}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    onChangeProfile({
+                      ...profile,
+                      generalLevel: Math.max(100, profile.generalLevel),
+                      swordLevel: 100,
+                      clubLevel: 100,
+                      axeLevel: 100,
+                      distanceLevel: 100,
+                      magicLevel: 100,
+                      defenseLevel: 100,
+                    });
+                    setSimulatedDrop(null);
+                  }}
+                  className="mt-2.5 w-full rounded border border-[#C89B3C]/45 bg-[#C89B3C]/10 px-2.5 py-1 text-[11px] font-semibold text-[#F6EFE2] hover:bg-[#C89B3C]/20"
+                >
+                  Simulate All Attack, Magic &amp; Defense @ Lv. 100 (Unlock 50% Cap)
+                </button>
+              </div>
+
+              <div className="mt-4 space-y-4">
                 <div>
                   <div className="flex items-center justify-between text-xs">
                     <label htmlFor="mastery-level-slider" className="text-[#D4CEC3]">
@@ -1221,7 +1345,7 @@ export function LootAndPveSection({
                     <span className="text-[#9C968B]">Gold Tier Chance</span>
                     <p className="font-mono-tabular mt-0.5 font-semibold text-[#D4AF37]">
                       {effectiveGoldChance}%{' '}
-                      <span className="font-normal text-[#9C968B]">(35% Cap)</span>
+                      <span className="font-normal text-[#9C968B]">({activeGoldCap}% Cap)</span>
                     </p>
                   </div>
                 </div>

@@ -1,5 +1,5 @@
 import { jsPDF } from 'jspdf';
-import type { PitchSlide } from '../data/gddData';
+import { GENERATED_ASSETS, type PitchSlide } from '../data/gddData';
 
 interface LoadedImageResult {
   dataUrl: string;
@@ -76,11 +76,11 @@ function drawSlideChrome(doc: jsPDF, W: number, H: number, footerRight: string) 
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(8);
   doc.setTextColor(200, 155, 60);
-  doc.text('THE LAST RELIC', 14, H - 9.5);
+  doc.text('VALDRIS CHRONICLE: LAST RELIC', 14, H - 9.5);
 
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(156, 150, 139);
-  doc.text('Original IP Edition · Universe of Valdris', 44, H - 9.5);
+  doc.text('Dimpz Games · Original IP Edition · World of Valdris', 74, H - 9.5);
   doc.text(footerRight, W - 14, H - 9.5, { align: 'right' });
 }
 
@@ -105,13 +105,17 @@ export async function exportPitchDeckToPdf(
   doc.setFillColor(11, 11, 13);
   doc.rect(0, 0, W, H, 'F');
 
-  const coverImg = await loadCroppedJpeg(coverImageSrc, 16 / 9, false);
+  const [coverImg, gameLogoImg, studioLogoImg] = await Promise.all([
+    loadCroppedJpeg(coverImageSrc, 16 / 9, false),
+    loadCroppedJpeg(GENERATED_ASSETS.gameLogo, 4 / 3, false),
+    loadCroppedJpeg(GENERATED_ASSETS.studioLogo, 4 / 3, false),
+  ]);
   if (coverImg) {
     doc.addImage(coverImg.dataUrl, 'JPEG', 12, 12, W - 24, H - 24);
     // Dark editorial scrim across left & bottom for crisp legibility
     doc.setFillColor(11, 11, 13);
-    doc.setGState(doc.GState({ opacity: 0.72 }));
-    doc.rect(12, 12, 168, H - 24, 'F');
+    doc.setGState(doc.GState({ opacity: 0.78 }));
+    doc.rect(12, 12, 178, H - 24, 'F');
     doc.setGState(doc.GState({ opacity: 1 }));
   }
 
@@ -119,10 +123,25 @@ export async function exportPitchDeckToPdf(
   doc.setLineWidth(0.8);
   doc.rect(12, 12, W - 24, H - 24);
 
+  if (gameLogoImg) {
+    doc.setFillColor(12, 12, 15);
+    doc.setDrawColor(200, 155, 60);
+    doc.setLineWidth(0.5);
+    doc.rect(200, 22, 74, 55.5, 'FD');
+    doc.addImage(gameLogoImg.dataUrl, 'JPEG', 201, 23, 72, 53.5);
+  }
+  if (studioLogoImg) {
+    doc.setFillColor(12, 12, 15);
+    doc.setDrawColor(90, 82, 68);
+    doc.setLineWidth(0.45);
+    doc.rect(200, 86, 74, 55.5, 'FD');
+    doc.addImage(studioLogoImg.dataUrl, 'JPEG', 201, 87, 72, 53.5);
+  }
+
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(10);
   doc.setTextColor(200, 155, 60);
-  doc.text('EXECUTIVE COMMERCIAL PITCH DECK', 22, 34);
+  doc.text('DIMPZ GAMES · EXECUTIVE COMMERCIAL PITCH DECK', 22, 34);
 
   doc.setFont('times', 'bold');
   doc.setFontSize(40);

@@ -36,6 +36,7 @@ export default function App() {
     distanceLevel: 48,
     magicLevel: 65,
     defenseLevel: 60,
+    weaponMasteryPct: 75,
     swordXp: 40,
     clubXp: 15,
     axeXp: 25,
@@ -154,7 +155,7 @@ export default function App() {
 
   const tabDefinitions: { id: MainViewTab; label: string }[] = [
     { id: 'overview', label: 'Master Document' },
-    { id: 'sets', label: '90 Set Designs' },
+    { id: 'sets', label: '90 Launch Skins' },
     { id: 'biomes', label: 'Biomes' },
     { id: 'bestiary', label: 'Bestiary' },
   ];
@@ -164,13 +165,21 @@ export default function App() {
       {/* Top Bar Contract: 3 zones separated by gap-8 */}
       <header className="sticky top-0 z-40 border-b border-white/10 bg-[#0B0B0D]/95 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-3.5 md:gap-8">
-          {/* Zone 1: Single text element wordmark */}
+          {/* Zone 1: Brand mark + wordmark */}
           <button
             type="button"
             onClick={() => switchTab('overview')}
-            className="font-display text-left text-lg font-semibold tracking-tight text-[#F6EFE2] whitespace-nowrap shrink-0"
+            className="flex items-center gap-2.5 text-left whitespace-nowrap shrink-0"
           >
-            The Last Relic
+            <img
+              src={GENERATED_ASSETS.gameLogo}
+              alt="Valdris Chronicle: Last Relic Episode I emblem"
+              referrerPolicy="no-referrer"
+              className="h-8 w-11 rounded border border-[#C89B3C]/40 bg-[#08080A] object-cover"
+            />
+            <span className="font-display text-lg font-semibold tracking-tight text-[#F6EFE2]">
+              The Last Relic
+            </span>
           </button>
 
           {/* Zone 2: Top-Level Interactive View Tabs */}
@@ -360,7 +369,7 @@ export default function App() {
               <div>
                 <dt className="text-xs text-[#9C968B]">Gold Tier Cap (Mastery)</dt>
                 <dd className="font-mono-tabular mt-1 text-2xl font-semibold text-[#D4AF37]">
-                  35% Maximum
+                  35% Base · 50% All Lv.100
                 </dd>
               </div>
               <div>
@@ -393,12 +402,43 @@ export default function App() {
                   ))}
                 </dl>
 
-                <p className="mt-6 border-t border-white/10 pt-4 text-xs leading-relaxed text-[#B8B1A6]">
+                {/* Official IP & Studio Logos Lockup */}
+                <div className="mt-6 grid grid-cols-1 gap-3 border-t border-white/10 pt-5 sm:grid-cols-2">
+                  <figure className="overflow-hidden rounded-lg border border-white/10 bg-[#0B0B0D]">
+                    <div className="aspect-[4/3] w-full overflow-hidden">
+                      <img
+                        src={GENERATED_ASSETS.gameLogo}
+                        alt="Valdris Chronicle: Last Relic (Episode I) Official Game Logo"
+                        referrerPolicy="no-referrer"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                    <figcaption className="border-t border-white/10 px-3 py-2 text-[11px] font-medium text-[#EAE6DF]">
+                      Official Title Crest · Valdris Chronicle: Last Relic (Episode I)
+                    </figcaption>
+                  </figure>
+                  <figure className="overflow-hidden rounded-lg border border-white/10 bg-[#0B0B0D]">
+                    <div className="aspect-[4/3] w-full overflow-hidden">
+                      <img
+                        src={GENERATED_ASSETS.studioLogo}
+                        alt="Dimpz Games Official Studio Emblem"
+                        referrerPolicy="no-referrer"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                    <figcaption className="border-t border-white/10 px-3 py-2 text-[11px] font-medium text-[#C89B3C]">
+                      Studio Emblem · Dimpz Games
+                    </figcaption>
+                  </figure>
+                </div>
+
+                <p className="mt-5 border-t border-white/10 pt-4 text-xs leading-relaxed text-[#B8B1A6]">
                   All original gameplay systems, the continent of Valdris, The Abyssal Ash, the
                   5-Act tactical loop, 5 Quality Tiers, 8 Ether Seals, PvE monster ecosystem, 4
                   strategic biomes, deterministic server math, multi-layer anti-cheat defense, and
                   attached Commercial Pitch Deck constitute the original work{' '}
-                  <span className="text-[#F6EFE2]">The Last Relic</span>.
+                  <span className="text-[#F6EFE2]">The Last Relic</span> by{' '}
+                  <span className="font-semibold text-[#C89B3C]">Dimpz Games</span>.
                 </p>
               </div>
 
@@ -490,7 +530,7 @@ export default function App() {
         {/* Section 02: 5-Act Match Cycle */}
         <MatchCycleSection />
 
-        {/* Section 03 & 05: Loot Tiers, Mastery 35% Cap Simulator & PvE Difficulty */}
+        {/* Section 03 & 05: Loot Tiers, Mastery 35% -> 50% Cap Simulator & PvE Difficulty */}
         <LootAndPveSection
           profile={playerProfile}
           onChangeProfile={setPlayerProfile}
@@ -638,10 +678,20 @@ export default function App() {
 
       <footer className="border-t border-white/10 py-10">
         <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-4 px-6 text-xs text-[#9C968B] sm:flex-row sm:items-center">
-          <div>
-            <span className="font-display font-semibold text-[#EAE6DF]">The Last Relic</span>
-            <span className="mx-2" aria-hidden="true">·</span>
-            <span>Original IP Edition · World of Valdris · 2026-11-16</span>
+          <div className="flex items-center gap-3">
+            <img
+              src={GENERATED_ASSETS.studioLogo}
+              alt="Dimpz Games Studio Emblem"
+              referrerPolicy="no-referrer"
+              className="h-7 w-10 rounded border border-white/15 bg-[#08080A] object-cover"
+            />
+            <div>
+              <span className="font-display font-semibold text-[#EAE6DF]">The Last Relic</span>
+              <span className="mx-2" aria-hidden="true">·</span>
+              <span className="font-semibold text-[#C89B3C]">Dimpz Games</span>
+              <span className="mx-2" aria-hidden="true">·</span>
+              <span>Original IP Edition · World of Valdris</span>
+            </div>
           </div>
           <div className="flex flex-wrap items-center gap-5">
             <button
@@ -656,7 +706,7 @@ export default function App() {
               onClick={() => switchTab('sets')}
               className="hover:text-[#EAE6DF]"
             >
-              90 Set Designs
+              90 Launch Skins
             </button>
             <button
               type="button"
