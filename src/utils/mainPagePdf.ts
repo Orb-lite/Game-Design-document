@@ -20,6 +20,7 @@ import {
   UNIVERSAL_SLOTS,
   VICTORY_HIERARCHY_RANKS,
   WARRIOR_ARCHETYPES,
+  STUDIO_IDENTITY,
 } from '../data/gddData';
 import { PROFESSION_3D_RENDER_ASSETS } from '../data/equipmentSets';
 
@@ -1112,6 +1113,26 @@ export async function exportMainPageToPdf(
     const pBody = doc.splitTextToSize(pdfSafe(pil.detail), pilW - 6);
     doc.text(pBody.slice(0, 4), px + 3, py + 11.5);
   });
+
+  // Compact Studio Ownership & Live GDD Registry strip (y = 271 to 279mm, cleanly above BOTTOM_Y = 281mm)
+  const whoY = y + 57.5;
+  doc.setFillColor(16, 16, 20);
+  doc.setDrawColor(200, 155, 60);
+  doc.setLineWidth(0.3);
+  doc.rect(MARGIN_X, whoY, CONTENT_W, 8.5, 'FD');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(6.6);
+  doc.setTextColor(200, 155, 60);
+  doc.text('STUDIO & ORIGINAL IP:', MARGIN_X + 3, whoY + 5.4);
+  doc.setFont('helvetica', 'normal');
+  doc.setTextColor(234, 230, 223);
+  doc.text(
+    pdfSafe(
+      `${STUDIO_IDENTITY.studioName}  |  ${STUDIO_IDENTITY.franchiseTitle}  |  ${STUDIO_IDENTITY.contactEmail}  |  ${STUDIO_IDENTITY.githubUrl}`
+    ),
+    MARGIN_X + 36,
+    whoY + 5.4
+  );
 
   onProgress?.(totalSteps, totalSteps);
   doc.save('The_Last_Relic_Main_Page_EN.pdf');

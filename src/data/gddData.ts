@@ -1617,3 +1617,10 @@ export const BESTIARY_CREATURES: BestiaryCreature[] = [
   },
 ];
 
+export const STUDIO_IDENTITY = {
+  studioName: 'Dimpz Games',
+  franchiseTitle: 'Valdris Chronicle: Last Relic (Episode I)',
+  githubUrl: 'https://github.com/Orb-lite/Game-Design-document',
+  contactEmail: 'ventas@orb-lite.com',
+} as const;
+

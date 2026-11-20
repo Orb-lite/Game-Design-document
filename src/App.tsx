@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Download, FileText } from 'lucide-react';
 import { AllSetsDesignTab } from './components/AllSetsDesignTab';
 import { BestiaryTab } from './components/BestiaryTab';
@@ -9,6 +9,7 @@ import { LootAndPveSection } from './components/LootAndPveSection';
 import { MatchCycleSection } from './components/MatchCycleSection';
 import { MediaFrame } from './components/MediaFrame';
 import { PitchDeckModal } from './components/PitchDeckModal';
+import { WhoIsSection } from './components/WhoIsSection';
 import {
   FICHA_TECNICA,
   GAME_MODES,
@@ -16,18 +17,56 @@ import {
   PITCH_DECK_SLIDES,
   type PlayerCombatProfile,
 } from './data/gddData';
+import type { VisitorTrafficSnapshot } from './types/visitorTraffic';
 import { exportMainPageToPdf } from './utils/mainPagePdf';
 import { exportPitchDeckToPdf } from './utils/pitchDeckPdf';
 
 type MainViewTab = 'overview' | 'sets' | 'biomes' | 'bestiary';
 
+function isHiddenTrafficUrl(): boolean {
+  if (typeof window === 'undefined') return false;
+  const path = window.location.pathname.replace(/\/+$/, '').toLowerCase();
+  const params = new URLSearchParams(window.location.search);
+  return (
+    path === '/traffic' ||
+    path === '/whois' ||
+    path === '/who-is' ||
+    params.get('traffic') === '1'
+  );
+}
+
+function getOrCreateStorageId(storage: Storage, key: string): string {
+  try {
+    const existing = storage.getItem(key);
+    if (existing) return existing;
+    const created =
+      typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+        ? crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+    storage.setItem(key, created);
+    return created;
+  } catch {
+    return `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+  }
+}
+
 export default function App() {
+  const [isTrafficConsole, setIsTrafficConsole] = useState<boolean>(() => isHiddenTrafficUrl());
   const [activeTab, setActiveTab] = useState<MainViewTab>('overview');
   const [isDeckOpen, setIsDeckOpen] = useState(false);
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [pdfProgress, setPdfProgress] = useState<string | null>(null);
   const [mainPagePdfProgress, setMainPagePdfProgress] = useState<string | null>(null);
   const [selectedModeId, setSelectedModeId] = useState<'juramento' | 'errante'>('juramento');
+  const [trafficSnapshot, setTrafficSnapshot] = useState<VisitorTrafficSnapshot | null>(null);
+  const [streamConnected, setStreamConnected] = useState(false);
+  const [refreshingTraffic, setRefreshingTraffic] = useState(false);
+  const visitorIdRef = useRef<string>('');
+  const sessionIdRef = useRef<string>('');
+  if (!visitorIdRef.current && typeof window !== 'undefined') {
+    visitorIdRef.current = getOrCreateStorageId(window.localStorage, 'valdris_visitor_id');
+    sessionIdRef.current = getOrCreateStorageId(window.sessionStorage, 'valdris_session_id');
+  }
   const [playerProfile, setPlayerProfile] = useState<PlayerCombatProfile>({
     generalLevel: 100,
     swordLevel: 82,
@@ -149,6 +188,177 @@ export default function App() {
     setActiveTab(nextTab);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  const currentTabLabel =
+    activeTab === 'overview'
+      ? 'Master Document'
+      : activeTab === 'sets'
+        ? '90 Launch Skins'
+        : activeTab === 'biomes'
+          ? 'Biomes'
+          : 'Bestiary';
+
+  const currentSectionLabel = isDeckOpen
+    ? `Pitch Deck Slide ${activeSlideIndex + 1}`
+    : activeTab === 'overview'
+      ? 'Core Overview'
+      : `${currentTabLabel} View`;
+
+  const sendVisitorHeartbeat = useCallback(async () => {
+    if (typeof window === 'undefined') return;
+    try {
+      const response = await fetch('/api/visitors/heartbeat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sessionId: sessionIdRef.current,
+          visitorId: visitorIdRef.current,
+          tab: currentTabLabel,
+          section: currentSectionLabel,
+          referrer: document.referrer || '',
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC',
+          screen: `${window.screen.width}x${window.screen.height}`,
+        }),
+      });
+      if (response.ok) {
+        const data = (await response.json()) as { snapshot?: VisitorTrafficSnapshot };
+        if (data.snapshot) {
+          setTrafficSnapshot(data.snapshot);
+        }
+      }
+    } catch {
+      // Non-blocking visitor telemetry ping
+    }
+  }, [currentTabLabel, currentSectionLabel]);
+
+  const handleRefreshTraffic = useCallback(async () => {
+    if (refreshingTraffic) return;
+    setRefreshingTraffic(true);
+    try {
+      const res = await fetch('/api/visitors/stats');
+      if (res.ok) {
+        const snap = (await res.json()) as VisitorTrafficSnapshot;
+        setTrafficSnapshot(snap);
+      }
+    } finally {
+      setRefreshingTraffic(false);
+    }
+  }, [refreshingTraffic]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setIsTrafficConsole(isHiddenTrafficUrl());
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  useEffect(() => {
+    if (isTrafficConsole) return;
+    void sendVisitorHeartbeat();
+    const interval = window.setInterval(() => {
+      void sendVisitorHeartbeat();
+    }, 20_000);
+    return () => window.clearInterval(interval);
+  }, [isTrafficConsole, sendVisitorHeartbeat]);
+
+  useEffect(() => {
+    if (!isTrafficConsole) return;
+    let eventSource: EventSource | null = null;
+    void handleRefreshTraffic();
+    try {
+      eventSource = new EventSource('/api/visitors/stream');
+      eventSource.onopen = () => setStreamConnected(true);
+      eventSource.addEventListener('snapshot', (ev) => {
+        try {
+          const snap = JSON.parse((ev as MessageEvent<string>).data) as VisitorTrafficSnapshot;
+          setTrafficSnapshot(snap);
+          setStreamConnected(true);
+        } catch {
+          // Ignore malformed SSE chunk
+        }
+      });
+      eventSource.onerror = () => {
+        setStreamConnected(false);
+      };
+    } catch {
+      setStreamConnected(false);
+    }
+
+    return () => {
+      eventSource?.close();
+    };
+  }, [isTrafficConsole, handleRefreshTraffic]);
+
+  useEffect(() => {
+    if (isTrafficConsole) return;
+    const handlePageHide = () => {
+      try {
+        navigator.sendBeacon(
+          '/api/visitors/leave',
+          JSON.stringify({ sessionId: sessionIdRef.current })
+        );
+      } catch {
+        // Ignore beacon failure on unload
+      }
+    };
+    window.addEventListener('pagehide', handlePageHide);
+
+    return () => {
+      window.removeEventListener('pagehide', handlePageHide);
+    };
+  }, [isTrafficConsole]);
+
+  const returnToPublicGdd = () => {
+    window.history.pushState({}, '', '/');
+    setIsTrafficConsole(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  if (isTrafficConsole) {
+    return (
+      <div className="min-h-screen bg-[#0B0B0D] text-[#EAE6DF]">
+        <header className="sticky top-0 z-40 border-b border-white/10 bg-[#0B0B0D]/95 backdrop-blur-md">
+          <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-3.5">
+            <div className="flex items-center gap-3">
+              <img
+                src={GENERATED_ASSETS.studioLogo}
+                alt="Dimpz Games Studio Emblem"
+                referrerPolicy="no-referrer"
+                className="h-8 w-11 rounded border border-[#C89B3C]/40 bg-[#08080A] object-cover"
+              />
+              <div>
+                <p className="font-display text-sm font-semibold text-[#F6EFE2]">
+                  Dimpz Games · Visitor Analytics
+                </p>
+                <p className="text-[11px] text-[#9C968B]">
+                  Hidden Private Endpoint (/traffic)
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={returnToPublicGdd}
+              className="rounded-md border border-[#C89B3C]/60 bg-[#C89B3C]/15 px-4 py-2 text-xs font-semibold text-[#F6EFE2] transition-colors hover:bg-[#C89B3C]/25"
+            >
+              Back to Master Document
+            </button>
+          </div>
+        </header>
+        <main>
+          <WhoIsSection
+            snapshot={trafficSnapshot}
+            currentSessionId={sessionIdRef.current}
+            liveConnected={streamConnected}
+            onRefresh={() => {
+              void handleRefreshTraffic();
+            }}
+            refreshing={refreshingTraffic}
+          />
+        </main>
+      </div>
+    );
+  }
 
   const activeMode =
     GAME_MODES.find((m) => m.id === selectedModeId) ?? GAME_MODES[0];
@@ -672,6 +882,7 @@ export default function App() {
             </div>
           </div>
         </section>
+
           </>
         )}
       </main>
