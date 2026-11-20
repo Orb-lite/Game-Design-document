@@ -254,11 +254,12 @@ export async function exportPitchDeckToPdf(
       }
 
       const items = slide.showcaseItems;
-      const cols = items.length === 5 ? 3 : 3;
+      const cols = 3;
+      const isSingleRow = items.length <= 3;
       const gap = 3.5;
       const cardW = (rightW - gap * (cols - 1)) / cols;
-      const cardH = 52;
-      const startGridY = rightY + 7;
+      const cardH = isSingleRow ? 68 : 52;
+      const startGridY = isSingleRow ? rightY + 20 : rightY + 7;
 
       for (let idx = 0; idx < items.length; idx++) {
         const item = items[idx];
@@ -272,8 +273,8 @@ export async function exportPitchDeckToPdf(
         doc.setLineWidth(0.3);
         doc.rect(cx, cy, cardW, cardH, 'FD');
 
-        const thumb = await loadCroppedJpeg(item.image, 4 / 3, true);
-        const imgH = 35;
+        const thumb = await loadCroppedJpeg(item.image, 4 / 3, !isSingleRow);
+        const imgH = isSingleRow ? 46 : 35;
         if (thumb) {
           doc.addImage(thumb.dataUrl, 'JPEG', cx + 1, cy + 1, cardW - 2, imgH);
         }

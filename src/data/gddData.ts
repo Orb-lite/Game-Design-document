@@ -1206,7 +1206,7 @@ export interface PitchSlide {
 export const PITCH_DECK_SLIDES: PitchSlide[] = [
   {
     index: 1,
-    code: '01 / 12',
+    code: '01 / 14',
     section: 'Concept & Hook',
     title: 'The Last Relic — 200-Warrior Tactical PvPvE Battle Royale',
     keyMessage: '"200 Souls. 5 Acts. One Single Iron Crown."',
@@ -1219,7 +1219,7 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
   },
   {
     index: 2,
-    code: '02 / 12',
+    code: '02 / 14',
     section: 'Market Opportunity',
     title: 'Bridging High-Tempo Battle Royale & Tactical Action Combat',
     keyMessage: 'Capturing players underserved by modern military gunplay shooters.',
@@ -1232,7 +1232,7 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
   },
   {
     index: 3,
-    code: '03 / 12',
+    code: '03 / 14',
     section: 'Universe & Fantasy',
     title: 'The Cursed Continent of Valdris',
     keyMessage: 'A shattered realm devoured by The Abyssal Ash.',
@@ -1245,7 +1245,7 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
   },
   {
     index: 4,
-    code: '04 / 12',
+    code: '04 / 14',
     section: 'Core 5-Act Match Loop',
     title: 'Tactical Match Lifecycle in 15–18 Minutes',
     keyMessage: 'Relentless pacing: early-game squad respawn giving way to Black Bell sudden death.',
@@ -1258,7 +1258,7 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
   },
   {
     index: 5,
-    code: '05 / 12',
+    code: '05 / 14',
     section: 'Pillar 1: Dynamic Warrior (6 Professions)',
     title: 'Warrior Identity: 6 Evolving Combat Specializations',
     keyMessage: 'Weapon hits train Weapon Mastery; spell casts raise Magic Level and define your role.',
@@ -1310,7 +1310,7 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
   },
   {
     index: 6,
-    code: '06 / 12',
+    code: '06 / 14',
     section: 'Pillar 2: Decoupled Stats Data, Separate Mastery & 90 Launch Skins',
     title: 'Unrelated Logical Gear Sets, Launch Skins & Dual Weapon Mastery',
     keyMessage: '90 Launch Skins unlock organically via Weapon Mastery OR auto-max Weapon Mastery upon purchase.',
@@ -1356,7 +1356,7 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
   },
   {
     index: 7,
-    code: '07 / 12',
+    code: '07 / 14',
     section: 'Pillar 3: Defense Level, Armor & Shields',
     title: 'Real Armor Mitigation & Active Shield Blocking Math',
     keyMessage: 'Defense Level turns every defensive gear piece into measurable survivability.',
@@ -1369,7 +1369,7 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
   },
   {
     index: 8,
-    code: '08 / 12',
+    code: '08 / 14',
     section: 'Pillar 4: 8 Ether Seals & Magic Level',
     title: 'Magic Level Spell Scaling Across 3 Equippable Slots',
     keyMessage: 'Casting spells trains Magic Level and scales damage, barriers, and squad healing.',
@@ -1382,7 +1382,7 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
   },
   {
     index: 9,
-    code: '09 / 12',
+    code: '09 / 14',
     section: 'Pillar 5: PvPvE Ecosystem & Warrior HP Curve',
     title: '4 PvE Difficulty Tiers, Warrior HP Curve & 50% Omni-Mastery Gold Cap',
     keyMessage: 'Endgame relics scale Lv_avg + 100, and true Omni-Mastery Lv.100 elevates Gold drops to 50%.',
@@ -1395,7 +1395,7 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
   },
   {
     index: 10,
-    code: '10 / 12',
+    code: '10 / 14',
     section: 'World Design & 4 Strategic Biomes',
     title: 'The Multi-Level Battlefield of Valdris',
     keyMessage: 'Four distinct environments engineered to reward every Warrior build.',
@@ -1409,7 +1409,7 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
   },
   {
     index: 11,
-    code: '11 / 12',
+    code: '11 / 14',
     section: 'UE5 Engineering, Hitbox Integrity & Anti-Cheat',
     title: 'Decoupled Skin Rendering & Server-Authoritative Combat Precision',
     keyMessage: 'Skins alter visual meshes, materials & VFX only—preserving exact Hitboxes, Timings & i-Frames.',
@@ -1422,14 +1422,101 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
   },
   {
     index: 12,
-    code: '12 / 12',
+    code: '12 / 14',
+    section: 'Seasonal Live-Ops · 4-Season Dynamic Storm Cycle',
+    title: 'Quarterly Storm & Lighting Rotation — Winter, Summer & Autumn',
+    keyMessage: 'One master Valdris world transforms every season via UE5 Niagara VFX & shaders—zero map rebuilds.',
+    bullets: [
+      'Spring & Autumn (Toxic Miasma Gas): Baseline emerald-violet creeping fog rolling from the Miasma Marshes with modular Niagara spores.',
+      'Winter (Glacial Ice Storm): Sub-zero blizzard with howling frost winds, freezing screen vignettes, and snow-dusted Citadel architecture.',
+      'Summer (Scorching Heat Storm): Blistering heatwave and ember-ash tempest with refractive heat-haze post-processing and dried-earth lighting.',
+      'Studio & Publisher Advantage: Dramatic seasonal freshness every quarter with a lean, predictable art pipeline that drives quarterly retention.',
+    ],
+    image: GENERATED_ASSETS.stormWinterBlizzard,
+    showcaseTitle: '4-Season Citadel Storm & Atmosphere Variants (UE5 Presets)',
+    showcaseItems: [
+      {
+        label: 'Spring & Autumn',
+        sublabel: 'Toxic Miasma Gas (Baseline)',
+        image: GENERATED_ASSETS.stormMiasmaBaseline,
+        accentHex: '#4F9E68',
+      },
+      {
+        label: 'Winter Storm',
+        sublabel: 'Glacial Ice Blizzard',
+        image: GENERATED_ASSETS.stormWinterBlizzard,
+        accentHex: '#3E82C7',
+      },
+      {
+        label: 'Summer Storm',
+        sublabel: 'Scorching Heat & Ember-Ash',
+        image: GENERATED_ASSETS.stormSummerHeat,
+        accentHex: '#E06C5A',
+      },
+    ],
+  },
+  {
+    index: 13,
+    code: '13 / 14',
+    section: "Holiday Events · Halloween, Dark Santa's Wish & Reactive Skins",
+    title: "Halloween, Dark Santa's Wish & Summer Solstice Live-Ops",
+    keyMessage: 'Event skins react dynamically to matching seasonal storms while keeping hitboxes 100% invariant.',
+    bullets: [
+      'Autumn · Halloween (Night of the Hollow Bell): Blood-orange harvest moon, Wraith-Lantern Stashes, Hollow Reaper Executioner boss, & Hollow Lantern Warden skin (pulses in Miasma fog).',
+      "Winter · Dark Santa's Wish: Sub-zero Glacial Storm, Cursed Gift Reliquaries, Frost Bell-Keeper boss, & Frostbound Hearth-Breaker skin (accumulates rime frost in blizzards).",
+      'Summer · Solar-Ash Reckoning: Solar Eclipse Altars & Sun-Baked Eclipse Sentinel Dual-Crossbow skin (ignites live molten embers under Scorching Heat Storms).',
+    ],
+    image: GENERATED_ASSETS.eventHalloweenValdris,
+    showcaseTitle: 'Holiday Event Arenas & Climate-Reactive Event Skins',
+    showcaseItems: [
+      {
+        label: 'Halloween Event',
+        sublabel: 'Night of the Hollow Bell',
+        image: GENERATED_ASSETS.eventHalloweenValdris,
+        accentHex: '#9461C9',
+      },
+      {
+        label: 'Winter Holiday',
+        sublabel: "Dark Santa's Wish Blizzard",
+        image: GENERATED_ASSETS.stormWinterBlizzard,
+        accentHex: '#3E82C7',
+      },
+      {
+        label: 'Summer Solstice',
+        sublabel: 'Solar-Ash Reckoning',
+        image: GENERATED_ASSETS.stormSummerHeat,
+        accentHex: '#E06C5A',
+      },
+      {
+        label: 'Hollow Lantern',
+        sublabel: 'Halloween Miasma Skin',
+        image: GENERATED_ASSETS.skinHalloweenWarden,
+        accentHex: '#9461C9',
+      },
+      {
+        label: 'Dark Santa Set',
+        sublabel: 'Winter Frost-Reactive Skin',
+        image: GENERATED_ASSETS.skinDarkSantaFrost,
+        accentHex: '#3E82C7',
+      },
+      {
+        label: 'Solar-Ash Set',
+        sublabel: 'Summer Ember Dual Xbows',
+        image: GENERATED_ASSETS.skinSummerAshSolstice,
+        accentHex: '#C89B3C',
+      },
+    ],
+  },
+  {
+    index: 14,
+    code: '14 / 14',
     section: 'Live-Ops Monetization, Fair Matchmaking & Episode Scale',
     title: 'Valdris Chronicle: Last Relic (Episode I) — Fair-Match Ethical Economy',
     keyMessage: 'Power-weighted Matchmaking guarantees every 200-player lobby stays 100% Fair Match.',
     bullets: [
       'Fair-Match Bracket Parity: Separate Weapon Mastery % (whether purchased via Skin or organic) and Omni-Lv.100 50% Loot status are weighted in MM_Index—zero unfair power mismatch inside any lobby.',
       'Anti-Smurf Squad Anchor: Oath Mode queues anchor to the highest squadmate rating so maxed veterans & buyers match strictly against equivalent rivals.',
-      'Multi-Episode Scalability: Attack Type Level, Defense Level & 50% Gold Cap stay strictly combat-earned while direct Skins scale sustainably across Episode I and future Episodes.',
+      'Multi-Episode Scalability: Attack Type Level, Defense Level & 50% Gold Cap stay strictly combat-earned while direct Skins & Holiday Events scale cleanly across future Episodes.',
     ],
     image: GENERATED_ASSETS.throneDuel,
   },

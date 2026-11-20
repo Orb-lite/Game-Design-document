@@ -479,7 +479,7 @@ export default function App() {
                 Seasonal Storms &amp; Live-Ops
               </a>
               <a href="#pitch-deck" className="whitespace-nowrap shrink-0 hover:text-[#F6EFE2]">
-                Pitch Deck (12 Slides)
+                Pitch Deck ({PITCH_DECK_SLIDES.length} Slides)
               </a>
               <a href="#alliance" className="whitespace-nowrap shrink-0 text-[#C89B3C] hover:text-[#F6EFE2]">
                 Co-Pitching Alliance
@@ -818,7 +818,9 @@ export default function App() {
                           )}
                           <div
                             className={`grid gap-2 ${
-                              slide.showcaseItems.length === 6 ? 'grid-cols-3' : 'grid-cols-5'
+                              slide.showcaseItems.length === 6 || slide.showcaseItems.length === 3
+                                ? 'grid-cols-3'
+                                : 'grid-cols-5'
                             }`}
                           >
                             {slide.showcaseItems.map((item) => (
