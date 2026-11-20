@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react';
-import { Download, FileText, Film, Link2, ShieldCheck } from 'lucide-react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Download, FileText } from 'lucide-react';
 import { AllSetsDesignTab } from './components/AllSetsDesignTab';
 import { BestiaryTab } from './components/BestiaryTab';
 import { BiomesAndMathSection } from './components/BiomesAndMathSection';
@@ -51,46 +51,6 @@ function getOrCreateStorageId(storage: Storage, key: string): string {
   }
 }
 
-function extractYouTubeId(raw: string): string | null {
-  const trimmed = raw.trim();
-  if (!trimmed) return null;
-  if (/^[A-Za-z0-9_-]{11}$/.test(trimmed)) return trimmed;
-  try {
-    const parsed = new URL(trimmed);
-    const host = parsed.hostname.replace(/^www\./, '').toLowerCase();
-    if (host === 'youtu.be') {
-      const id = parsed.pathname.split('/').filter(Boolean)[0];
-      return id && /^[A-Za-z0-9_-]{11}$/.test(id) ? id : null;
-    }
-    if (host === 'youtube.com' || host === 'm.youtube.com' || host === 'youtube-nocookie.com') {
-      const v = parsed.searchParams.get('v');
-      if (v && /^[A-Za-z0-9_-]{11}$/.test(v)) return v;
-      const parts = parsed.pathname.split('/').filter(Boolean);
-      const idx = parts.findIndex((p) => p === 'embed' || p === 'shorts' || p === 'live');
-      if (idx !== -1 && parts[idx + 1] && /^[A-Za-z0-9_-]{11}$/.test(parts[idx + 1])) {
-        return parts[idx + 1];
-      }
-    }
-  } catch {
-    return null;
-  }
-  return null;
-}
-
-function getInitialPrototypeId(): string | null {
-  if (typeof window === 'undefined') return null;
-  try {
-    const params = new URLSearchParams(window.location.search);
-    const fromUrl = params.get('prototype') || params.get('yt');
-    const urlId = fromUrl ? extractYouTubeId(fromUrl) : null;
-    if (urlId) return urlId;
-    const saved = window.localStorage.getItem('valdris_prototype_yt');
-    return saved ? extractYouTubeId(saved) : null;
-  } catch {
-    return null;
-  }
-}
-
 export default function App() {
   const [isTrafficConsole, setIsTrafficConsole] = useState<boolean>(() => isHiddenTrafficUrl());
   const [activeTab, setActiveTab] = useState<MainViewTab>('overview');
@@ -99,10 +59,6 @@ export default function App() {
   const [pdfProgress, setPdfProgress] = useState<string | null>(null);
   const [mainPagePdfProgress, setMainPagePdfProgress] = useState<string | null>(null);
   const [selectedModeId, setSelectedModeId] = useState<'juramento' | 'errante'>('juramento');
-  const [prototypeVideoId, setPrototypeVideoId] = useState<string | null>(() => getInitialPrototypeId());
-  const [prototypeInput, setPrototypeInput] = useState('');
-  const [prototypeInputError, setPrototypeInputError] = useState<string | null>(null);
-  const [showPrototypeEditor, setShowPrototypeEditor] = useState(false);
   const [trafficSnapshot, setTrafficSnapshot] = useState<VisitorTrafficSnapshot | null>(null);
   const [streamConnected, setStreamConnected] = useState(false);
   const [refreshingTraffic, setRefreshingTraffic] = useState(false);
@@ -610,158 +566,6 @@ export default function App() {
               Figure 1: Key Art — The Citadel of Valdris under The Abyssal Ash.
             </p>
 
-            {/* Publisher-Ready Package & 45–60s Uncut UE5 Prototype Proof Carrier */}
-            <div
-              id="prototype-reel"
-              className="mt-8 grid grid-cols-1 gap-6 rounded-xl border border-[#C89B3C]/35 bg-[#141417] p-6 lg:grid-cols-12 lg:items-center lg:p-7"
-            >
-              <div className="lg:col-span-6">
-                <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-wider text-[#C89B3C] uppercase">
-                  <ShieldCheck className="h-4 w-4" aria-hidden="true" />
-                  <span>Publisher-Ready Commercial Package · Phase 1 Vertical Slice</span>
-                </div>
-                <h2 className="font-display mt-2 text-2xl font-semibold text-[#F6EFE2]">
-                  45–60s Uncut UE5 Combat Prototype Proof
-                </h2>
-                <p className="mt-2.5 text-xs leading-relaxed text-[#D4CEC3]">
-                  Engineered for partner art studios and publishers—not an abstract megaproject. Our
-                  playable Unreal Engine 5 graybox prototype proves directional Parry/Riposte timing,
-                  Dual Hand Crossbows, and enemy AI responsiveness before a single hour of studio art
-                  is invested.
-                </p>
-
-                <div className="mt-4 flex flex-wrap items-center gap-3">
-                  <a
-                    href="#alliance"
-                    className="rounded-md bg-[#C89B3C] px-4 py-2 text-xs font-semibold text-[#0B0B0D] transition-colors hover:bg-[#D9AC4A]"
-                  >
-                    Co-Pitching &amp; Studio Alliance Model
-                  </a>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShowPrototypeEditor((prev) => !prev);
-                      setPrototypeInputError(null);
-                    }}
-                    className="inline-flex items-center gap-1.5 rounded-md border border-white/15 bg-[#0F0F12] px-3.5 py-2 text-xs font-medium text-[#EAE6DF] transition-colors hover:border-[#C89B3C]/50 hover:text-[#F6EFE2]"
-                  >
-                    <Link2 className="h-3.5 w-3.5 text-[#C89B3C]" aria-hidden="true" />
-                    <span>
-                      {prototypeVideoId ? 'Change Unlisted YouTube URL' : 'Attach Unlisted YouTube Video'}
-                    </span>
-                  </button>
-                </div>
-
-                {showPrototypeEditor && (
-                  <form
-                    onSubmit={(e: FormEvent) => {
-                      e.preventDefault();
-                      const id = extractYouTubeId(prototypeInput);
-                      if (!id) {
-                        setPrototypeInputError(
-                          'Enter a valid unlisted YouTube URL or 11-character video ID.'
-                        );
-                        return;
-                      }
-                      setPrototypeVideoId(id);
-                      try {
-                        window.localStorage.setItem('valdris_prototype_yt', id);
-                      } catch {
-                        // Ignore storage failures
-                      }
-                      setPrototypeInput('');
-                      setPrototypeInputError(null);
-                      setShowPrototypeEditor(false);
-                    }}
-                    className="mt-4 rounded-md border border-white/10 bg-[#0F0F12] p-3.5"
-                  >
-                    <label
-                      htmlFor="prototype-yt-input"
-                      className="block text-[11px] font-medium text-[#D4CEC3]"
-                    >
-                      Unlisted YouTube Link (45–60s uncut UE5 graybox combat video)
-                    </label>
-                    <div className="mt-1.5 flex gap-2">
-                      <input
-                        id="prototype-yt-input"
-                        type="text"
-                        value={prototypeInput}
-                        onChange={(e) => setPrototypeInput(e.target.value)}
-                        placeholder="https://youtu.be/... or https://youtube.com/watch?v=..."
-                        className="font-mono-tabular w-full rounded border border-white/15 bg-[#08080A] px-3 py-1.5 text-xs text-[#EAE6DF] placeholder-[#736E66] focus:border-[#C89B3C] focus:outline-none"
-                      />
-                      <button
-                        type="submit"
-                        className="shrink-0 rounded bg-[#C89B3C] px-3 py-1.5 text-xs font-semibold text-[#0B0B0D] hover:bg-[#D9AC4A]"
-                      >
-                        Embed
-                      </button>
-                      {prototypeVideoId && (
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setPrototypeVideoId(null);
-                            try {
-                              window.localStorage.removeItem('valdris_prototype_yt');
-                            } catch {
-                              // Ignore storage failures
-                            }
-                            setShowPrototypeEditor(false);
-                          }}
-                          className="shrink-0 rounded border border-white/15 px-2.5 py-1.5 text-xs text-[#B8B1A6] hover:text-[#F6EFE2]"
-                        >
-                          Clear
-                        </button>
-                      )}
-                    </div>
-                    {prototypeInputError && (
-                      <p className="mt-1.5 text-[11px] text-[#E07A5F]">{prototypeInputError}</p>
-                    )}
-                  </form>
-                )}
-              </div>
-
-              <div className="lg:col-span-6">
-                {prototypeVideoId ? (
-                  <div className="aspect-video w-full overflow-hidden rounded-lg border border-[#C89B3C]/40 bg-[#08080A]">
-                    <iframe
-                      src={`https://www.youtube-nocookie.com/embed/${prototypeVideoId}?rel=0`}
-                      title="Valdris Chronicle UE5 Playable Combat Prototype (45–60s Uncut)"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="h-full w-full border-0"
-                    />
-                  </div>
-                ) : (
-                  <div className="flex aspect-video w-full flex-col justify-between rounded-lg border border-dashed border-[#C89B3C]/40 bg-[#0B0B0D] p-5">
-                    <div className="flex items-center justify-between text-[11px] text-[#9C968B]">
-                      <span className="inline-flex items-center gap-1.5 font-semibold text-[#C89B3C]">
-                        <Film className="h-3.5 w-3.5" aria-hidden="true" />
-                        <span>UE5 Graybox Gameplay Reel Slot</span>
-                      </span>
-                      <span className="font-mono-tabular">45–60s Uncut · Unlisted YouTube</span>
-                    </div>
-
-                    <div className="my-auto py-3 text-center">
-                      <p className="font-display text-base font-semibold text-[#F6EFE2]">
-                        Playable UE5 Combat Loop Verification
-                      </p>
-                      <p className="mx-auto mt-1.5 max-w-md text-xs leading-relaxed text-[#B8B1A6]">
-                        Attach your 45–60 second uncut Unlisted YouTube capture demonstrating graybox
-                        Parry/Riposte windows, Dual Hand Crossbows, and Black Bell Executioner combat
-                        directly on the front cover.
-                      </p>
-                    </div>
-
-                    <div className="flex flex-wrap items-center justify-between gap-2 border-t border-white/10 pt-3 text-[11px] text-[#9C968B]">
-                      <span>Vertical Slice Cut: 10–15 Min Demo</span>
-                      <span>Supports ?prototype=VIDEO_ID</span>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
             {/* 4-Column Structural Strip */}
             <dl className="mt-10 grid grid-cols-2 gap-4 border-y border-white/10 py-6 lg:grid-cols-4">
               <div>
@@ -1084,13 +888,7 @@ export default function App() {
         </section>
 
         {/* Section 08: Co-Pitching & Studio Alliance Model (Phase 1 Vertical Slice) */}
-        <CoPitchingAllianceSection
-          onFocusPrototypeReel={() => {
-            setShowPrototypeEditor(true);
-            const el = document.getElementById('prototype-reel');
-            el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }}
-        />
+        <CoPitchingAllianceSection />
           </>
         )}
       </main>

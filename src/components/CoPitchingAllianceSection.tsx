@@ -1,13 +1,7 @@
-import { Briefcase, CheckCircle2, Film, Layers, Shield, TrendingUp } from 'lucide-react';
-import { CO_PITCHING_ALLIANCE, STUDIO_IDENTITY } from '../data/gddData';
+import { Briefcase, CheckCircle2, Layers, Milestone, ShieldCheck, TrendingUp } from 'lucide-react';
+import { CO_PITCHING_ALLIANCE } from '../data/gddData';
 
-interface CoPitchingAllianceSectionProps {
-  onFocusPrototypeReel: () => void;
-}
-
-export function CoPitchingAllianceSection({
-  onFocusPrototypeReel,
-}: CoPitchingAllianceSectionProps) {
+export function CoPitchingAllianceSection() {
   return (
     <section id="alliance" className="border-t border-white/10 py-20 lg:py-24">
       <div className="mx-auto max-w-6xl px-6">
@@ -121,7 +115,46 @@ export function CoPitchingAllianceSection({
           </div>
         </div>
 
-        {/* 3. Strict Vertical Slice Scope Cut & 4. Technical Credibility Gate */}
+        {/* 3. Testing & Scaling Roadmap */}
+        <div className="mt-10 rounded-lg border border-white/10 bg-[#141417] p-6 lg:p-8">
+          <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+            <div>
+              <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-[#C89B3C] uppercase">
+                <Milestone className="h-4 w-4" aria-hidden="true" />
+                <span>Incremental Engineering Validation</span>
+              </div>
+              <h3 className="font-display mt-2 text-2xl font-semibold text-[#F6EFE2]">
+                {CO_PITCHING_ALLIANCE.testingRoadmap.title}
+              </h3>
+            </div>
+            <p className="max-w-md text-xs leading-relaxed text-[#B8B1A6]">
+              {CO_PITCHING_ALLIANCE.testingRoadmap.subtitle}
+            </p>
+          </div>
+
+          <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
+            {CO_PITCHING_ALLIANCE.testingRoadmap.milestones.map((m, idx) => (
+              <div
+                key={m.phase}
+                className={`rounded-md border p-5 ${
+                  idx === 0
+                    ? 'border-[#C89B3C]/50 bg-[#0F0F12]'
+                    : 'border-white/10 bg-[#0F0F12]'
+                }`}
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-mono-tabular text-xs font-bold text-[#C89B3C] uppercase">
+                    {m.phase}
+                  </span>
+                  <span className="text-[11px] font-medium text-[#9C968B]">{m.status}</span>
+                </div>
+                <p className="mt-3 text-xs leading-relaxed text-[#D4CEC3]">{m.detail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* 4. Strict Vertical Slice Scope Cut & 5. Current Technical Status */}
         <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-12">
           {/* Strict Vertical Slice Cut (10-15 min) */}
           <div className="rounded-lg border border-white/10 bg-[#141417] p-6 lg:col-span-7 lg:p-7">
@@ -152,48 +185,34 @@ export function CoPitchingAllianceSection({
             </div>
           </div>
 
-          {/* Technical Credibility Gate (Playable UE5 + 45-60s Uncut YouTube) */}
-          <div className="flex flex-col justify-between rounded-lg border border-white/10 bg-[#141417] p-6 lg:col-span-5 lg:p-7">
+          {/* Current Technical Status (Playable Prototype) */}
+          <div className="flex flex-col justify-between rounded-lg border border-[#4F9E68]/35 bg-[#141417] p-6 lg:col-span-5 lg:p-7">
             <div>
-              <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-[#C89B3C] uppercase">
-                <Shield className="h-4 w-4" aria-hidden="true" />
-                <span>Pre-Outreach Prerequisite</span>
+              <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-[#9AE0AF] uppercase">
+                <ShieldCheck className="h-4 w-4" aria-hidden="true" />
+                <span>Live UE5 Engineering State</span>
               </div>
               <h3 className="font-display mt-2 text-xl font-semibold text-[#F6EFE2]">
-                {CO_PITCHING_ALLIANCE.technicalCredibility.title}
+                {CO_PITCHING_ALLIANCE.currentTechnicalStatus.title}
               </h3>
               <p className="mt-2 text-xs leading-relaxed text-[#B8B1A6]">
-                {CO_PITCHING_ALLIANCE.technicalCredibility.summary}
+                {CO_PITCHING_ALLIANCE.currentTechnicalStatus.summary}
               </p>
 
-              <ul className="mt-4 space-y-2.5 border-t border-white/10 pt-4 text-xs leading-relaxed text-[#D4CEC3]">
-                {CO_PITCHING_ALLIANCE.technicalCredibility.requirements.map((req) => (
-                  <li key={req} className="flex items-start gap-2.5">
+              <ul className="mt-4 space-y-3 border-t border-white/10 pt-4 text-xs leading-relaxed text-[#D4CEC3]">
+                {CO_PITCHING_ALLIANCE.currentTechnicalStatus.points.map((pt) => (
+                  <li key={pt.label} className="flex items-start gap-2.5">
                     <span
-                      className="mt-1.5 h-1.5 w-1.5 shrink-0 bg-[#C89B3C]"
+                      className="mt-1.5 h-1.5 w-1.5 shrink-0 bg-[#4F9E68]"
                       aria-hidden="true"
                     />
-                    <span>{req}</span>
+                    <span>
+                      <strong className="text-[#F6EFE2]">{pt.label}: </strong>
+                      <span className="text-[#B8B1A6]">{pt.detail}</span>
+                    </span>
                   </li>
                 ))}
               </ul>
-            </div>
-
-            <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-4">
-              <button
-                type="button"
-                onClick={onFocusPrototypeReel}
-                className="inline-flex items-center gap-2 rounded-md bg-[#C89B3C] px-4 py-2 text-xs font-semibold text-[#0B0B0D] transition-colors hover:bg-[#D9AC4A]"
-              >
-                <Film className="h-3.5 w-3.5" aria-hidden="true" />
-                <span>Configure Cover Prototype Video</span>
-              </button>
-              <a
-                href={`mailto:${STUDIO_IDENTITY.contactEmail}?subject=Co-Pitching%20Alliance%20-%20Valdris%20Chronicle`}
-                className="text-xs font-semibold text-[#C89B3C] hover:underline"
-              >
-                Partner Inquiry →
-              </a>
             </div>
           </div>
         </div>

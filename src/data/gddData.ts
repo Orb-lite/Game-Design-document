@@ -1637,19 +1637,19 @@ export const CO_PITCHING_ALLIANCE = {
     { label: 'Phase 1 Studio Window', value: '2–3 Months (In-Kind Art)' },
     { label: 'Target Publisher Deal', value: '18–24 Mo Funded Production' },
     { label: 'Vertical Slice Cut', value: '10–15 Min Playable Demo' },
-    { label: 'UE5 Prototype Gate', value: '45–60s Uncut Cover Reel' },
+    { label: 'Milestone Status', value: 'UE5 Combat Loop Active' },
   ],
   divisionOfLabor: [
     {
-      role: 'Creator & Technical Lead Contribution',
+      role: 'Creator & Technical Lead Contribution (Phase 1)',
       badge: '$0 Upfront Studio Cost',
       accent: 'gold' as const,
       summary:
-        'All Unreal Engine 5 engineering, combat feel, multiplayer architecture, and publisher documentation are delivered free of cost to the partner studio.',
+        'Core UE5 gameplay engineering, scalable multiplayer foundation, deterministic combat/loot math, and full publisher documentation delivered at zero upfront studio cost.',
       items: [
-        'Full Unreal Engine 5 Replication Graph & server-authoritative combat architecture.',
-        'Complete core gameplay programming: directional melee, Parry/Riposte windows, Dual Hand Crossbows, base PvE AI, and lobby match loop.',
-        'Deterministic combat & loot math, decoupled Gear/Skin live-ops model, Fair-Match MM_Index, and full Publisher Pitch Deck + Master GDD.',
+        'Core Gameplay & Combat Programming: Directional melee, tight Parry/Riposte windows, Dual Hand Crossbows, hit-stop, and responsive enemy/boss AI.',
+        'Scalable Multiplayer Foundation: Server-authoritative combat architecture in UE5 built for small-squad co-op / PvP testing in Phase 1, designed to scale up to large-scale modes (Siege & 200-player Battle Royale via Replication Graph) during full production.',
+        'Systems & Commercial Documentation: Deterministic combat/loot math, decoupled Gear/Skin economy, Full GDD, and Publisher Pitch Deck.',
       ],
     },
     {
@@ -1712,13 +1712,45 @@ export const CO_PITCHING_ALLIANCE = {
       },
     ],
   },
-  technicalCredibility: {
-    title: 'Phase 0 Gate: Technical Credibility Before Studio Outreach',
+  testingRoadmap: {
+    title: 'Testing & Scaling Roadmap',
+    subtitle: 'Disciplined technical validation across controlled milestones before scaling full concurrency:',
+    milestones: [
+      {
+        phase: 'Milestone 0',
+        status: 'Current / Pre-Studio',
+        detail:
+          'Single-player / local graybox combat prototype proving core game feel (Catacombs arena + Black Bell Executioner mechanics).',
+      },
+      {
+        phase: 'Milestone 1',
+        status: 'Phase 1 — Vertical Slice (2–3 Mo)',
+        detail:
+          'Full visual polish with partner studio + small-scale multiplayer stress testing (2–4 player Co-op / PvP) to validate netcode responsiveness for the Publisher Pitch.',
+      },
+      {
+        phase: 'Milestone 2',
+        status: 'Full Production — Publisher Funded',
+        detail:
+          'Progressive scaling of lobby concurrency, Replication Graph optimization, dedicated server infrastructure, and rollout of large-scale modes (Siege Battles & 200-player Battle Royale) toward final build.',
+      },
+    ],
+  },
+  currentTechnicalStatus: {
+    title: 'Current Technical Status (Playable Prototype)',
     summary:
-      'With zero upfront capital exchanged, playable UE5 proof is our strongest currency. Partner studios must verify the combat loop works and feels responsive before committing artists.',
-    requirements: [
-      'Functional UE5 Playable Prototype (even with graybox cubes & mannequins) proving Parry/Riposte timing, Dual Crossbows, hit-stop, and enemy AI already feel great.',
-      '45–60 Second Uncut Gameplay Video uploaded as an Unlisted YouTube reel—raw, continuous, straight to combat—embedded directly on the front Cover above.',
+      'Validated engineering core built to let partner art studios and publishers verify combat feel:',
+    points: [
+      {
+        label: 'Core Combat Loop Functional',
+        detail:
+          'Directional melee, Parry/Riposte timing, Dual Crossbow spacing, and base boss AI behaviors are implemented in UE5.',
+      },
+      {
+        label: 'Iterative Netcode Approach',
+        detail:
+          'Built on a clean server-authoritative foundation tested periodically in controlled builds before scaling concurrency in full production.',
+      },
     ],
   },
 } as const;
