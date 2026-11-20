@@ -1629,3 +1629,98 @@ export const STUDIO_IDENTITY = {
   phoneDisplay: '+52 33 1835 9421',
 } as const;
 
+export const CO_PITCHING_ALLIANCE = {
+  eyebrow: 'Commercial Packaging · Publisher Co-Pitching Blueprint',
+  title: 'Co-Pitching & Studio Alliance Model',
+  lead: 'Engineered as a publisher-ready commercial package rather than an unverified megaproject. Phase 1 isolates a high-impact 10–15 minute Vertical Slice so partner art studios capture an 18–24 month funded production contract with zero upfront cash outlay.',
+  executiveMetrics: [
+    { label: 'Phase 1 Studio Window', value: '2–3 Months (In-Kind Art)' },
+    { label: 'Target Publisher Deal', value: '18–24 Mo Funded Production' },
+    { label: 'Vertical Slice Cut', value: '10–15 Min Playable Demo' },
+    { label: 'UE5 Prototype Gate', value: '45–60s Uncut Cover Reel' },
+  ],
+  divisionOfLabor: [
+    {
+      role: 'Creator & Technical Lead Contribution',
+      badge: '$0 Upfront Studio Cost',
+      accent: 'gold' as const,
+      summary:
+        'All Unreal Engine 5 engineering, combat feel, multiplayer architecture, and publisher documentation are delivered free of cost to the partner studio.',
+      items: [
+        'Full Unreal Engine 5 Replication Graph & server-authoritative combat architecture.',
+        'Complete core gameplay programming: directional melee, Parry/Riposte windows, Dual Hand Crossbows, base PvE AI, and lobby match loop.',
+        'Deterministic combat & loot math, decoupled Gear/Skin live-ops model, Fair-Match MM_Index, and full Publisher Pitch Deck + Master GDD.',
+      ],
+    },
+    {
+      role: 'Art & Co-Development Studio Contribution',
+      badge: 'In-Kind Investment (Phase 1)',
+      accent: 'emerald' as const,
+      summary:
+        'Focused 2–3 month visual execution solely on the locked Vertical Slice scope—never speculative full-map Battle Royale assets.',
+      items: [
+        'Cohesive Dark Medieval Fantasy Art Direction, shaders, and lighting mood.',
+        '1 complete playable Vertical Slice environment taken from graybox blockout to final PBR art.',
+        '2–3 fully modeled, rigged, and animated characters/enemies + production UI/UX HUD pass + 60–90s Publisher Pitch Trailer.',
+      ],
+    },
+  ],
+  studioValueReturn: {
+    headline: 'Why Investing 2–3 Months Locks In an 18–24 Month Production Contract',
+    summary:
+      'Once the Vertical Slice closes publisher financing, the partner studio transitions immediately from co-pitching partner into the Official Full-Production Vendor—eliminating speculative business risk.',
+    pillars: [
+      {
+        title: 'Official Commercial Production Vendor',
+        detail:
+          'The studio bills its standard commercial production rates directly out of the publisher’s funded development budget for the full 18–24 month roadmap.',
+      },
+      {
+        title: 'Revenue Share or IP Co-Ownership',
+        detail:
+          'In addition to commercial production fees, the founding art partner secures a negotiated Rev-Share percentage or co-ownership stake in the Valdris Chronicle IP.',
+      },
+      {
+        title: 'Asymmetric Studio ROI',
+        detail:
+          'Risking 2–3 months of focused Vertical Slice art to lock in 18–24 months of guaranteed publisher cashflow plus long-term live-ops upside.',
+      },
+    ],
+  },
+  verticalSliceScope: {
+    title: 'Strict Vertical Slice Scope Cut (10–15 Minute Publisher Demo)',
+    rationale:
+      'Requesting Day-1 art for a 200-player Battle Royale island triggers immediate cost rejection. Phase 1 strictly isolates the core combat loop into a razor-sharp 10–15 minute showcase:',
+    pillars: [
+      {
+        slot: '1 Environment',
+        name: 'Catacombs of the Nameless King',
+        detail:
+          'Single high-contrast torchlit crypt arena & vault junction—compact enough for AAA lighting polish within 6–8 weeks.',
+      },
+      {
+        slot: '2 Combat Styles',
+        name: 'Sword & Shield vs. Dual Hand Crossbows',
+        detail:
+          'Proves both tactical close-quarters Parry/Riposte + Shield Block and high-mobility ranged Dual Crossbow (1 per hand) + Ether Seal spacing.',
+      },
+      {
+        slot: '1 Signature Boss',
+        name: 'Black Bell Executioner',
+        detail:
+          'Full boss encounter with clear attack telegraphs, poise break windows, and climax reward drop to close the 10–15 minute publisher demo.',
+      },
+    ],
+  },
+  technicalCredibility: {
+    title: 'Phase 0 Gate: Technical Credibility Before Studio Outreach',
+    summary:
+      'With zero upfront capital exchanged, playable UE5 proof is our strongest currency. Partner studios must verify the combat loop works and feels responsive before committing artists.',
+    requirements: [
+      'Functional UE5 Playable Prototype (even with graybox cubes & mannequins) proving Parry/Riposte timing, Dual Crossbows, hit-stop, and enemy AI already feel great.',
+      '45–60 Second Uncut Gameplay Video uploaded as an Unlisted YouTube reel—raw, continuous, straight to combat—embedded directly on the front Cover above.',
+    ],
+  },
+} as const;
+
+

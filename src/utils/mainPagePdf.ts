@@ -21,6 +21,7 @@ import {
   VICTORY_HIERARCHY_RANKS,
   WARRIOR_ARCHETYPES,
   STUDIO_IDENTITY,
+  CO_PITCHING_ALLIANCE,
 } from '../data/gddData';
 import { PROFESSION_3D_RENDER_ASSETS } from '../data/equipmentSets';
 
@@ -154,7 +155,7 @@ export async function exportMainPageToPdf(
     format: 'a4',
   });
 
-  const totalSteps = 10;
+  const totalSteps = 11;
   let pageCount = 1;
   onProgress?.(0, totalSteps);
 
@@ -1133,6 +1134,181 @@ export async function exportMainPageToPdf(
     MARGIN_X + 36,
     whoY + 5.4
   );
+
+  onProgress?.(10, totalSteps);
+
+  // ============================================================================
+  // PAGE 10: COMMERCIAL CO-PITCHING & STUDIO ALLIANCE MODEL (VERTICAL SLICE)
+  // ============================================================================
+  y = addNewPage('09 · Commercial Co-Pitching & Studio Alliance Model');
+  y = drawSectionHeading(
+    doc,
+    y,
+    CO_PITCHING_ALLIANCE.eyebrow,
+    CO_PITCHING_ALLIANCE.title
+  );
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(7.6);
+  doc.setTextColor(212, 206, 195);
+  const allianceLeadLines = doc.splitTextToSize(pdfSafe(CO_PITCHING_ALLIANCE.lead), CONTENT_W);
+  doc.text(allianceLeadLines, MARGIN_X, y);
+  y += allianceLeadLines.length * 3.8 + 4;
+
+  // 4-Metric Deal Strip
+  const dealW = (CONTENT_W - 9) / 4;
+  CO_PITCHING_ALLIANCE.executiveMetrics.forEach((m, idx) => {
+    const mx = MARGIN_X + idx * (dealW + 3);
+    doc.setFillColor(20, 20, 23);
+    doc.setDrawColor(56, 52, 44);
+    doc.rect(mx, y, dealW, 13, 'FD');
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(6.5);
+    doc.setTextColor(156, 150, 139);
+    doc.text(pdfSafe(m.label), mx + 2.5, y + 4.6);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8.2);
+    doc.setTextColor(200, 155, 60);
+    doc.text(pdfSafe(m.value), mx + 2.5, y + 10.2);
+  });
+  y += 18;
+
+  // 1. Division of Labor (2 columns)
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8.2);
+  doc.setTextColor(246, 239, 226);
+  doc.text('DIVISION OF LABOR (PHASE 1 — VERTICAL SLICE)', MARGIN_X, y);
+  y += 3;
+
+  const colW = (CONTENT_W - 4) / 2;
+  CO_PITCHING_ALLIANCE.divisionOfLabor.forEach((track, idx) => {
+    const tx = MARGIN_X + idx * (colW + 4);
+    doc.setFillColor(20, 20, 23);
+    doc.setDrawColor(idx === 0 ? 120 : 65, idx === 0 ? 96 : 115, idx === 0 ? 48 : 80);
+    doc.rect(tx, y, colW, 58, 'FD');
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(6.8);
+    doc.setTextColor(200, 155, 60);
+    doc.text(pdfSafe(track.badge.toUpperCase()), tx + 3.5, y + 5.2);
+
+    doc.setFont('times', 'bold');
+    doc.setFontSize(10);
+    doc.setTextColor(246, 239, 226);
+    doc.text(pdfSafe(track.role), tx + 3.5, y + 10.6);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(6.6);
+    doc.setTextColor(212, 206, 195);
+    const sumL = doc.splitTextToSize(pdfSafe(track.summary), colW - 7);
+    doc.text(sumL.slice(0, 2), tx + 3.5, y + 15.6);
+
+    let ty = y + 24.5;
+    doc.setFontSize(6.4);
+    doc.setTextColor(184, 177, 166);
+    track.items.forEach((item) => {
+      const iL = doc.splitTextToSize(`- ${pdfSafe(item)}`, colW - 8);
+      const shown = iL.slice(0, 3);
+      doc.text(shown, tx + 4, ty);
+      ty += shown.length * 3.3 + 1.8;
+    });
+  });
+  y += 64;
+
+  // 2. Studio Value Proposition & ROI
+  doc.setFillColor(22, 20, 17);
+  doc.setDrawColor(120, 96, 48);
+  doc.rect(MARGIN_X, y, CONTENT_W, 44, 'FD');
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(7.2);
+  doc.setTextColor(200, 155, 60);
+  doc.text('STUDIO VALUE PROPOSITION & COMMERCIAL RETURN', MARGIN_X + 4, y + 5.5);
+
+  doc.setFont('times', 'bold');
+  doc.setFontSize(10.5);
+  doc.setTextColor(246, 239, 226);
+  doc.text(pdfSafe(CO_PITCHING_ALLIANCE.studioValueReturn.headline), MARGIN_X + 4, y + 11.2);
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(6.8);
+  doc.setTextColor(212, 206, 195);
+  const valSum = doc.splitTextToSize(pdfSafe(CO_PITCHING_ALLIANCE.studioValueReturn.summary), CONTENT_W - 8);
+  doc.text(valSum.slice(0, 2), MARGIN_X + 4, y + 16);
+
+  const pilColW = (CONTENT_W - 14) / 3;
+  CO_PITCHING_ALLIANCE.studioValueReturn.pillars.forEach((p, idx) => {
+    const px = MARGIN_X + 4 + idx * (pilColW + 3);
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(6.7);
+    doc.setTextColor(200, 155, 60);
+    doc.text(pdfSafe(p.title), px, y + 25.5);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(6.2);
+    doc.setTextColor(184, 177, 166);
+    const dL = doc.splitTextToSize(pdfSafe(p.detail), pilColW);
+    doc.text(dL.slice(0, 4), px, y + 29.5);
+  });
+  y += 49;
+
+  // 3. Strict Vertical Slice Scope Cut (10-15 Min Demo)
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8.2);
+  doc.setTextColor(246, 239, 226);
+  doc.text(pdfSafe(CO_PITCHING_ALLIANCE.verticalSliceScope.title.toUpperCase()), MARGIN_X, y);
+  y += 3.8;
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(6.8);
+  doc.setTextColor(184, 177, 166);
+  const vsRat = doc.splitTextToSize(pdfSafe(CO_PITCHING_ALLIANCE.verticalSliceScope.rationale), CONTENT_W);
+  doc.text(vsRat.slice(0, 2), MARGIN_X, y);
+  y += vsRat.slice(0, 2).length * 3.5 + 2.5;
+
+  const vsW = (CONTENT_W - 6) / 3;
+  CO_PITCHING_ALLIANCE.verticalSliceScope.pillars.forEach((item, idx) => {
+    const vx = MARGIN_X + idx * (vsW + 3);
+    doc.setFillColor(20, 20, 23);
+    doc.setDrawColor(50, 50, 58);
+    doc.rect(vx, y, vsW, 30, 'FD');
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(6.8);
+    doc.setTextColor(200, 155, 60);
+    doc.text(pdfSafe(item.slot.toUpperCase()), vx + 3, y + 5);
+
+    doc.setFont('times', 'bold');
+    doc.setFontSize(8.8);
+    doc.setTextColor(246, 239, 226);
+    doc.text(pdfSafe(item.name), vx + 3, y + 10);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(6.2);
+    doc.setTextColor(184, 177, 166);
+    const vBody = doc.splitTextToSize(pdfSafe(item.detail), vsW - 6);
+    doc.text(vBody.slice(0, 4), vx + 3, y + 14.5);
+  });
+  y += 35;
+
+  // 4. Phase 0 Technical Credibility Gate
+  doc.setFillColor(18, 18, 22);
+  doc.setDrawColor(79, 158, 104);
+  doc.rect(MARGIN_X, y, CONTENT_W, 25.5, 'FD');
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(7.4);
+  doc.setTextColor(154, 224, 175);
+  doc.text(pdfSafe(CO_PITCHING_ALLIANCE.technicalCredibility.title.toUpperCase()), MARGIN_X + 4, y + 5.2);
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(6.5);
+  doc.setTextColor(212, 206, 195);
+  let gateY = y + 10;
+  CO_PITCHING_ALLIANCE.technicalCredibility.requirements.forEach((req) => {
+    const rL = doc.splitTextToSize(`- ${pdfSafe(req)}`, CONTENT_W - 8);
+    doc.text(rL.slice(0, 2), MARGIN_X + 4, gateY);
+    gateY += rL.slice(0, 2).length * 3.4 + 1.5;
+  });
 
   onProgress?.(totalSteps, totalSteps);
   doc.save('The_Last_Relic_Main_Page_EN.pdf');
