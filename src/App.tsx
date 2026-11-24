@@ -10,6 +10,7 @@ import { LootAndPveSection } from './components/LootAndPveSection';
 import { MatchCycleSection } from './components/MatchCycleSection';
 import { MediaFrame } from './components/MediaFrame';
 import { PitchDeckModal } from './components/PitchDeckModal';
+import { VideosTab } from './components/VideosTab';
 import { WhoIsSection } from './components/WhoIsSection';
 import {
   FICHA_TECNICA,
@@ -22,7 +23,7 @@ import type { VisitorTrafficSnapshot } from './types/visitorTraffic';
 import { exportMainPageToPdf } from './utils/mainPagePdf';
 import { exportPitchDeckToPdf } from './utils/pitchDeckPdf';
 
-type MainViewTab = 'overview' | 'sets' | 'biomes' | 'bestiary';
+type MainViewTab = 'overview' | 'sets' | 'biomes' | 'bestiary' | 'videos';
 
 function isHiddenTrafficUrl(): boolean {
   if (typeof window === 'undefined') return false;
@@ -197,7 +198,9 @@ export default function App() {
         ? '90 Launch Skins'
         : activeTab === 'biomes'
           ? 'Biomes'
-          : 'Bestiary';
+          : activeTab === 'bestiary'
+            ? 'Bestiary'
+            : 'Videos';
 
   const currentSectionLabel = isDeckOpen
     ? `Pitch Deck Slide ${activeSlideIndex + 1}`
@@ -369,6 +372,7 @@ export default function App() {
     { id: 'sets', label: '90 Launch Skins' },
     { id: 'biomes', label: 'Biomes' },
     { id: 'bestiary', label: 'Bestiary' },
+    { id: 'videos', label: 'Videos' },
   ];
 
   return (
@@ -496,6 +500,15 @@ export default function App() {
           <BiomesTab onOpenBestiary={() => switchTab('bestiary')} />
         ) : activeTab === 'bestiary' ? (
           <BestiaryTab onOpenBiomes={() => switchTab('biomes')} />
+        ) : activeTab === 'videos' ? (
+          <VideosTab
+            onOpenAlliance={() => {
+              setActiveTab('overview');
+              window.setTimeout(() => {
+                document.getElementById('alliance')?.scrollIntoView({ behavior: 'smooth' });
+              }, 60);
+            }}
+          />
         ) : (
           <>
             {/* Hero Section & Section 01: Universe & Technical Sheet */}
@@ -954,6 +967,13 @@ export default function App() {
               className="hover:text-[#EAE6DF]"
             >
               Bestiary
+            </button>
+            <button
+              type="button"
+              onClick={() => switchTab('videos')}
+              className="hover:text-[#EAE6DF]"
+            >
+              Videos
             </button>
             <button
               type="button"

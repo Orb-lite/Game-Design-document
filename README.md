@@ -49,11 +49,12 @@ Built as a publisher-ready commercial package that isolates a **10–15 minute V
 
 ## Interactive Web Application Features
 
-- **4 Main Interactive Views:**
-  1. **Master Document:** Full GDD specification, interactive Warrior progression trainer, Ether Seal browser, live UE5 combat/defense math simulator, balance tables, Seasonal Live-Ops planner (with `WISH` vs `THREAT` ritual simulator & full-season storm previewer), Co-Pitching Alliance blueprint, and **UE5 Standalone Gameplay Preview Video** (early systems testbed validating combat attacks, inventory loot pickups, and set data using placeholder UI/art/biome).
+- **5 Main Interactive Views:**
+  1. **Master Document:** Full GDD specification, interactive Warrior progression trainer, Ether Seal browser, live UE5 combat/defense math simulator, balance tables, Seasonal Live-Ops planner (with `WISH` vs `THREAT` ritual simulator & full-season storm previewer), and Co-Pitching Alliance blueprint.
   2. **90 Launch Skins:** Complete filterable armory covering all 15 progressive sets across all 6 specializations (`#01`–`#90`).
   3. **Strategic Biomes:** Elevation, Abyssal Ash closure windows, environmental hazards, and visual breakdowns across *The Citadel of Valdris*, *The Miasma Marshes*, *Catacombs of the Nameless King*, and *The Forest of Spires*.
   4. **Bestiary:** Detailed combat behaviors, HP/Threat multipliers, counterplay, and guaranteed loot rules across 7 PvPvE threats up to the *Black Bell Executioner*.
+  5. **Videos:** Dedicated showcase for live Unreal Engine 5 engine captures — featuring the **UE5 Standalone Gameplay Preview Video** (early testbed validating combat attacks, inventory loot pickups, and set data using placeholder UI/art/biome) and the Phase 1 capture roadmap.
 - **Executive Pitch Deck Modal (14 Slides):** Keyboard/click presentation viewer synced with the GDD data.
 - **Real-Time Client PDF Generators (`jsPDF`):**
   - `The_Last_Relic_Pitch_Deck_EN.pdf` — 16:9 widescreen executive pitch deck (Cover + 14 slides).
