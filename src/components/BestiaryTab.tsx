@@ -275,7 +275,7 @@ export function BestiaryTab({ onOpenBiomes }: BestiaryTabProps) {
                     <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#08080A]">
                       <img
                         src={creature.image}
-                        alt={`${creature.name} — ${creature.title}`}
+                        alt={`${creature.name} - ${creature.title}`}
                         referrerPolicy="no-referrer"
                         className="h-full w-full object-cover object-top"
                       />
@@ -394,7 +394,7 @@ export function BestiaryTab({ onOpenBiomes }: BestiaryTabProps) {
             <p>
               <span className="font-semibold text-[#F6EFE2]">Mastery PvE Advantage:</span>{' '}
               Warriors reaching General Lv.100 deal +15% PvE damage (+30% at Lv.200) and scale
-              Tier III–IV Gold drop chances up to 35% base cap—rising to 50% upon reaching Lv.100
+              Tier III-IV Gold drop chances up to 35% base cap - rising to 50% upon reaching Lv.100
               in all Attack Types, Magic, and Defense.
             </p>
           </div>

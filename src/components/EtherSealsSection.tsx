@@ -187,7 +187,7 @@ export function EtherSealsSection({
             <MediaFrame
               src={GENERATED_ASSETS.relicLoot}
               alt="Loot Study: Royal Vestige, engraved Ether Seals, and Vial Belt"
-              caption="Figure 4: Loot Study — Royal Vestige, engraved Ether Seals, and Belt of Vials."
+              caption="Figure 4: Loot Study - Royal Vestige, engraved Ether Seals, and Belt of Vials."
               aspectClass="aspect-[4/3] lg:h-full"
             />
           </div>

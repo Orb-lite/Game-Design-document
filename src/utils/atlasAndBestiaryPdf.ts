@@ -13,13 +13,21 @@ const CONTENT_W = PAGE_W - MARGIN_X * 2; // 186mm
 
 function pdfSafe(input: string): string {
   return input
-    .replace(/→/g, '->')
-    .replace(/←/g, '<-')
-    .replace(/≤/g, '<=')
-    .replace(/≥/g, '>=')
-    .replace(/Δ/g, 'Delta ')
-    .replace(/×/g, 'x')
-    .replace(/•/g, '-')
+    .replace(/\u2014/g, ' - ')
+    .replace(/\u2013/g, '-')
+    .replace(/[\u2012\u2015\u2212]/g, '-')
+    .replace(/[\u2018\u2019\u201A]/g, "'")
+    .replace(/[\u201C\u201D\u201E]/g, '"')
+    .replace(/\u2026/g, '...')
+    .replace(/\u2192/g, '->')
+    .replace(/\u2190/g, '<-')
+    .replace(/\u2264/g, '<=')
+    .replace(/\u2265/g, '>=')
+    .replace(/\u0394/g, 'Delta ')
+    .replace(/\u00D7/g, 'x')
+    .replace(/\u2022/g, '-')
+    .replace(/\u00B7/g, ' | ')
+    .replace(/\s{2,}/g, ' ')
     .replace(/[^\x09\x0A\x0D\x20-\xFF]/g, '');
 }
 

@@ -264,7 +264,7 @@ export function LootAndPveSection({
       affixBuilder: () => string;
     }[] = [
       {
-        label: 'Royal Vestige (Gold — Unique)',
+        label: 'Royal Vestige (Gold - Unique)',
         hex: '#D4AF37',
         chance: effectiveGoldChance,
         affixBuilder: () =>
@@ -273,31 +273,31 @@ export function LootAndPveSection({
           }`,
       },
       {
-        label: 'Cursed Relic (Purple — Passives)',
+        label: 'Cursed Relic (Purple - Passives)',
         hex: '#9461C9',
         chance: effectiveMorado,
         affixBuilder: () =>
-          `2–3 major affixes · Passive: ${
+          `2-3 major affixes · Passive: ${
             CURSED_PASSIVES[Math.floor(Math.random() * CURSED_PASSIVES.length)]
           }`,
       },
       {
-        label: 'Astral Alchemy (Blue — Elemental)',
+        label: 'Astral Alchemy (Blue - Elemental)',
         hex: '#3E82C7',
         chance: activeContainer.azul,
         affixBuilder: () =>
-          `1–2 elemental affixes (${
+          `1-2 elemental affixes (${
             ELEMENTAL_AFFIXES[Math.floor(Math.random() * ELEMENTAL_AFFIXES.length)]
           })`,
       },
       {
-        label: 'Tempered Steel (Green — Upgrade)',
+        label: 'Tempered Steel (Green - Upgrade)',
         hex: '#4F9E68',
         chance: activeContainer.verde,
         affixBuilder: () => '+15% base stats · Faster stamina recovery',
       },
       {
-        label: 'Rusted Forge (Grey — Common)',
+        label: 'Rusted Forge (Grey - Common)',
         hex: '#8C929A',
         chance: activeContainer.gris,
         affixBuilder: () => 'Baseline stats without passives (+5% optional Stamina)',
@@ -324,7 +324,7 @@ export function LootAndPveSection({
     }
 
     setSimulatedDrop({
-      quality: 'Rusted Forge (Grey — Common)',
+      quality: 'Rusted Forge (Grey - Common)',
       hex: '#8C929A',
       itemName,
       itemSkill,
@@ -363,7 +363,7 @@ export function LootAndPveSection({
           <MediaFrame
             src={GENERATED_ASSETS.qualityLineup}
             alt="Valdris Quality Scale: Rusted Forge, Tempered Steel, Astral Alchemy, Cursed Relic, and Royal Vestige"
-            caption="Figure 3: Valdris Quality Scale — Visual silhouette progression from Rusted Forge (Grey) up to Royal Vestige (Gold)."
+            caption="Figure 3: Valdris Quality Scale - Visual silhouette progression from Rusted Forge (Grey) up to Royal Vestige (Gold)."
             aspectClass="aspect-video"
           />
         </div>
@@ -778,7 +778,7 @@ export function LootAndPveSection({
                   Logical Stat Sets &amp; Unrelated Episode I Launch Cosmetic Skins
                 </h3>
                 <p className="mt-1 text-xs text-[#9C968B]">
-                  In-match looted Sets modify combat stats, affixes, and build synergies only—never
+                  In-match looted Sets modify combat stats, affixes, and build synergies only - never
                   altering default 3D visuals. All 90 3D designs shown below serve independently as
                   Valdris&apos;s first visible Launch Cosmetic Skins inside Cosmetic Transmog Slots
                   (completely unrelated to equipped gear stats).
@@ -1409,7 +1409,7 @@ export function LootAndPveSection({
               </p>
               <p className="mt-3 text-sm leading-relaxed text-[#B8B1A6]">
                 The server maintains a Retroactive Net-Damage Ledger per monster and pays out EXP on
-                death based on each player&apos;s % damage share and ΔLevel (0.15x – 2.50x).
+                death based on each player&apos;s % damage share and ΔLevel (0.15x - 2.50x).
               </p>
             </div>
 

@@ -116,7 +116,7 @@ export function MatchCycleSection() {
         <div className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="text-xs tracking-widest text-[#9C968B] uppercase">
-              02 · The 5-Act Match Loop (15–18 Minutes) &amp; Victory Coronation
+              02 · The 5-Act Match Loop (15-18 Minutes) &amp; Victory Coronation
             </p>
             <h2 className="font-display mt-2 text-3xl font-semibold text-[#F6EFE2] text-balance lg:text-4xl">
               Tactical Pacing of The Abyssal Ash
@@ -124,7 +124,7 @@ export function MatchCycleSection() {
           </div>
           <p className="max-w-md text-sm leading-relaxed text-[#B8B1A6]">
             Two hundred Warriors converge from the outer coasts to the Throne Hall. Starting in Act
-            IV, the Black Bell locks respawns—and the winning squad crowns its ranks in Act V.
+            IV, the Black Bell locks respawns - and the winning squad crowns its ranks in Act V.
           </p>
         </div>
 
@@ -282,7 +282,7 @@ export function MatchCycleSection() {
                 Throne Hall Coronation · Oath Mode Victory Hierarchy
               </p>
               <h3 className="font-display mt-1.5 text-2xl font-semibold text-[#F6EFE2]">
-                King, Captain, Colonel &amp; Sergeant — Contribution &amp; Survival EXP
+                King, Captain, Colonel &amp; Sergeant - Contribution &amp; Survival EXP
               </h3>
               <p className="mt-1.5 max-w-2xl text-xs leading-relaxed text-[#B8B1A6]">
                 On the winning squad, the player with the highest eliminations &amp; contribution is

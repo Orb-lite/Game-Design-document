@@ -130,7 +130,7 @@ function SetDesignCard({ set }: { set: EquipmentSetSpec }) {
         <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#09090C]">
           <img
             src={artworkUrl}
-            alt={`${set.name} (${set.professionLabel}) Launch Cosmetic Skin — ${set.visualDesignNote}`}
+            alt={`${set.name} (${set.professionLabel}) Launch Cosmetic Skin - ${set.visualDesignNote}`}
             loading="lazy"
             referrerPolicy="no-referrer"
             className="h-full w-full object-cover object-top"

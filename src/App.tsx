@@ -566,7 +566,7 @@ export default function App() {
             </div>
 
             <p className="mt-3 text-xs text-[#9C968B] italic">
-              Figure 1: Key Art — The Citadel of Valdris under The Abyssal Ash.
+              Figure 1: Key Art - The Citadel of Valdris under The Abyssal Ash.
             </p>
 
             {/* 4-Column Structural Strip */}
@@ -580,7 +580,7 @@ export default function App() {
               <div>
                 <dt className="text-xs text-[#9C968B]">5-Act Match Loop</dt>
                 <dd className="font-mono-tabular mt-1 text-2xl font-semibold text-[#F6EFE2]">
-                  15–18 Minutes
+                  15-18 Minutes
                 </dd>
               </div>
               <div>
@@ -592,7 +592,7 @@ export default function App() {
               <div>
                 <dt className="text-xs text-[#9C968B]">Engine &amp; Replication</dt>
                 <dd className="font-mono-tabular mt-1 text-2xl font-semibold text-[#F6EFE2]">
-                  UE5 · 50–80m
+                  UE5 | 50-80m
                 </dd>
               </div>
             </dl>
@@ -670,7 +670,7 @@ export default function App() {
                   </h2>
                   <p className="mt-4 text-sm leading-relaxed text-[#D4CEC3] first-letter:float-left first-letter:mr-2.5 first-letter:font-display first-letter:text-4xl first-letter:font-bold first-letter:text-[#C89B3C]">
                     Across the cursed continent of Valdris, every blood moon unleashes The Abyssal
-                    Ash—an arcane storm born from the kingdom&apos;s ancient broken oath. No fixed
+                    Ash - an arcane storm born from the kingdom&apos;s ancient broken oath. No fixed
                     classes or rigid bloodlines bind you: your discipline is forged by the steel
                     and Ether Seals you wield.
                   </p>

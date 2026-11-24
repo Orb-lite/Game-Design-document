@@ -59,7 +59,7 @@ export function PitchDeckModal({
       className="fixed inset-0 z-50 flex flex-col bg-[#08080A]/95 backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
-      aria-label={`Commercial Pitch Deck — ${slide.section}`}
+      aria-label={`Commercial Pitch Deck - ${slide.section}`}
     >
       {/* Presentation Top Bar */}
       <div className="flex items-center justify-between gap-4 border-b border-white/10 px-6 py-4">

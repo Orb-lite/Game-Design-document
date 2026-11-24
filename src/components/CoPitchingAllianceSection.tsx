@@ -1,5 +1,5 @@
-import { Briefcase, CheckCircle2, Layers, Milestone, ShieldCheck, TrendingUp } from 'lucide-react';
-import { CO_PITCHING_ALLIANCE } from '../data/gddData';
+import { Briefcase, CheckCircle2, Layers, Milestone, Play, ShieldCheck, TrendingUp } from 'lucide-react';
+import { CO_PITCHING_ALLIANCE, GENERATED_ASSETS } from '../data/gddData';
 
 export function CoPitchingAllianceSection() {
   return (
@@ -32,12 +32,12 @@ export function CoPitchingAllianceSection() {
           ))}
         </dl>
 
-        {/* 1. Division of Labor (Phase 1 — Vertical Slice) */}
+        {/* 1. Division of Labor (Phase 1 - Vertical Slice) */}
         <div className="mt-10">
           <div className="mb-4 flex items-center gap-2">
             <Briefcase className="h-4 w-4 text-[#C89B3C]" aria-hidden="true" />
             <h3 className="font-display text-xl font-semibold text-[#F6EFE2]">
-              Division of Labor (Phase 1 — Vertical Slice)
+              Division of Labor (Phase 1 - Vertical Slice)
             </h3>
           </div>
 
@@ -213,6 +213,70 @@ export function CoPitchingAllianceSection() {
                   </li>
                 ))}
               </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* 6. Playable UE5 Standalone Systems Preview Video */}
+        <div className="mt-10 rounded-lg border border-[#C89B3C]/40 bg-[#141417] p-6 lg:p-8">
+          <div className="flex flex-col gap-3 border-b border-white/10 pb-5 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-[#C89B3C] uppercase">
+                <Play className="h-3.5 w-3.5" aria-hidden="true" />
+                <span>{CO_PITCHING_ALLIANCE.currentTechnicalStatus.previewTag}</span>
+              </div>
+              <h3 className="font-display mt-1.5 text-2xl font-semibold text-[#F6EFE2]">
+                {CO_PITCHING_ALLIANCE.currentTechnicalStatus.previewTitle}
+              </h3>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {CO_PITCHING_ALLIANCE.currentTechnicalStatus.testScopeTags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded border border-[#4F9E68]/45 bg-[#4F9E68]/10 px-2.5 py-1 text-[11px] font-semibold text-[#9AE0AF]"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-6 grid grid-cols-1 items-center gap-6 lg:grid-cols-12">
+            <div className="overflow-hidden rounded-lg border border-white/15 bg-[#08080A] lg:col-span-8">
+              <video
+                src={GENERATED_ASSETS.ue5PrototypePreviewVideo}
+                controls
+                preload="metadata"
+                playsInline
+                poster={GENERATED_ASSETS.ue5PrototypePoster}
+                className="aspect-video w-full bg-black object-contain"
+              >
+                Your browser does not support HTML5 video playback.
+              </video>
+            </div>
+
+            <div className="space-y-4 lg:col-span-4">
+              <div className="rounded-md border border-[#C89B3C]/45 bg-[#12110E] p-4">
+                <p className="text-[11px] font-bold tracking-wider text-[#C89B3C] uppercase">
+                  Engineering Scope Notice
+                </p>
+                <p className="mt-2 text-xs leading-relaxed text-[#EAE6DF]">
+                  {CO_PITCHING_ALLIANCE.currentTechnicalStatus.previewDisclaimer}
+                </p>
+              </div>
+
+              <div className="rounded-md border border-white/10 bg-[#0F0F12] p-4 text-xs leading-relaxed text-[#B8B1A6]">
+                <p className="font-semibold text-[#F6EFE2]">What Is Verified in This Capture:</p>
+                <ul className="mt-2 space-y-1.5">
+                  <li>- Attack inputs, swing timing &amp; hit registration</li>
+                  <li>- Live ground &amp; chest inventory loot pickup flow</li>
+                  <li>- Real equipment Set Data &amp; stat table binding</li>
+                </ul>
+                <p className="mt-3 border-t border-white/10 pt-2.5 text-[11px] text-[#9C968B]">
+                  Placeholder UI, placeholder art, and temporary test terrain will be replaced in
+                  Phase 1 with the Partner Art Studio.
+                </p>
+              </div>
             </div>
           </div>
         </div>

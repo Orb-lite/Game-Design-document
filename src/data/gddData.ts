@@ -17,6 +17,8 @@ export const GENERATED_ASSETS = {
   skinSummerAshSolstice: '/src/assets/images/skin_summer_ash_solstice_1795189920293.jpg',
   eventHalloweenValdris: '/src/assets/images/event_halloween_valdris_1795190239316.jpg',
   skinHalloweenWarden: '/src/assets/images/skin_halloween_warden_1795190239202.jpg',
+  ue5PrototypePreviewVideo: '/assets/aistudio/ue5_standalone_preview.mp4',
+  ue5PrototypePoster: '/assets/aistudio/ue5_standalone_poster.jpg',
 } as const;
 
 export interface FichaEntry {
@@ -25,7 +27,7 @@ export interface FichaEntry {
 }
 
 export const FICHA_TECNICA: FichaEntry[] = [
-  { label: 'Work Title', value: 'Valdris Chronicle: Last Relic (Episode I) — The Last Relic' },
+  { label: 'Work Title', value: 'Valdris Chronicle: Last Relic (Episode I) - The Last Relic' },
   {
     label: 'Studio & Contact',
     value: 'Dimpz Games · isaacgestrada94@gmail.com · +52 33 1835 9421',
@@ -57,22 +59,22 @@ export const GAME_MODES = [
   {
     id: 'juramento',
     name: 'Oath Mode',
-    subtitle: 'Duos, Trios & Quads — Shared Squad Victory',
+    subtitle: 'Duos, Trios & Quads - Shared Squad Victory',
     summary:
-      'Duos, Trios, and Quads never split, have zero friendly fire, and claim victory together—crowning team ranks by Kills, Assists, and Team Healing Magic.',
+      'Duos, Trios, and Quads never split, have zero friendly fire, and claim victory together - crowning team ranks by Kills, Assists, and Team Healing Magic.',
     rules: [
       'During Acts I through III, a fallen squadmate respawns in 60 seconds as long as at least 1 ally remains alive.',
       'If all remaining teammates fall before the 60s timer completes, the entire squad is eliminated instantly.',
       'Starting in Act IV (Black Bell), all respawns are permanently disabled for the rest of the match.',
       'Post-match Coronation & Time Alive EXP: Kills, Assists, Team Healing Magic, and Time Alive award EXP; top squadmate is crowned King, 2nd Captain, 3rd Colonel, and last Sergeant.',
     ],
-    respawnWindow: '60s in Acts I–III · No respawn from Act IV',
+    respawnWindow: '60s in Acts I-III · No respawn from Act IV',
     winCondition: 'Joint squad victory with Throne Hall Hierarchy (King, Captain, Colonel, Sergeant)',
   },
   {
     id: 'errante',
     name: 'Wanderer Mode',
-    subtitle: 'Solo 1 vs 199 — Sole Survivor',
+    subtitle: 'Solo 1 vs 199 - Sole Survivor',
     summary:
       'Extreme individual survival with zero alliances from the very first second.',
     rules: [
@@ -104,7 +106,7 @@ export const MATCH_ACTS: MatchAct[] = [
     id: 'act-1',
     number: 'Act I',
     name: 'The Landfall',
-    timeRange: '0:00 – 4:00',
+    timeRange: '0:00 - 4:00',
     survivors: '200 → 130',
     respawnStatus: '60s Respawn Active',
     respawnActive: true,
@@ -122,12 +124,12 @@ export const MATCH_ACTS: MatchAct[] = [
     id: 'act-2',
     number: 'Act II',
     name: 'The Hunt',
-    timeRange: '4:00 – 9:00',
+    timeRange: '4:00 - 9:00',
     survivors: '130 → 60',
     respawnStatus: '60s Respawn Active',
     respawnActive: true,
     summary:
-      'First constriction of The Abyssal Ash. Sealed Altar-Chests (Epic) emerge guarded by spectral sentinels and Tier II–III PvE beasts.',
+      'First constriction of The Abyssal Ash. Sealed Altar-Chests (Epic) emerge guarded by spectral sentinels and Tier II-III PvE beasts.',
     keyEvents: [
       'PvPvE clashes around runic light beacons visible up to 70m when breaking Altar seals.',
       'Squad rotation from the Miasma Marshes and Forest of Spires toward the walled periphery.',
@@ -140,7 +142,7 @@ export const MATCH_ACTS: MatchAct[] = [
     id: 'act-3',
     number: 'Act III',
     name: 'The Siege',
-    timeRange: '9:00 – 14:00',
+    timeRange: '9:00 - 14:00',
     survivors: '60 → 16',
     respawnStatus: 'Final Act with 60s Respawn',
     respawnActive: true,
@@ -152,13 +154,13 @@ export const MATCH_ACTS: MatchAct[] = [
       'Final tactical window to recover fallen allies before the Black Bell tolls.',
     ],
     image: GENERATED_ASSETS.siegeBridge,
-    caption: 'Figure 2: The Siege — Company clash across the Citadel of Valdris drawbridge.',
+    caption: 'Figure 2: The Siege - Company clash across the Citadel of Valdris drawbridge.',
   },
   {
     id: 'act-4',
     number: 'Act IV',
     name: 'The Black Bell',
-    timeRange: '14:00 – 16:00',
+    timeRange: '14:00 - 16:00',
     survivors: 'Last 16 Companies / 4',
     respawnStatus: 'NO RESPAWN',
     respawnActive: false,
@@ -170,13 +172,13 @@ export const MATCH_ACTS: MatchAct[] = [
       'Global compass marker reveals the Black Bell Executioner (3.00x HP, 35% base / 50% Omni-Lv.100 Gold Tier).',
     ],
     image: GENERATED_ASSETS.throneDuel,
-    caption: 'Figure 6: Acts IV–V — Toll of the Black Bell echoing through the Citadel vaults.',
+    caption: 'Figure 6: Acts IV-V - Toll of the Black Bell echoing through the Citadel vaults.',
   },
   {
     id: 'act-5',
     number: 'Act V',
     name: 'The Judgment',
-    timeRange: '16:00 – Finale',
+    timeRange: '16:00 - Finale',
     survivors: 'Throne Hall Finale',
     respawnStatus: 'NO RESPAWN · Sudden Death',
     respawnActive: false,
@@ -188,7 +190,7 @@ export const MATCH_ACTS: MatchAct[] = [
       'Time Alive EXP plus Kills, Assists, and Team Healing Magic payouts settle all General & Mastery levels.',
     ],
     image: GENERATED_ASSETS.throneDuel,
-    caption: 'Figure 6: The Judgment — Final Parry duel and Throne Hall Coronation.',
+    caption: 'Figure 6: The Judgment - Final Parry duel and Throne Hall Coronation.',
   },
 ];
 
@@ -235,7 +237,7 @@ export const VICTORY_HIERARCHY_RANKS: VictoryRankSpec[] = [
     orderLabel: '4th / Last in Squad',
     title: 'Sergeant',
     accentHex: '#4F9E68',
-    rule: 'Final member of the winning squad—still honored for Survival Time, Assists, and Support.',
+    rule: 'Final member of the winning squad - still honored for Survival Time, Assists, and Support.',
     expBonusPct: 10,
     ceremonyReward: 'Oathguard Quartermaster Signet · +10% Victory EXP Bonus',
   },
@@ -284,7 +286,7 @@ export const QUALITY_TIERS: QualityTier[] = [
   {
     id: 'gris',
     name: 'Rusted Forge',
-    colorName: 'Grey — Common',
+    colorName: 'Grey - Common',
     hex: '#8C929AC9',
     badgeText: 'Grey · Common',
     subtitle: 'Baseline survival gear',
@@ -293,7 +295,7 @@ export const QUALITY_TIERS: QualityTier[] = [
   {
     id: 'verde',
     name: 'Tempered Steel',
-    colorName: 'Green — Upgrade',
+    colorName: 'Green - Upgrade',
     hex: '#4F9E68',
     badgeText: 'Green · Upgrade',
     subtitle: '+15% base stat boost',
@@ -302,7 +304,7 @@ export const QUALITY_TIERS: QualityTier[] = [
   {
     id: 'azul',
     name: 'Astral Alchemy',
-    colorName: 'Blue — Elemental',
+    colorName: 'Blue - Elemental',
     hex: '#3E82C7',
     badgeText: 'Blue · Elemental',
     subtitle: 'Combat elemental infusion',
@@ -312,7 +314,7 @@ export const QUALITY_TIERS: QualityTier[] = [
   {
     id: 'morado',
     name: 'Cursed Relic',
-    colorName: 'Purple — Passives',
+    colorName: 'Purple - Passives',
     hex: '#9461C9',
     badgeText: 'Purple · Passives',
     subtitle: 'Rule-bending combat passives',
@@ -322,12 +324,12 @@ export const QUALITY_TIERS: QualityTier[] = [
   {
     id: 'dorado',
     name: 'Royal Vestige',
-    colorName: 'Gold — Unique',
+    colorName: 'Gold - Unique',
     hex: '#D4AF37',
     badgeText: 'Gold · Unique',
     subtitle: 'Match-unique legendary stat data',
     description:
-      'Unique legendary combat data per match granting maximum stats, affixes, and ultimate abilities—completely decoupled from equipped Cosmetic Skins.',
+      'Unique legendary combat data per match granting maximum stats, affixes, and ultimate abilities - completely decoupled from equipped Cosmetic Skins.',
   },
 ];
 
@@ -361,7 +363,7 @@ export const CONTAINER_DROP_TABLE: ContainerDropRow[] = [
     azul: 40,
     morado: 12,
     dorado: 3,
-    affixRule: '1–2 elemental affixes (Embers, Frost, Miasma, Voltaic).',
+    affixRule: '1-2 elemental affixes (Embers, Frost, Miasma, Voltaic).',
   },
   {
     id: 'boveda-catacumba',
@@ -371,7 +373,7 @@ export const CONTAINER_DROP_TABLE: ContainerDropRow[] = [
     azul: 35,
     morado: 41,
     dorado: 14,
-    affixRule: '2–3 major affixes + 1 rule-altering combat passive.',
+    affixRule: '2-3 major affixes + 1 rule-altering combat passive.',
   },
   {
     id: 'botin-heraldo',
@@ -468,20 +470,20 @@ export function computeMatchmakingBracket(profile: PlayerCombatProfile) {
       (omniUnlocked ? 35 : 0)
   );
 
-  let bracketLabel = 'Bracket I · Novice Vanguard (Lv. 1–39 Band)';
+  let bracketLabel = 'Bracket I · Novice Vanguard (Lv. 1-39 Band)';
   let queueParityNote =
     'Paired strictly against low-level Warriors & matched Weapon Mastery tiers (35% Gold Cap lobby).';
 
   if (omniUnlocked || combatPowerIndex >= 175) {
     bracketLabel = 'Bracket IV · Omni-Master Apex (50% Gold Cap Parity)';
     queueParityNote =
-      'Matched exclusively against high-mastery Warriors with full Lv.100+ & 100% Weapon Mastery parity—zero mismatch vs newcomers.';
+      'Matched exclusively against high-mastery Warriors with full Lv.100+ & 100% Weapon Mastery parity - zero mismatch vs newcomers.';
   } else if (combatPowerIndex >= 130 || profile.weaponMasteryPct >= 100) {
     bracketLabel = 'Bracket III · Mastered Citadel Tier (Equalized Mastery)';
     queueParityNote =
       'Any 100% Weapon Mastery (bought via Skin or organic) elevates MMR into Mastered lobbies where opponents also field max Weapon Mastery.';
   } else if (combatPowerIndex >= 85) {
-    bracketLabel = 'Bracket II · Proven Challenger (Lv. 40–79 Band)';
+    bracketLabel = 'Bracket II · Proven Challenger (Lv. 40-79 Band)';
     queueParityNote =
       'Balanced mid-tier Valdris lobby enforcing tight ±15 Combat Index variance and highest-squadmate anti-smurf anchoring.';
   }
@@ -629,12 +631,12 @@ export const UNIVERSAL_SLOTS = [
   {
     slot: 'Base Designation & Separate Mastery Axes',
     detail:
-      'Every Warrior trains 3 isolated progression tracks: (1) Attack Type Level (Sword, Club, Axe, Distance, Magic), (2) Defense Level, and (3) Standalone Weapon Mastery (0%–100%), kept completely separate from Attack Type and Defense levels.',
+      'Every Warrior trains 3 isolated progression tracks: (1) Attack Type Level (Sword, Club, Axe, Distance, Magic), (2) Defense Level, and (3) Standalone Weapon Mastery (0%-100%), kept completely separate from Attack Type and Defense levels.',
   },
   {
     slot: 'Logical Gear Data Slots (Stats & Synergies Only)',
     detail:
-      '2 Quick-Swap Weapons, 4 Armor Data Slots (Helm, Cuirass, Greaves, Boots), Shield/Off-hand, and 4 Vial Belt Slots strictly modify numerical Attack, Defense, Block %, Affixes, and Build Synergies—never altering your visible 3D mesh by default.',
+      '2 Quick-Swap Weapons, 4 Armor Data Slots (Helm, Cuirass, Greaves, Boots), Shield/Off-hand, and 4 Vial Belt Slots strictly modify numerical Attack, Defense, Block %, Affixes, and Build Synergies - never altering your visible 3D mesh by default.',
   },
   {
     slot: 'Cosmetic Slots & Dual Weapon Mastery Unlock',
@@ -790,22 +792,22 @@ export const PVE_DIFFICULTY_TIERS: PveTierSpec[] = [
   {
     id: 'tier-1',
     tierLabel: 'Tier I',
-    difficulty: 'Difficulty I — Low (Early Looting)',
-    acts: 'Acts I–II',
+    difficulty: 'Difficulty I - Low (Early Looting)',
+    acts: 'Acts I-II',
     enemies: 'Valdris Marauders (Withered Mercenary 0.45x HP, Mire Leech 0.52x HP)',
     chestMechanic: 'Camp Stash & Patrol Pack (fast 1.5s unsealed looting).',
-    scalingErrante: '1x HP (1–2 foes)',
+    scalingErrante: '1x HP (1-2 foes)',
     scalingJuramento: '1.4x HP (3-foe patrol)',
     pvpRisk: '25m (low audio footprint, no map ping)',
     hpMultiplierMax: 0.52,
     drops: { gris: 62, verde: 30, azul: 8, morado: 0, dorado: 0 },
-    guaranteedRule: '1–2 starter gear pieces + 1 guaranteed Belt Vial.',
+    guaranteedRule: '1-2 starter gear pieces + 1 guaranteed Belt Vial.',
   },
   {
     id: 'tier-2',
     tierLabel: 'Tier II',
-    difficulty: 'Difficulty II — Medium (Sealed Altar-Chest)',
-    acts: 'Acts II–III',
+    difficulty: 'Difficulty II - Medium (Sealed Altar-Chest)',
+    acts: 'Acts II-III',
     enemies: 'Spectral Guardians (Altar Sentinel 0.90x HP, Spires Watcher 0.75x HP)',
     chestMechanic: 'Chest remains invulnerable until both guardians fall; 3.0s unseal channel.',
     scalingErrante: '1x HP (2 guardians)',
@@ -818,8 +820,8 @@ export const PVE_DIFFICULTY_TIERS: PveTierSpec[] = [
   {
     id: 'tier-3',
     tierLabel: 'Tier III',
-    difficulty: 'Difficulty III — High (Catacomb Bosses)',
-    acts: 'Acts II–IV',
+    difficulty: 'Difficulty III - High (Catacomb Bosses)',
+    acts: 'Acts II-IV',
     enemies: 'Horrors of the Nameless King (Ossuary Knight 1.80x HP, Catacomb Wyrm 2.20x HP)',
     chestMechanic: 'Boss drops the Ossuary Key to unlock the 3-chest vault (4.5s channel).',
     scalingErrante: '1x HP',
@@ -833,8 +835,8 @@ export const PVE_DIFFICULTY_TIERS: PveTierSpec[] = [
   {
     id: 'tier-4',
     tierLabel: 'Tier IV',
-    difficulty: 'Difficulty IV — Extreme (Black Bell)',
-    acts: 'Acts IV–V',
+    difficulty: 'Difficulty IV - Extreme (Black Bell)',
+    acts: 'Acts IV-V',
     enemies: 'Herald of The Abyssal Ash (Black Bell Executioner 3.00x HP)',
     chestMechanic:
       'Instant direct drop on killing blow; Gold Tier scales up to 35% base cap, rising to 50% at All Masteries Lv.100+.',
@@ -879,10 +881,10 @@ export const BIOMES: BiomeSpec[] = [
     tacticalNotes:
       'Ether Wall seals portcullises and bridges; the toll of the Black Bell locks the final ring here.',
     image: GENERATED_ASSETS.siegeBridge,
-    caption: 'The Citadel of Valdris — Battlements, drawbridges, and Throne Hall.',
+    caption: 'The Citadel of Valdris - Battlements, drawbridges, and Throne Hall.',
     elevationProfile: '3 Vertical Fortress Tiers + Central Throne Hall Arena',
     ashClosureWindow: 'Safe Center through Act V (Throne Hall Sudden Death)',
-    lootFocus: 'Tier III–IV Endgame Spoils · 35% Base -> 50% Omni-Mastery Gold Cap',
+    lootFocus: 'Tier III-IV Endgame Spoils · 35% Base -> 50% Omni-Mastery Gold Cap',
     environmentalHazards: [
       'Retracting Drawbridges & Narrow Rampart Chokepoints under crossbow fire',
       'Throne Hall Pillar Collapse & Tightening Abyssal Ash Ring in Act V',
@@ -897,16 +899,16 @@ export const BIOMES: BiomeSpec[] = [
     name: 'The Miasma Marshes',
     location: 'Western Flank',
     threat: 'Tier I Monsters & Toxic Pools',
-    acts: 'Acts I–II',
+    acts: 'Acts I-II',
     description:
       'Sunken hamlets linked by wooden catwalks above toxic waters; requires Purifying Elixirs or Astral Alchemy boots to cross safely without poison DoT.',
     tacticalNotes:
       'Ideal for quiet early looting (25m PvP noise radius) and choke-point ambushes on narrow walkways.',
     image: GENERATED_ASSETS.biomeMiasmaMarshes,
-    caption: 'The Miasma Marshes — Sunken wooden catwalks over glowing toxic waters.',
+    caption: 'The Miasma Marshes - Sunken wooden catwalks over glowing toxic waters.',
     elevationProfile: 'Low-Lying Bog Basins & Elevated Timber Walkways',
     ashClosureWindow: 'Consumed by Abyssal Ash at end of Act II (9:00)',
-    lootFocus: 'Tier I–II Stashes, Purifying Elixirs & Anti-Miasma Boots',
+    lootFocus: 'Tier I-II Stashes, Purifying Elixirs & Anti-Miasma Boots',
     environmentalHazards: [
       'Toxic Miasma Floodwaters inflicting scaling poison DoT without Purifying Elixir',
       'Rotting Catwalk Chokepoints forcing single-file crossings or blink escapes',
@@ -921,13 +923,13 @@ export const BIOMES: BiomeSpec[] = [
     name: 'Catacombs of the Nameless King',
     location: 'Underneath Valdris',
     threat: 'Tier III Bosses & 120m Echo',
-    acts: 'Acts II–IV (Sealed in Act IV)',
+    acts: 'Acts II-IV (Sealed in Act IV)',
     description:
       'Torch-lit subterranean labyrinth housing Cursed Relics; forces squads to fight over the sole 3 escape stairways before the Abyssal Ash seals the depths.',
     tacticalNotes:
       'Slaying the Ossuary Knight or Wyrm awards the Ossuary Key for the 3-chest Vault (4.5s).',
     image: GENERATED_ASSETS.catacombsAltar,
-    caption: 'Catacombs of the Nameless King — Subterranean vaults guarded by Tier III Horrors.',
+    caption: 'Catacombs of the Nameless King - Subterranean vaults guarded by Tier III Horrors.',
     elevationProfile: 'Subterranean Crypt Chambers · 3 Sole Ascent Stairways',
     ashClosureWindow: 'Sealed Permanently at Act IV Black Bell (14:00)',
     lootFocus: 'Cursed Relics (Purple) & 14% Base Gold Tier (3-Chest Ossuary Vault)',
@@ -945,13 +947,13 @@ export const BIOMES: BiomeSpec[] = [
     name: 'The Forest of Spires',
     location: 'Eastern Flank',
     threat: 'Tier II Guardians & Verticality',
-    acts: 'Acts I–III',
+    acts: 'Acts I-III',
     description:
-      'Colossal ancient trees laced with lookout platforms and suspension bridges—built for vertical ambushes with Dual Hand Crossbows (1 per hand) and Seal of Translation.',
+      'Colossal ancient trees laced with lookout platforms and suspension bridges - built for vertical ambushes with Dual Hand Crossbows (1 per hand) and Seal of Translation.',
     tacticalNotes:
       'Seal of Translation (8m+) chains leaps across tree canopies while Watchers guard Altar-Chests below.',
     image: GENERATED_ASSETS.biomeForestSpires,
-    caption: 'The Forest of Spires — High treehouse platforms and swaying rope bridges.',
+    caption: 'The Forest of Spires - High treehouse platforms and swaying rope bridges.',
     elevationProfile: 'Multi-Tier Redwood Canopies, Rope Bridges & Forest Floor Altars',
     ashClosureWindow: 'Overrun by Abyssal Ash late in Act III (13:30)',
     lootFocus: 'Sealed Altar-Chests (Tier II Astral Alchemy) & Ether Seals',
@@ -969,8 +971,8 @@ export const BIOMES: BiomeSpec[] = [
 export const MATH_FORMULAS = [
   {
     title: 'Retroactive Damage Ledger EXP',
-    formula: 'EXP_Awarded = Base_EXP * (%_Damage_Share) * ΔLevel_Factor',
-    note: 'ΔLevel Much Higher (+50 lv+): 1.50x–2.50x · Higher (+21 to +49): 1.20x–1.49x · Similar (-20 to +20): 1.00x · Lower (-21 or less): 0.15x–0.60x.',
+    formula: 'EXP_Awarded = Base_EXP * (%_Damage_Share) * ΔLevel_Factor * SameYear_Event_2x',
+    note: 'ΔLevel Much Higher (+50 lv+): 1.50x-2.50x · Higher (+21 to +49): 1.20x-1.49x · Similar (-20 to +20): 1.00x · Lower (-21 or less): 0.15x-0.60x. Players who already won that current year Loot Event earn 2x EXP for that match across Monsters, Bosses & Players (resets each year with brand-new loot).',
   },
   {
     title: 'Universal Vitality (Warrior HP Curve)',
@@ -986,7 +988,7 @@ export const MATH_FORMULAS = [
     title: 'Weapon Damage by Attack Type, Separate Weapon Mastery & General Level',
     formula:
       'Net_Dmg = [(Weapon_Atk * (1 + Weapon_Mastery * 0.12)) * (1 + Attack_Type_Lv * 0.015) + General_Lv * 0.35] * Factor * 0.60 * (100 / (100 + Armor))',
-    note: 'Attack_Type_Lv (Sword/Club/Axe/Distance) and Defense_Level are earned strictly in combat. Separate Weapon_Mastery (0.00–1.00) auto-maxes to 1.00 (Max Weapon Attack) on Skin purchase or unlocks the Weapon Skin for free at 100% organic completion.',
+    note: 'Attack_Type_Lv (Sword/Club/Axe/Distance) and Defense_Level are earned strictly in combat. Separate Weapon_Mastery (0.00-1.00) auto-maxes to 1.00 (Max Weapon Attack) on Skin purchase or unlocks the Weapon Skin for free at 100% organic completion.',
   },
   {
     title: 'Spell Output & Healing Power (Magic Level)',
@@ -998,7 +1000,7 @@ export const MATH_FORMULAS = [
     title: 'Armor, Shield & Defense Level Mitigation',
     formula:
       'Effective_Armor = (Armor_Def + Shield_Def) * (1 + Defense_Level * 0.014)   |   Mitigation = Armor / (100 + Armor)',
-    note: 'Every shield block or absorbed hit grants Defense EXP. Shields add active block reduction (25%–68%) boosted by Defense Level.',
+    note: 'Every shield block or absorbed hit grants Defense EXP. Shields add active block reduction (25%-68%) boosted by Defense Level.',
   },
   {
     title: 'Vial Belt Recovery',
@@ -1013,8 +1015,8 @@ export const MATH_FORMULAS = [
   {
     title: 'Match EXP & Omni-Mastery Gold Loot Cap (35% → 50%)',
     formula:
-      'Match_EXP = [(Kills * 140) + (Assists * 65) + (Healing / 15) + (Min * 20)] * (1 + Rank)   |   Gold_Cap = 50% if All_Atk & Mag & Def >= 100 else 35%',
-    note: 'Reaching Lv.100+ organically in ALL Attack Types (Sword, Club, Axe, Distance), Magic, and Defense elevates the Gold Tier drop cap from 35% to 50%. Every minute alive awards +20 EXP.',
+      'Match_EXP = [(Kills * 140) + (Assists * 65) + (Healing / 15) + (Min * 20)] * (1 + Rank) * SameYear_Event_2x   |   Gold_Cap = 50% if All_Atk & Mag & Def >= 100 else 35%',
+    note: 'Reaching Lv.100+ organically in ALL Attack Types (Sword, Club, Axe, Distance), Magic, and Defense elevates the Gold Tier drop cap from 35% to 50%. Every minute alive awards +20 EXP; already winning this year Loot Event grants 2x EXP for that match across Monsters, Bosses & Players (resets next year for brand-new annual loot).',
   },
   {
     title: 'Fair-Match Power Matchmaking (Zero Store Advantage)',
@@ -1128,9 +1130,9 @@ export const DECOUPLED_SYSTEM_PILLARS: DecoupledPillarSpec[] = [
     summary:
       'Valdris Chronicle: Last Relic (Episode I) decouples in-match Logical Gear Data from independent Cosmetic Slots (the 90 launch 3D skins) and isolates a dedicated Weapon Mastery track completely separate from Attack Type Level and Defense Level.',
     bullets: [
-      'Logical Gear vs. Launch Skins: Equipped gear modifies numerical Attack, Defense, Block %, and affixes only—leaving your 3D mesh unchanged. The 90 3D designs serve independently as Episode I Launch Cosmetic Skins with zero stat binding.',
+      'Logical Gear vs. Launch Skins: Equipped gear modifies numerical Attack, Defense, Block %, and affixes only - leaving your 3D mesh unchanged. The 90 3D designs serve independently as Episode I Launch Cosmetic Skins with zero stat binding.',
       'Separate Weapon Mastery Track: Every weapon features a standalone Weapon Mastery gauge strictly isolated from Attack Type Level (Sword/Club/Axe/Distance/Magic) and Defense Level.',
-      'Dual Unlock Symmetry: Purchasing a weapon skin immediately masterizes that weapon’s separate Weapon Mastery to 100% Max Weapon Attack (without modifying Attack Type or Defense Level); completing that Weapon Mastery organically unlocks the weapon’s Cosmetic Skin for free.',
+      'Dual Unlock Symmetry: Purchasing a weapon skin immediately masterizes that weapon\'s separate Weapon Mastery to 100% Max Weapon Attack (without modifying Attack Type or Defense Level); completing that Weapon Mastery organically unlocks the weapon\'s Cosmetic Skin for free.',
     ],
   },
   {
@@ -1139,11 +1141,11 @@ export const DECOUPLED_SYSTEM_PILLARS: DecoupledPillarSpec[] = [
     title: 'Technical Architecture & Tactical Combat Precision',
     subtitle: 'Visual Mesh Override vs. Invariant Hitboxes & Frame Data',
     summary:
-      'To safeguard high-precision PvPvE duels across 200 concurrent Warriors in Unreal Engine 5, Skins alter client visuals only and Weapon Mastery remains strictly capped at each weapon’s canonical organic ceiling.',
+      'To safeguard high-precision PvPvE duels across 200 concurrent Warriors in Unreal Engine 5, Skins alter client visuals only and Weapon Mastery remains strictly capped at each weapon\'s canonical organic ceiling.',
     bullets: [
       'Rendering-Only Overrides: Equipped skins swap only Modular Skeletal Mesh components, PBR material instances, textures, and non-intrusive GPU Niagara VFX trails.',
       'Locked Collision & Frame Data: Canonical Hitboxes, Hurtboxes, swing arc geometry, active Parry windows, Riposte recovery timings, and Dodge Invulnerability Frames (i-Frames) remain 100% invariant and server-authoritative.',
-      'Bounded Parity & Fair-Match Matchmaking: Whenever a Skin auto-maxes Weapon Mastery to 100% (or a Warrior unlocks Omni-Lv.100’s 50% Gold Cap), Server Matchmaking updates their Combat Power Index—pairing them strictly with equivalent-power opponents inside tight Lv_avg lobbies.',
+      'Bounded Parity & Fair-Match Matchmaking: Whenever a Skin auto-maxes Weapon Mastery to 100% (or a Warrior unlocks Omni-Lv.100\'s 50% Gold Cap), Server Matchmaking updates their Combat Power Index - pairing them strictly with equivalent-power opponents inside tight Lv_avg lobbies.',
     ],
   },
   {
@@ -1154,7 +1156,7 @@ export const DECOUPLED_SYSTEM_PILLARS: DecoupledPillarSpec[] = [
     summary:
       'True Zero Pay-to-Win requires Fair-Match Matchmaking: any purchased Skin granting 100% Separate Weapon Mastery immediately queues that Warrior into Mastered Brackets alongside equal-power organic players, while Attack Type, Defense Level, and Anti-Smurf squad anchoring protect every lobby.',
     bullets: [
-      'Fair-Match Bracket Isolation: MM_Index weighs General Level, Attack/Defense Levels, active Weapon Mastery %, and Omni-Lv.100 50%-cap status—preventing maxed veterans or skin-mastered buyers from facing unmastered newcomers.',
+      'Fair-Match Bracket Isolation: MM_Index weighs General Level, Attack/Defense Levels, active Weapon Mastery %, and Omni-Lv.100 50%-cap status - preventing maxed veterans or skin-mastered buyers from facing unmastered newcomers.',
       'Anti-Smurf Oath Squad Anchor: In Oath Mode (Duos/Trios/Quads), matchmaking anchors to the highest-rated squadmate so veterans cannot smurf into beginner lobbies.',
       'Protected Progression & Multi-Episode Scale: Attack Type Level, Defense Level, and the 50% Omni-Lv.100 Gold Cap remain strictly non-purchasable across Episode I and future Valdris Chronicle Episodes.',
     ],
@@ -1163,9 +1165,9 @@ export const DECOUPLED_SYSTEM_PILLARS: DecoupledPillarSpec[] = [
 
 export const UE5_PILLARS = [
   {
-    title: 'Replication Graph & Spatial Relevancy (50–80m)',
+    title: 'Replication Graph & Spatial Relevancy (50-80m)',
     detail:
-      'High-frequency replication for parry frames, dual-crossbow bolts, and Ether Seals inside a 50–80m combat radius, conserving bandwidth across the rest of the 200-player map.',
+      'High-frequency replication for parry frames, dual-crossbow bolts, and Ether Seals inside a 50-80m combat radius, conserving bandwidth across the rest of the 200-player map.',
   },
   {
     title: 'Fair-Match Server Authority & 3-Track Mastery Ledger',
@@ -1175,7 +1177,7 @@ export const UE5_PILLARS = [
   {
     title: 'Decoupled Cosmetic Mesh Swapping & Canonical Frame Data',
     detail:
-      'Cosmetic Skins swap Modular Skeletal Meshes, PBR materials, textures, and non-intrusive Niagara VFX via independent Transmog Slots—while Hitboxes, Hurtboxes, Animation Timings, and Invulnerability Frames remain 100% locked and unaffected.',
+      'Cosmetic Skins swap Modular Skeletal Meshes, PBR materials, textures, and non-intrusive Niagara VFX via independent Transmog Slots - while Hitboxes, Hurtboxes, Animation Timings, and Invulnerability Frames remain 100% locked and unaffected.',
   },
   {
     title: 'Multi-Layer Anti-Cheat Defense',
@@ -1208,12 +1210,12 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
     index: 1,
     code: '01 / 14',
     section: 'Concept & Hook',
-    title: 'The Last Relic — 200-Warrior Tactical PvPvE Battle Royale',
+    title: 'The Last Relic - 200-Warrior Tactical PvPvE Battle Royale',
     keyMessage: '"200 Souls. 5 Acts. One Single Iron Crown."',
     bullets: [
       'Dark-fantasy Battle Royale built in Unreal Engine 5 uniting directional melee parry combat, dual-crossbow ballistics, and Ether magic.',
       'Two crisp game modes: Oath Mode (Duos, Trios & Quads united with shared victory) and Wanderer Mode (Solo 1 vs 199).',
-      'Dynamic Warrior identity featuring 6 evolving specializations, 90 modular 3D sets, and fast 15–18 minute matches.',
+      'Dynamic Warrior identity featuring 6 evolving specializations, 90 modular 3D sets, and fast 15-18 minute matches.',
     ],
     image: GENERATED_ASSETS.heroCitadel,
   },
@@ -1247,7 +1249,7 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
     index: 4,
     code: '04 / 14',
     section: 'Core 5-Act Match Loop',
-    title: 'Tactical Match Lifecycle in 15–18 Minutes',
+    title: 'Tactical Match Lifecycle in 15-18 Minutes',
     keyMessage: 'Relentless pacing: early-game squad respawn giving way to Black Bell sudden death.',
     bullets: [
       'Acts I & II (Landfall & The Hunt): starter stashes, Sealed Altar-Chests, and 60s teammate respawn while 1+ ally stands.',
@@ -1268,7 +1270,7 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
       '2 Arcane Masteries via Magic Level: Wizard (offensive sorcery) and Druid (squad healing, Miasma cleansing, and barriers).',
     ],
     image: GENERATED_ASSETS.qualityLineup,
-    showcaseTitle: '3D Visual Designs — All 6 Warrior Specializations',
+    showcaseTitle: '3D Visual Designs - All 6 Warrior Specializations',
     showcaseItems: [
       {
         label: 'Sword Warrior',
@@ -1315,9 +1317,9 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
     title: 'Unrelated Logical Gear Sets, Launch Skins & Dual Weapon Mastery',
     keyMessage: '90 Launch Skins unlock organically via Weapon Mastery OR auto-max Weapon Mastery upon purchase.',
     bullets: [
-      'Complete Visual/Logic Separation: equipping in-match gear alters numerical stats, affixes, and synergies only (never default 3D visuals), while 90 3D designs form Episode I’s independent Launch Skins.',
-      'Separate Weapon Mastery Track: isolated from Attack Type Level (Sword/Club/Axe/Distance/Magic) and Defense Level—preventing any bypass of core combat skill progression.',
-      'Dual-Path Symmetry: buying a weapon skin auto-masterizes its Weapon Mastery to Max Weapon Attack immediately; earning that Weapon Mastery organically unlocks that weapon’s skin for free.',
+      'Complete Visual/Logic Separation: equipping in-match gear alters numerical stats, affixes, and synergies only (never default 3D visuals), while 90 3D designs form Episode I\'s independent Launch Skins.',
+      'Separate Weapon Mastery Track: isolated from Attack Type Level (Sword/Club/Axe/Distance/Magic) and Defense Level - preventing any bypass of core combat skill progression.',
+      'Dual-Path Symmetry: buying a weapon skin auto-masterizes its Weapon Mastery to Max Weapon Attack immediately; earning that Weapon Mastery organically unlocks that weapon\'s skin for free.',
     ],
     image: GENERATED_ASSETS.relicLoot,
     showcaseTitle: 'Episode I Launch Cosmetic Skins (Unrelated to Logical Gear Stats)',
@@ -1374,7 +1376,7 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
     title: 'Magic Level Spell Scaling Across 3 Equippable Slots',
     keyMessage: 'Casting spells trains Magic Level and scales damage, barriers, and squad healing.',
     bullets: [
-      'Every spell cast grants Magic EXP—naturally diverging high-magic Warriors into offensive Wizards or supportive Druids.',
+      'Every spell cast grants Magic EXP - naturally diverging high-magic Warriors into offensive Wizards or supportive Druids.',
       'Direct scaling formula: Spell_Power = [Base * (1 + Magic_Level * 0.018) + General_Lv * 0.45] across all 8 Ether Seals.',
       'Spatial control & outplay tools: Bastion (8s crystal wall), Gravity (60%+ slow well), and Translation (8m+ blink).',
     ],
@@ -1412,11 +1414,11 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
     code: '11 / 14',
     section: 'UE5 Engineering, Hitbox Integrity & Anti-Cheat',
     title: 'Decoupled Skin Rendering & Server-Authoritative Combat Precision',
-    keyMessage: 'Skins alter visual meshes, materials & VFX only—preserving exact Hitboxes, Timings & i-Frames.',
+    keyMessage: 'Skins alter visual meshes, materials & VFX only - preserving exact Hitboxes, Timings & i-Frames.',
     bullets: [
       'Strict Render-Layer Isolation: Cosmetic Slots swap only Skeletal Meshes, PBR materials, textures, and non-intrusive Niagara VFX trails.',
       'Invariant Combat Frame Data: Canonical Hitboxes, Hurtboxes, swing arcs, active Parry windows, and Dodge i-Frames stay 100% locked for PvPvE integrity.',
-      'Replication Graph (50–80m) + Multi-Layer Anti-Cheat: kernel protection, server anti-ESP occlusion culling, and <80ms auto-parry telemetry.',
+      'Replication Graph (50-80m) + Multi-Layer Anti-Cheat: kernel protection, server anti-ESP occlusion culling, and <80ms auto-parry telemetry.',
     ],
     image: GENERATED_ASSETS.siegeBridge,
   },
@@ -1424,12 +1426,12 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
     index: 12,
     code: '12 / 14',
     section: 'Seasonal Live-Ops · Full-Season World Storms',
-    title: 'Full-Season Storm & Lighting Cycle — Winter, Summer & Autumn',
+    title: 'Full-Season Storm & Lighting Cycle - Winter, Summer & Autumn',
     keyMessage: 'Each environment & storm transformation persists across the entire season (zero map rebuilds), hosting timed loot events inside.',
     bullets: [
-      'Spring & Autumn — Toxic Miasma Gas (Full Seasons · Mar–May & Sep–Nov): Baseline emerald-violet creeping fog rolling from the Miasma Marshes across all of Spring & Autumn.',
-      'Winter — Glacial Ice Storm (Entire Winter Season · Dec–Feb): Sub-zero blizzard, freezing vignettes & snow-dusted Citadel remain active all winter, hosting the 2-week Dark Santa loot event.',
-      'Summer — Scorching Heat Storm (Entire Summer Season · Jun–Aug): Blistering heatwave, heat-haze post-processing & ember-ash storms span all of Summer, opening with a 1-week Solstice loot event.',
+      'Spring & Autumn - Toxic Miasma Gas (Full Seasons · Mar-May & Sep-Nov): Baseline emerald-violet creeping fog rolling from the Miasma Marshes across all of Spring & Autumn.',
+      'Winter - Glacial Ice Storm (Entire Winter Season · Dec-Feb): Sub-zero blizzard, freezing vignettes & snow-dusted Citadel remain active all winter, hosting the 2-week Dark Santa loot event.',
+      'Summer - Scorching Heat Storm (Entire Summer Season · Jun-Aug): Blistering heatwave, heat-haze post-processing & ember-ash storms span all of Summer, opening with a 1-week Solstice loot event.',
       'Studio & Publisher Advantage: Full-season visual freshness with modular UE5 Niagara VFX & shaders, paired with urgent timed cosmetic loot drops.',
     ],
     image: GENERATED_ASSETS.stormWinterBlizzard,
@@ -1443,13 +1445,13 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
       },
       {
         label: 'Winter Storm',
-        sublabel: 'Glacial Ice (All Dec–Feb)',
+        sublabel: 'Glacial Ice (All Dec-Feb)',
         image: GENERATED_ASSETS.stormWinterBlizzard,
         accentHex: '#3E82C7',
       },
       {
         label: 'Summer Storm',
-        sublabel: 'Scorching Heat (All Jun–Aug)',
+        sublabel: 'Scorching Heat (All Jun-Aug)',
         image: GENERATED_ASSETS.stormSummerHeat,
         accentHex: '#E06C5A',
       },
@@ -1459,12 +1461,13 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
     index: 13,
     code: '13 / 14',
     section: "Limited-Time Loot Events · Halloween, Dark Santa & Reactive Skins",
-    title: "Limited-Time Holiday Loot Rituals (1–2 Weeks) & Reactive Skins",
-    keyMessage: '24/7 Queue + 1 Entry / 24h on marked dates; repeat wins within the same year award 2x Match EXP (that match only), resetting yearly with brand-new loot & unique seasonal trophies.',
+    title: "Limited-Time Holiday Loot Rituals (1-2 Weeks) & Reactive Skins",
+    keyMessage: 'Always-Open 24/7 Queue + 1 Attempt Every 24h runs strictly during marked loot dates inside each full-season storm world.',
     bullets: [
-      'Halloween & Midwinter Loot Rituals (1 Entry / 24h): Halloween Wish or Threat (1w: Oct 25–Nov 1) & Dark Santa’s Wish (2w: Dec 24–Jan 7) unlock Gold-Tier sets on win (24h loss cooldown).',
-      'Repeat-Win Double XP (Current Year · Single Match): Winning a Seasonal Loot Event after already winning it earlier in the same year awards 2x Match EXP strictly for that winning match.',
-      'Annual Reset, Fresh Loot & Unique Trophies: Each new year resets win ledgers with newly designed exclusive loot and awards unique collectible seasonal trophies to showcase permanently.',
+      'Halloween - Wish or Threat (1 Week · Oct 25 - Nov 1 · 1 Entry / 24h): Pick WISH (Spectral Harvester Plate / Hollow Executioner Cloak) or THREAT (curse + Cursed VFX; loss locks 24h).',
+      "Midwinter - Dark Santa's Wish (2 Weeks · Dec 24 - Jan 7 · 1 Entry / 24h): Lock a Gold-Tier set via Wish UI inside the winter storm and defeat Dark Santa (24h loss cooldown).",
+      'Summer Solstice - Solar-Ash (1 Week · Jun 21 - Jun 28): Summer kickoff inside Scorching Heat Storm; Solar Eclipse Altars unlock climate-reactive skins.',
+      'Same-Year Replay Bonus (2x Match EXP): Already won this year? Re-entering grants 2x EXP for that match (Monsters, Bosses & Players) - resets next year with brand-new loot.',
     ],
     image: GENERATED_ASSETS.eventHalloweenValdris,
     showcaseTitle: 'Limited-Time Loot Arenas & Climate-Reactive Event Skins',
@@ -1511,10 +1514,10 @@ export const PITCH_DECK_SLIDES: PitchSlide[] = [
     index: 14,
     code: '14 / 14',
     section: 'Live-Ops Monetization, Fair Matchmaking & Episode Scale',
-    title: 'Valdris Chronicle: Last Relic (Episode I) — Fair-Match Ethical Economy',
+    title: 'Valdris Chronicle: Last Relic (Episode I) - Fair-Match Ethical Economy',
     keyMessage: 'Power-weighted Matchmaking guarantees every 200-player lobby stays 100% Fair Match.',
     bullets: [
-      'Fair-Match Bracket Parity: Separate Weapon Mastery % (whether purchased via Skin or organic) and Omni-Lv.100 50% Loot status are weighted in MM_Index—zero unfair power mismatch inside any lobby.',
+      'Fair-Match Bracket Parity: Separate Weapon Mastery % (whether purchased via Skin or organic) and Omni-Lv.100 50% Loot status are weighted in MM_Index - zero unfair power mismatch inside any lobby.',
       'Anti-Smurf Squad Anchor: Oath Mode queues anchor to the highest squadmate rating so maxed veterans & buyers match strictly against equivalent rivals.',
       'Multi-Episode Scalability: Attack Type Level, Defense Level & 50% Gold Cap stay strictly combat-earned while direct Skins & Holiday Events scale cleanly across future Episodes.',
     ],
@@ -1551,7 +1554,7 @@ export const BESTIARY_CREATURES: BestiaryCreature[] = [
     tierLabel: 'Tier I',
     tierHex: '#8C929A',
     difficulty: 'Low · Early Looting',
-    acts: 'Acts I–II',
+    acts: 'Acts I-II',
     biomeIds: ['marismas', 'bosque'],
     biomeLabel: 'Outer Coasts, Forest Edges & Roadside Camps',
     hpMultiplier: 0.45,
@@ -1561,12 +1564,12 @@ export const BESTIARY_CREATURES: BestiaryCreature[] = [
     lore: 'Former levies of Valdris consumed by The Abyssal Ash, condemned to patrol ruined roadside camps clutching rusted blades long after their minds turned to cinder.',
     combatBehavior: [
       'Telegraphed 2-hit rusted sword slash with generous Parry window.',
-      'Patrols in packs of 1–2 (Wanderer Mode) or 3 (Oath Mode) near Camp Stashes.',
+      'Patrols in packs of 1-2 (Wanderer Mode) or 3 (Oath Mode) near Camp Stashes.',
       'Drops aggro beyond 30m, making stealth disengagement easy.',
     ],
     counterplayTip: 'Trigger a crisp Parry on the overhead swing for an instant 1.60x Riposte execution and fast Sword/Club/Axe Mastery XP.',
     weakness: 'Physical Cleave & Fire Embers',
-    guaranteedDrops: '1–2 Starter Grey/Green pieces + 1 guaranteed Belt Vial (62% Grey / 30% Green / 8% Blue).',
+    guaranteedDrops: '1-2 Starter Grey/Green pieces + 1 guaranteed Belt Vial (62% Grey / 30% Green / 8% Blue).',
   },
   {
     id: 'mire-leech',
@@ -1575,7 +1578,7 @@ export const BESTIARY_CREATURES: BestiaryCreature[] = [
     tierLabel: 'Tier I',
     tierHex: '#4F9E68',
     difficulty: 'Low · Marsh Ambush',
-    acts: 'Acts I–II',
+    acts: 'Acts I-II',
     biomeIds: ['marismas'],
     biomeLabel: 'The Miasma Marshes (Western Flank)',
     hpMultiplier: 0.52,
@@ -1599,7 +1602,7 @@ export const BESTIARY_CREATURES: BestiaryCreature[] = [
     tierLabel: 'Tier II',
     tierHex: '#3E82C7',
     difficulty: 'Medium · Sealed Altar-Chest',
-    acts: 'Acts II–III',
+    acts: 'Acts II-III',
     biomeIds: ['bosque', 'ciudadela'],
     biomeLabel: 'Forest Floor Altars & Citadel Courtyards',
     hpMultiplier: 0.9,
@@ -1623,7 +1626,7 @@ export const BESTIARY_CREATURES: BestiaryCreature[] = [
     tierLabel: 'Tier II',
     tierHex: '#4F9E68',
     difficulty: 'Medium · Canopy Pursuit',
-    acts: 'Acts I–III',
+    acts: 'Acts I-III',
     biomeIds: ['bosque'],
     biomeLabel: 'The Forest of Spires (Eastern Flank)',
     hpMultiplier: 0.75,
@@ -1647,14 +1650,14 @@ export const BESTIARY_CREATURES: BestiaryCreature[] = [
     tierLabel: 'Tier III',
     tierHex: '#9461C9',
     difficulty: 'High · Catacomb Boss',
-    acts: 'Acts II–IV',
+    acts: 'Acts II-IV',
     biomeIds: ['catacumbas'],
     biomeLabel: 'Catacombs of the Nameless King',
     hpMultiplier: 1.8,
     baseExpReward: 1150,
     pvpAlertRadius: '120m + Stairway Echo Ping',
     image: '/src/assets/images/beast_ossuary_knight_1794869230733.jpg',
-    lore: 'Forged from the fused skulls and cursed obsidian armor of the Nameless King’s honor guard. It guards the Ossuary Key deep below Valdris until the Black Bell seals the crypts.',
+    lore: 'Forged from the fused skulls and cursed obsidian armor of the Nameless King\'s honor guard. It guards the Ossuary Key deep below Valdris until the Black Bell seals the crypts.',
     combatBehavior: [
       'Performs delayed overhead greatsword slams that bait premature Parries.',
       'Enrages at 40% HP in Oath Mode (2.2x HP scaling), radiating cursed purple Shockwaves.',
@@ -1671,7 +1674,7 @@ export const BESTIARY_CREATURES: BestiaryCreature[] = [
     tierLabel: 'Tier III',
     tierHex: '#9461C9',
     difficulty: 'High · Catacomb Vault Boss',
-    acts: 'Acts II–IV',
+    acts: 'Acts II-IV',
     biomeIds: ['catacumbas'],
     biomeLabel: 'Subterranean Vaults beneath The Citadel',
     hpMultiplier: 2.2,
@@ -1694,8 +1697,8 @@ export const BESTIARY_CREATURES: BestiaryCreature[] = [
     title: 'Herald of The Abyssal Ash (Final Raid Boss)',
     tierLabel: 'Tier IV',
     tierHex: '#D4AF37',
-    difficulty: 'Extreme · Act IV–V World Boss',
-    acts: 'Acts IV–V',
+    difficulty: 'Extreme · Act IV-V World Boss',
+    acts: 'Acts IV-V',
     biomeIds: ['ciudadela'],
     biomeLabel: 'The Citadel of Valdris (Central Courtyard)',
     hpMultiplier: 3.0,
@@ -1706,7 +1709,7 @@ export const BESTIARY_CREATURES: BestiaryCreature[] = [
     combatBehavior: [
       'Scales dynamically by lobby average (Lv_avg + 100) and squad size (Duo 1.35x / Trio 1.75x / Quad 2.2x HP).',
       'Strikes the war-bell axe into the flagstones to unleash a 15m seismic gold shockwave.',
-      'Executes massive cleave sweeps—high risk, massive reward while rival squads close in for the Throne Hall.',
+      'Executes massive cleave sweeps - high risk, massive reward while rival squads close in for the Throne Hall.',
     ],
     counterplayTip: 'Assign a high-Defense Club/Sword tank with a Tower Shield & Seal of Aegis while Druid supports with Seal of Restoration (+Team Healing EXP) and Wizards cast from ramparts.',
     weakness: 'Coordinated Squad Focus & Mastery +15%/+30% PvE Bonus',
@@ -1726,11 +1729,11 @@ export const STUDIO_IDENTITY = {
 export const CO_PITCHING_ALLIANCE = {
   eyebrow: 'Commercial Packaging · Publisher Co-Pitching Blueprint',
   title: 'Co-Pitching & Studio Alliance Model',
-  lead: 'Engineered as a publisher-ready commercial package rather than an unverified megaproject. Phase 1 isolates a high-impact 10–15 minute Vertical Slice so partner art studios capture an 18–24 month funded production contract with zero upfront cash outlay.',
+  lead: 'Engineered as a publisher-ready commercial package rather than an unverified megaproject. Phase 1 isolates a high-impact 10-15 minute Vertical Slice so partner art studios capture an 18-24 month funded production contract with zero upfront cash outlay.',
   executiveMetrics: [
-    { label: 'Phase 1 Studio Window', value: '2–3 Months (In-Kind Art)' },
-    { label: 'Target Publisher Deal', value: '18–24 Mo Funded Production' },
-    { label: 'Vertical Slice Cut', value: '10–15 Min Playable Demo' },
+    { label: 'Phase 1 Studio Window', value: '2-3 Months (In-Kind Art)' },
+    { label: 'Target Publisher Deal', value: '18-24 Mo Funded Production' },
+    { label: 'Vertical Slice Cut', value: '10-15 Min Playable Demo' },
     { label: 'Milestone Status', value: 'UE5 Combat Loop Active' },
   ],
   divisionOfLabor: [
@@ -1751,23 +1754,23 @@ export const CO_PITCHING_ALLIANCE = {
       badge: 'In-Kind Investment (Phase 1)',
       accent: 'emerald' as const,
       summary:
-        'Focused 2–3 month visual execution solely on the locked Vertical Slice scope—never speculative full-map Battle Royale assets.',
+        'Focused 2-3 month visual execution solely on the locked Vertical Slice scope - never speculative full-map Battle Royale assets.',
       items: [
         'Cohesive Dark Medieval Fantasy Art Direction, shaders, and lighting mood.',
         '1 complete playable Vertical Slice environment taken from graybox blockout to final PBR art.',
-        '2–3 fully modeled, rigged, and animated characters/enemies + production UI/UX HUD pass + 60–90s Publisher Pitch Trailer.',
+        '2-3 fully modeled, rigged, and animated characters/enemies + production UI/UX HUD pass + 60-90s Publisher Pitch Trailer.',
       ],
     },
   ],
   studioValueReturn: {
-    headline: 'Why Investing 2–3 Months Locks In an 18–24 Month Production Contract',
+    headline: 'Why Investing 2-3 Months Locks In an 18-24 Month Production Contract',
     summary:
-      'Once the Vertical Slice closes publisher financing, the partner studio transitions immediately from co-pitching partner into the Official Full-Production Vendor—eliminating speculative business risk.',
+      'Once the Vertical Slice closes publisher financing, the partner studio transitions immediately from co-pitching partner into the Official Full-Production Vendor - eliminating speculative business risk.',
     pillars: [
       {
         title: 'Official Commercial Production Vendor',
         detail:
-          'The studio bills its standard commercial production rates directly out of the publisher’s funded development budget for the full 18–24 month roadmap.',
+          'The studio bills its standard commercial production rates directly out of the publisher\'s funded development budget for the full 18-24 month roadmap.',
       },
       {
         title: 'Revenue Share or IP Co-Ownership',
@@ -1777,20 +1780,20 @@ export const CO_PITCHING_ALLIANCE = {
       {
         title: 'Asymmetric Studio ROI',
         detail:
-          'Risking 2–3 months of focused Vertical Slice art to lock in 18–24 months of guaranteed publisher cashflow plus long-term live-ops upside.',
+          'Risking 2-3 months of focused Vertical Slice art to lock in 18-24 months of guaranteed publisher cashflow plus long-term live-ops upside.',
       },
     ],
   },
   verticalSliceScope: {
-    title: 'Strict Vertical Slice Scope Cut (10–15 Minute Publisher Demo)',
+    title: 'Strict Vertical Slice Scope Cut (10-15 Minute Publisher Demo)',
     rationale:
-      'Requesting Day-1 art for a 200-player Battle Royale island triggers immediate cost rejection. Phase 1 strictly isolates the core combat loop into a razor-sharp 10–15 minute showcase:',
+      'Requesting Day-1 art for a 200-player Battle Royale island triggers immediate cost rejection. Phase 1 strictly isolates the core combat loop into a razor-sharp 10-15 minute showcase:',
     pillars: [
       {
         slot: '1 Environment',
         name: 'Catacombs of the Nameless King',
         detail:
-          'Single high-contrast torchlit crypt arena & vault junction—compact enough for AAA lighting polish within 6–8 weeks.',
+          'Single high-contrast torchlit crypt arena & vault junction - compact enough for AAA lighting polish within 6-8 weeks.',
       },
       {
         slot: '2 Combat Styles',
@@ -1802,7 +1805,7 @@ export const CO_PITCHING_ALLIANCE = {
         slot: '1 Signature Boss',
         name: 'Black Bell Executioner',
         detail:
-          'Full boss encounter with clear attack telegraphs, poise break windows, and climax reward drop to close the 10–15 minute publisher demo.',
+          'Full boss encounter with clear attack telegraphs, poise break windows, and climax reward drop to close the 10-15 minute publisher demo.',
       },
     ],
   },
@@ -1818,13 +1821,13 @@ export const CO_PITCHING_ALLIANCE = {
       },
       {
         phase: 'Milestone 1',
-        status: 'Phase 1 — Vertical Slice (2–3 Mo)',
+        status: 'Phase 1 - Vertical Slice (2-3 Mo)',
         detail:
-          'Full visual polish with partner studio + small-scale multiplayer stress testing (2–4 player Co-op / PvP) to validate netcode responsiveness for the Publisher Pitch.',
+          'Full visual polish with partner studio + small-scale multiplayer stress testing (2-4 player Co-op / PvP) to validate netcode responsiveness for the Publisher Pitch.',
       },
       {
         phase: 'Milestone 2',
-        status: 'Full Production — Publisher Funded',
+        status: 'Full Production - Publisher Funded',
         detail:
           'Progressive scaling of lobby concurrency, Replication Graph optimization, dedicated server infrastructure, and rollout of large-scale modes (Siege Battles & 200-player Battle Royale) toward final build.',
       },
@@ -1833,8 +1836,18 @@ export const CO_PITCHING_ALLIANCE = {
   currentTechnicalStatus: {
     title: 'Current Technical Status (Playable Prototype)',
     summary:
-      'Validated engineering core built to let partner art studios and publishers verify combat feel:',
+      'Validated UE5 engineering core testing combat attacks, inventory loot, and set data before studio visual production:',
+    previewTag: 'UE5 Standalone Preview (NetMode: Standalone | 64-bit Windows)',
+    previewTitle: 'Gameplay Mechanics Testbed - Not Final UI, Art, or Biome',
+    previewDisclaimer:
+      'Early engineering preview only: this build does NOT represent the final UI, final character/environment art, or final biome. It runs strictly to test combat attacks, inventory loot pickups, and live equipment set data.',
+    testScopeTags: ['Attack & Hit Detection', 'Inventory Loot Drops', 'Set Data & Stat Bindings'],
     points: [
+      {
+        label: 'Active Testbed Scope (Video Preview)',
+        detail:
+          'Demonstrates working combat attacks, inventory loot pickups, and equipment set data bindings using temporary placeholder UI, art, and test terrain.',
+      },
       {
         label: 'Core Combat Loop Functional',
         detail:
@@ -1852,56 +1865,39 @@ export const CO_PITCHING_ALLIANCE = {
 export const SEASONAL_LIVE_OPS = {
   eyebrow: 'Seasonal Live-Ops & Holiday Events',
   title: 'Full-Season Storm Worlds, Timed Loot Events & Reactive Skins',
-  lead: 'Valdris Chronicle cleanly separates Full-Season Environmental Storms (transforming lighting, skybox & hazards across the entire Winter, Summer, or Spring/Autumn season with zero map rebuilds) from Limited-Time Holiday Loot Events (running strictly 1–2 weeks on marked dates):',
+  lead: 'Valdris Chronicle cleanly separates Full-Season Environmental Storms (transforming lighting, skybox & hazards across the entire Winter, Summer, or Spring/Autumn season with zero map rebuilds) from Limited-Time Holiday Loot Events (running strictly 1-2 weeks on marked dates):',
   cadenceRule: [
     {
       layer: 'Full-Season World Scenarios',
       duration: 'Entire Astronomical Season (3 Months)',
       detail:
-        'Glacial Ice Storm spans all Winter (Dec–Feb), Scorching Heat Storm spans all Summer (Jun–Aug), and Toxic Miasma Gas spans all Spring & Autumn.',
+        'Glacial Ice Storm spans all Winter (Dec-Feb), Scorching Heat Storm spans all Summer (Jun-Aug), and Toxic Miasma Gas spans all Spring & Autumn.',
     },
     {
       layer: 'Limited-Time Holiday Loot Events',
-      duration: 'Strict Marked Dates Only (1–2 Weeks)',
+      duration: 'Strict Marked Dates Only (1-2 Weeks)',
       detail:
-        'Exclusive Gold-Tier loot contracts & Wish/Threat rituals run only during marked windows: Halloween (1w: Oct 25–Nov 1), Dark Santa (2w: Dec 24–Jan 7), & Summer Kickoff (1w: Jun 21–28).',
+        'Exclusive Gold-Tier loot contracts & Wish/Threat rituals run only during marked windows: Halloween (1w: Oct 25-Nov 1), Dark Santa (2w: Dec 24-Jan 7), & Summer Kickoff (1w: Jun 21-28).',
     },
   ],
   eventQueueLineup: {
     title: 'Limited-Time Loot Lineup: 1 Attempt Every 24 Hours (Zero Pay-to-Win)',
-    lead: 'While each seasonal weather scenario lasts the entire quarter, these marquee Loot Events open exclusively during their marked calendar dates on an Always-Open 24/7 Queue with a strict 1-Entry-Per-24h Personal Cooldown, single-match 2x Match EXP for repeat same-year winners, annual fresh loot resets, and unique seasonal trophies:',
+    lead: 'While each seasonal weather scenario lasts the entire quarter, these marquee Loot Events open exclusively during their marked calendar dates on an Always-Open 24/7 Queue with a strict 1-Entry-Per-24h Personal Cooldown:',
     queueMetrics: [
       { label: 'Matchmaking Queue', value: 'Always-Open 24/7' },
       { label: 'Entry Cadence', value: '1 Attempt / 24h' },
-      { label: 'Same-Year Repeat Win', value: '2x Match EXP (1 Match)' },
-      { label: 'Annual Loot & Trophies', value: 'Yearly Reset + New Loot' },
+      { label: 'Loot Event Windows', value: '1w-2w Marked Dates' },
+      { label: 'Same-Year Replay', value: '2x Whole-Match EXP' },
     ],
-    annualProgression: [
-      {
-        id: 'repeat-win-double-xp',
-        tag: 'Same-Year Repeat Win',
-        title: 'Double XP (That Match Only)',
-        detail:
-          'If a player wins a Seasonal Loot Event match and had already won that same Seasonal Loot Event earlier in the current calendar year, they earn 2x Match EXP—counting strictly for that single winning match (not on defeat, and never a permanent buff).',
-      },
-      {
-        id: 'annual-fresh-loot',
-        tag: 'Every New Year Resets',
-        title: 'Brand-New Loot Designed Yearly',
-        detail:
-          'When the next calendar year arrives, the event win ledger resets completely. Every year introduces newly designed seasonal Gold-Tier sets and cosmetics, letting returning winners compete again to claim that year’s brand-new loot.',
-      },
-      {
-        id: 'seasonal-trophies',
-        tag: 'Permanent Legacy Collection',
-        title: 'Unique Collectible Trophies Every Season',
-        detail:
-          'Every season awards distinct, year-stamped collectible trophies (displayed permanently in the player’s Profile & Social Hub Trophy Hall), letting dedicated warriors collect unique seasonal trophies across every chapter and year.',
-      },
-    ],
+    veteranBonus: {
+      badge: 'Same-Year Replay Bonus · Resets Annually',
+      title: 'Already Won This Year? Earn 2x Whole-Match EXP',
+      multiplier: '2x EXP for That Match (Monsters, Bosses & Players)',
+      rule: 'If you already won that specific Loot Event earlier in the same year, playing it again grants 2x EXP only for that match across Monsters, Bosses, and Players. Every following year resets completion and launches brand-new designed loot rewards, letting everyone win the new annual cosmetics fresh.',
+    },
     halloween: {
-      title: 'Halloween — Wish or Threat',
-      durationLabel: 'Loot Event Window · 1 Week Only (Oct 25 – Nov 1)',
+      title: 'Halloween - Wish or Threat',
+      durationLabel: 'Loot Event Window · 1 Week Only (Oct 25 - Nov 1)',
       prompt: 'Before entering their daily run, the UI forces a risk-reward choice:',
       targetSets: ['Spectral Harvester Plate', 'Hollow Executioner Cloak'],
       curses: [
@@ -1913,23 +1909,23 @@ export const SEASONAL_LIVE_OPS = {
       wish: {
         label: 'WISH',
         summary:
-          'Pick this year’s target Halloween Gold-Tier cosmetic set (e.g., Spectral Harvester Plate or Hollow Executioner Cloak) and claim it plus the season’s Unique Trophy on first win—or earn 2x Match EXP (for that winning match only) on repeat wins within the same year.',
+          'Pick your target Halloween Gold-Tier cosmetic set (e.g., Spectral Harvester Plate or Hollow Executioner Cloak) and fight under standard rules to claim it on victory.',
       },
       threat: {
         label: 'THREAT',
         summary:
-          'Voluntarily accept a match-wide curse (cursed blood-fog, disabled radar, enraged World Boss, or public bounty mark). Triumphing under Threat awards the year’s Gold-Tier set + exclusive Cursed VFX / Ether Seal + Seasonal Trophy (or 2x Match EXP for that match on same-year repeat wins)—while defeat locks the player out for 24h.',
+          'Voluntarily accept a match-wide curse (such as cursed blood-fog, disabled radar, enraged World Boss, or public bounty mark). Triumphing under Threat awards the chosen Gold-Tier set plus an exclusive Cursed VFX / Ether Seal variant - while defeat locks the player out for 24 hours.',
       },
     },
     midwinter: {
-      title: "Midwinter — Dark Santa's Wish",
-      durationLabel: 'Loot Event Window · 2 Weeks Only (Dec 24 – Jan 7)',
+      title: "Midwinter - Dark Santa's Wish",
+      durationLabel: 'Loot Event Window · 2 Weeks Only (Dec 24 - Jan 7)',
       summary:
-        'Players lock in their desired current-year Gold-Tier cosmetic set via the pre-match Wish UI and enter the full-winter snow arena during the 2-week Christmas & New Year loot window to defeat Dark Santa. First-time winners unlock the set & unique Winter Trophy immediately; same-year repeat winners earn 2x Match EXP for that winning match; next year resets with brand-new loot. Losers wait 24h.',
+        'Players lock in their desired Gold-Tier cosmetic set via the pre-match Wish UI and enter the full-winter snow arena during the 2-week Christmas & New Year loot window to defeat the Dark Santa encounter. Winners claim their selected set immediately to showcase in the Social Hub; losers wait 24 hours for their next attempt.',
       highlights: [
         'Loot Contract Window: Strictly 2 weeks (Christmas & New Year through Jan 7) inside the full-winter storm.',
-        'Repeat-Win 2x EXP (Single Match): Already won Dark Santa’s Wish this year? Another win grants 2x Match EXP for that match only.',
-        'Annual Reset + Unique Trophies: Resets each year with freshly designed Winter loot & collectible season-unique trophies.',
+        'Pre-Match Wish UI: Lock in your target Gold-Tier Winter set before queuing.',
+        'Victory & Cooldown Rule: Instant unlock & Social Hub showcase on win; 24-hour lockout on defeat.',
       ],
     },
   },
@@ -1938,43 +1934,43 @@ export const SEASONAL_LIVE_OPS = {
       id: 'halloween-hollow-bell',
       seasonTag: 'Halloween Loot · 1 Week',
       title: 'Night of the Hollow Bell (Wish or Threat)',
-      window: 'Oct 25 – Nov 1 · 1 Entry / 24h',
+      window: 'Oct 25 - Nov 1 · 1 Entry / 24h',
       stormPairing: 'Full-Autumn Toxic Miasma Gas (Active All Autumn)',
       accentHex: '#9461C9',
       image: GENERATED_ASSETS.eventHalloweenValdris,
       atmosphere:
-        'A giant blood-orange harvest moon hangs above Valdris while wrought-iron jack-o’-lantern braziers line Citadel drawbridges inside Autumn’s baseline Miasma haze.',
+        "A giant blood-orange harvest moon hangs above Valdris while wrought-iron jack-o'-lantern braziers line Citadel drawbridges inside Autumn's baseline Miasma haze.",
       gameplayTwist:
-        'Pre-match Wish or Threat loot ritual (1 week only): claim this year’s Gold-Tier set & Unique Autumn Trophy on first win; repeat wins in the same year award 2x Match EXP (that match only), resetting next year with brand-new loot.',
-      rewardSkin: 'Yearly Gold-Tier Halloween Set + Unique Season Trophy (2x Match EXP on Repeat Same-Year Win)',
+        'Pre-match Wish or Threat loot ritual (1 week only): fight normally for a Gold-Tier set (Spectral Harvester Plate / Hollow Executioner Cloak) or accept a Threat curse for an exclusive Cursed VFX / Ether Seal.',
+      rewardSkin: 'Gold-Tier Halloween Set + Optional Threat Cursed VFX / Ether Seal',
     },
     {
       id: 'dark-santas-wish',
       seasonTag: 'Midwinter Loot · 2 Weeks',
       title: "Dark Santa's Wish",
-      window: 'Dec 24 – Jan 7 · 1 Entry / 24h',
-      stormPairing: 'Full-Winter Glacial Ice Storm (Active All Dec–Feb)',
+      window: 'Dec 24 - Jan 7 · 1 Entry / 24h',
+      stormPairing: 'Full-Winter Glacial Ice Storm (Active All Dec-Feb)',
       accentHex: '#3E82C7',
       image: GENERATED_ASSETS.stormWinterBlizzard,
       atmosphere:
         'Framed inside the all-winter snowbound Citadel blizzard, crimson-iron Yule banners and Dark Santa altars spawn strictly for the 2-week Christmas & New Year loot run.',
       gameplayTwist:
-        'During this 2-week loot window, lock in your current-year Gold-Tier set via the Wish UI and defeat Dark Santa. Repeat wins in the same year grant 2x Match EXP (this match only); next year resets with brand-new loot. Loss = 24h cooldown.',
-      rewardSkin: 'Yearly Winter Gold Set + Unique Winter Trophy (2x Match EXP on Repeat Same-Year Win)',
+        'During this 2-week loot window, players lock in a desired Gold-Tier set via the Wish UI and defeat Dark Santa inside the winter storm; defeat triggers a 24-hour personal cooldown.',
+      rewardSkin: 'Chosen Gold-Tier Set + Instant Social Hub Showcase (Frostbound Hearth-Breaker)',
     },
     {
       id: 'solar-ash-solstice',
       seasonTag: 'Summer Loot · 1 Week',
       title: 'Solar-Ash Reckoning',
-      window: 'Jun 21 – Jun 28 · June Summer Kickoff',
-      stormPairing: 'Full-Summer Scorching Heat Storm (Active All Jun–Aug)',
+      window: 'Jun 21 - Jun 28 · June Summer Kickoff',
+      stormPairing: 'Full-Summer Scorching Heat Storm (Active All Jun-Aug)',
       accentHex: '#E06C5A',
       image: GENERATED_ASSETS.stormSummerHeat,
       atmosphere:
         'Kicking off inside the all-summer Scorching Heat Storm, Solar Eclipse shrines ignite duel bounties across parched Citadel flagstones for one high-intensity opening week.',
       gameplayTwist:
-        '1-week Summer opening loot contract: Solar Eclipse Altars unlock this year’s Solstice set & Unique Summer Trophy; same-year repeat wins grant 2x Match EXP for that match only, resetting next year with newly designed loot.',
-      rewardSkin: 'Yearly Solstice Gold Set + Unique Summer Trophy (2x Match EXP on Repeat Same-Year Win)',
+        '1-week Summer opening loot contract: Solar Eclipse Altars fuel Ash-Guardian gauntlets for direct Solstice Skin progression while the Heat Storm remains active all summer.',
+      rewardSkin: 'Sun-Baked Eclipse Sentinel Set (Solar Gold Plate & Dual Hand Crossbows)',
     },
   ],
   stormPhases: [
@@ -1982,56 +1978,56 @@ export const SEASONAL_LIVE_OPS = {
       id: 'spring-autumn',
       seasonLabel: 'Spring & Autumn (Full Seasons)',
       title: 'Toxic Miasma Gas (Baseline)',
-      calendarWindow: 'Entire Spring & Autumn (Mar–May · Sep–Nov)',
+      calendarWindow: 'Entire Spring & Autumn (Mar-May · Sep-Nov)',
       accentHex: '#4F9E68',
       image: GENERATED_ASSETS.stormMiasmaBaseline,
       description:
-        'Active throughout all of Spring and Autumn—the signature Valdris zone hazard rolls out of the Miasma Marshes with choking green-violet spores and low-visibility tension.',
+        'Active throughout all of Spring and Autumn - the signature Valdris zone hazard rolls out of the Miasma Marshes with choking green-violet spores and low-visibility tension.',
       ue5Tech:
         'UE5 Volumetric Exponential Height Fog + modular emerald-violet Niagara spore ribbons.',
-      eventPairing: "Hosts 1-Week Halloween Loot Event (Oct 25 – Nov 1)",
+      eventPairing: "Hosts 1-Week Halloween Loot Event (Oct 25 - Nov 1)",
     },
     {
       id: 'winter',
       seasonLabel: 'Winter (Entire Season)',
       title: 'Glacial Ice Storm',
-      calendarWindow: 'Entire Winter Season (Dec–Feb · 3 Months)',
+      calendarWindow: 'Entire Winter Season (Dec-Feb · 3 Months)',
       accentHex: '#3E82C7',
       image: GENERATED_ASSETS.stormWinterBlizzard,
       description:
-        'Active across the entire Winter season—the toxic gas gives way to a lethal sub-zero blizzard bringing howling frost winds, freezing screen vignettes, and snow-dusted Citadel architecture all winter long.',
+        'Active across the entire Winter season - the toxic gas gives way to a lethal sub-zero blizzard bringing howling frost winds, freezing screen vignettes, and snow-dusted Citadel architecture all winter long.',
       ue5Tech:
         'World-aligned snow/ice shader mask + Sub-Zero Blizzard Niagara VFX & Frost Vignette post-process.',
-      eventPairing: "Hosts 2-Week Dark Santa's Wish Loot Event (Dec 24 – Jan 7)",
+      eventPairing: "Hosts 2-Week Dark Santa's Wish Loot Event (Dec 24 - Jan 7)",
     },
     {
       id: 'summer',
       seasonLabel: 'Summer (Entire Season)',
       title: 'Scorching Heat Storm',
-      calendarWindow: 'Entire Summer Season (Jun–Aug · 3 Months)',
+      calendarWindow: 'Entire Summer Season (Jun-Aug · 3 Months)',
       accentHex: '#E06C5A',
       image: GENERATED_ASSETS.stormSummerHeat,
       description:
-        'Active across the entire Summer season—the encroaching zone transforms into a blistering heatwave and ember-ash tempest featuring heat-haze distortion and dried-earth lighting.',
+        'Active across the entire Summer season - the encroaching zone transforms into a blistering heatwave and ember-ash tempest featuring heat-haze distortion and dried-earth lighting.',
       ue5Tech:
         'Refractive heat-haze post-process material + Scorched Directional Sun preset & ember-ash Niagara swirl.',
-      eventPairing: 'Hosts 1-Week Solar-Ash Reckoning Loot Event (Jun 21 – Jun 28)',
+      eventPairing: 'Hosts 1-Week Solar-Ash Reckoning Loot Event (Jun 21 - Jun 28)',
     },
   ],
   productionAdvantage: {
     title: 'Why This Works for Production & Live-Ops',
     summary:
-      'Persistent Full-Season Storm environments keep Valdris visually transformed for months via modular UE5 Niagara VFX & shaders, while short 1–2 week Holiday Loot Events concentrate player urgency without map rebuilds.',
+      'Persistent Full-Season Storm environments keep Valdris visually transformed for months via modular UE5 Niagara VFX & shaders, while short 1-2 week Holiday Loot Events concentrate player urgency without map rebuilds.',
     partnerPoints: [
       {
         audience: 'Partner Art Studio Advantage',
         detail:
-          'Zero map geometry rebuilds across seasons—one master world shifts atmosphere for 3-month stretches via reusable shader layers, volumetric fog profiles, and modular Niagara emitters.',
+          'Zero map geometry rebuilds across seasons - one master world shifts atmosphere for 3-month stretches via reusable shader layers, volumetric fog profiles, and modular Niagara emitters.',
       },
       {
         audience: 'Publisher Retention Driver',
         detail:
-          'Full-season weather resets sustain quarterly visual freshness, while timed 1–2 week holiday loot windows drive FOMO spikes, lapsed-player reactivation, and streamable rituals.',
+          'Full-season weather resets sustain quarterly visual freshness, while timed 1-2 week holiday loot windows drive FOMO spikes with brand-new yearly loot designs (annual reset) and 2x match EXP (Monsters, Bosses & Players) for same-year repeat victors.',
       },
     ],
   },
@@ -2039,7 +2035,7 @@ export const SEASONAL_LIVE_OPS = {
     eyebrow: 'Art Direction Synergy · Weather-Responsive Cosmetics',
     title: 'Climate-Reactive Seasonal Event Skins',
     summary:
-      'Limited-time cosmetics earned during Holiday Events feature lightweight UE5 Material Parameter Collections that react dynamically to the active match storm—maximizing visual cohesion while keeping canonical hitboxes and combat timing 100% untouched.',
+      'Limited-time cosmetics earned during Holiday Events feature lightweight UE5 Material Parameter Collections that react dynamically to the active match storm - maximizing visual cohesion while keeping canonical hitboxes and combat timing 100% untouched.',
     showcase: [
       {
         id: 'halloween-lantern-warden',
@@ -2049,7 +2045,7 @@ export const SEASONAL_LIVE_OPS = {
         accentHex: '#9461C9',
         image: GENERATED_ASSETS.skinHalloweenWarden,
         detail:
-          'Carved iron jack-o’-lantern skull visor and jagged blackened plate housing a spirit-lit ribcage. Inside Autumn’s Toxic Miasma Gas, emerald-violet soul flames and blade runes surge brighter.',
+          "Carved iron jack-o'-lantern skull visor and jagged blackened plate housing a spirit-lit ribcage. Inside Autumn's Toxic Miasma Gas, emerald-violet soul flames and blade runes surge brighter.",
       },
       {
         id: 'dark-santas-wish',
@@ -2059,7 +2055,7 @@ export const SEASONAL_LIVE_OPS = {
         accentHex: '#3E82C7',
         image: GENERATED_ASSETS.skinDarkSantaFrost,
         detail:
-          'Blackened gothic wrought iron layered with wolf-fur-trimmed crimson wool. Inside Winter’s Glacial Ice Storm, rime frost crystals and glacial rune-glow intensify across pauldrons and axe edges.',
+          "Blackened gothic wrought iron layered with wolf-fur-trimmed crimson wool. Inside Winter's Glacial Ice Storm, rime frost crystals and glacial rune-glow intensify across pauldrons and axe edges.",
       },
       {
         id: 'solar-ash-solstice',
@@ -2069,7 +2065,7 @@ export const SEASONAL_LIVE_OPS = {
         accentHex: '#C89B3C',
         image: GENERATED_ASSETS.skinSummerAshSolstice,
         detail:
-          'Tarnished eclipse gold and scorched obsidian armor wielding Dual Hand Crossbows (1 per hand). Under Summer’s Scorching Heat Storm, engraved solar veins ignite with live ember trails and rising cinders.',
+          "Tarnished eclipse gold and scorched obsidian armor wielding Dual Hand Crossbows (1 per hand). Under Summer's Scorching Heat Storm, engraved solar veins ignite with live ember trails and rising cinders.",
       },
     ],
   },

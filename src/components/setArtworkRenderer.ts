@@ -140,7 +140,7 @@ export function getSetStyleProfile(set: EquipmentSetSpec): SetStyleProfile {
           : 'Spectral Cursed Plate & Weave';
     }
   } else {
-    // 'dorado' — Royal Vestige (Gold)
+    // 'dorado' - Royal Vestige (Gold)
     fxType = 'royal-gold';
     saturation = 1.25;
     contrast = 1.18;

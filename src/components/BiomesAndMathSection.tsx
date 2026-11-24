@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Calendar, Clock, CloudSnow, Flame, Ghost, Gift, Layers, RefreshCw, ShieldAlert, Skull, Sparkles, Sun, Trophy, Wind } from 'lucide-react';
+import { Calendar, Clock, CloudSnow, Flame, Ghost, Gift, Layers, ShieldAlert, Skull, Sparkles, Sun, Wind } from 'lucide-react';
 import {
   BALANCE_POTIONS,
   BALANCE_RUNES,
@@ -65,7 +65,6 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
   const [selectedWishSet, setSelectedWishSet] = useState<string>(
     SEASONAL_LIVE_OPS.eventQueueLineup.halloween.targetSets[0]
   );
-  const [hasWonEventThisYear, setHasWonEventThisYear] = useState<boolean>(false);
 
   const activeBiome = BIOMES.find((b) => b.id === selectedBiomeId) ?? BIOMES[0];
   const activeSeason =
@@ -899,7 +898,7 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
                 08 · Decoupled Equipment, Combat Frame Integrity &amp; Live-Ops (Episode I)
               </p>
               <h2 className="font-display mt-2 text-2xl font-semibold text-[#F6EFE2] lg:text-3xl">
-                Logical Gear Data vs. Cosmetic Skin Layer — Zero Pay-to-Win Architecture
+                Logical Gear Data vs. Cosmetic Skin Layer - Zero Pay-to-Win Architecture
               </h2>
               <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-3">
                 {DECOUPLED_SYSTEM_PILLARS.map((item) => (
@@ -1011,11 +1010,11 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
                       <span>Limited-Time Loot &amp; Boss Contracts (Marked Dates Only)</span>
                     </div>
                     <h4 className="font-display mt-1.5 text-2xl font-semibold text-[#F6EFE2]">
-                      Holiday Loot Windows — Halloween, Dark Santa&apos;s Wish &amp; Summer Solstice
+                      Holiday Loot Windows - Halloween, Dark Santa&apos;s Wish &amp; Summer Solstice
                     </h4>
                   </div>
                   <p className="max-w-md text-xs leading-relaxed text-[#B8B1A6]">
-                    Fair-match PvPvE twists, themed boss encounters, and Gold-Tier cosmetic contracts open strictly for 1–2 weeks inside their matching full-season storm world.
+                    Fair-match PvPvE twists, themed boss encounters, and Gold-Tier cosmetic contracts open strictly for 1-2 weeks inside their matching full-season storm world.
                   </p>
                 </div>
 
@@ -1028,7 +1027,7 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
                       <div className="aspect-video w-full overflow-hidden bg-[#08080A]">
                         <img
                           src={ev.image}
-                          alt={`${ev.seasonTag} — ${ev.title}`}
+                          alt={`${ev.seasonTag} - ${ev.title}`}
                           loading="lazy"
                           referrerPolicy="no-referrer"
                           className="h-full w-full object-cover"
@@ -1112,7 +1111,7 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
 
                 {/* Flagship Queue Breakdown: Halloween Wish or Threat + Midwinter Dark Santa's Wish */}
                 <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-12">
-                  {/* Halloween — Wish or Threat Interactive Selector */}
+                  {/* Halloween - Wish or Threat Interactive Selector */}
                   <div className="rounded-md border border-[#9461C9]/45 bg-[#0F0F12] p-6 lg:col-span-7">
                     <div className="flex flex-col gap-3 border-b border-white/10 pb-4 sm:flex-row sm:items-center sm:justify-between">
                       <div>
@@ -1215,71 +1214,24 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
                       </div>
                     </div>
 
-                    <div className="mt-4 space-y-2.5 border-t border-white/10 pt-3 text-[11px] text-[#B8B1A6]">
-                      <div className="flex flex-wrap items-center justify-between gap-2">
-                        <span className="font-semibold text-[#EAE6DF]">Prior Same-Year Event Status:</span>
-                        <div
-                          className="inline-flex items-center gap-1 rounded border border-white/10 bg-[#141417] p-0.5"
-                          role="group"
-                          aria-label="Simulate first win or repeat win in the current year"
-                        >
-                          <button
-                            type="button"
-                            onClick={() => setHasWonEventThisYear(false)}
-                            className={`rounded px-2 py-1 text-[10px] font-semibold transition-colors ${
-                              !hasWonEventThisYear
-                                ? 'bg-[#C89B3C] text-[#0B0B0D]'
-                                : 'text-[#9C968B] hover:text-[#F6EFE2]'
-                            }`}
-                          >
-                            1st Win This Year
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setHasWonEventThisYear(true)}
-                            className={`rounded px-2 py-1 text-[10px] font-semibold transition-colors ${
-                              hasWonEventThisYear
-                                ? 'bg-[#4F9E68] text-[#0B0B0D]'
-                                : 'text-[#9C968B] hover:text-[#F6EFE2]'
-                            }`}
-                          >
-                            Already Won This Year (Repeat)
-                          </button>
-                        </div>
-                      </div>
-
-                      <div>
-                        <span className="font-semibold text-[#EAE6DF]">Active Simulation Outcome: </span>
-                        {hasWonEventThisYear ? (
-                          <span>
-                            Victory awards{' '}
-                            <strong className="text-[#4F9E68]">2x Match EXP (This Winning Match Only)</strong>
-                            {halloweenRitualChoice === 'threat'
-                              ? ' after surviving the match-wide curse'
-                              : ''}
-                            —current year&apos;s loot &amp; trophy are already claimed. Next year resets the ledger with{' '}
-                            <strong className="text-[#D4AF37]">brand-new designed loot</strong>.
-                          </span>
-                        ) : halloweenRitualChoice === 'wish' ? (
-                          <span>
-                            First win this year unlocks{' '}
-                            <strong className="text-[#D4AF37]">{selectedWishSet}</strong> +{' '}
-                            <strong className="text-[#F6EFE2]">Unique Season Trophy</strong>. Any repeat win later this same year earns{' '}
-                            <strong className="text-[#4F9E68]">2x Match EXP (that match only)</strong>.
-                          </span>
-                        ) : (
-                          <span>
-                            Survive match-wide curse ({SEASONAL_LIVE_OPS.eventQueueLineup.halloween.curses.join(' · ')}) on first win this year to unlock{' '}
-                            <strong className="text-[#D4AF37]">{selectedWishSet}</strong> +{' '}
-                            <strong className="text-[#C4A1EA]">Exclusive Cursed VFX / Ether Seal</strong> +{' '}
-                            <strong className="text-[#F6EFE2]">Unique Season Trophy</strong> (Defeat = 24h lock; repeat same-year win = 2x Match EXP for that match only).
-                          </span>
-                        )}
-                      </div>
+                    <div className="mt-4 border-t border-white/10 pt-3 text-[11px] text-[#B8B1A6]">
+                      <span className="font-semibold text-[#EAE6DF]">Active Simulation Outcome: </span>
+                      {halloweenRitualChoice === 'wish' ? (
+                        <span>
+                          Win match under standard rules to unlock{' '}
+                          <strong className="text-[#D4AF37]">{selectedWishSet}</strong>.
+                        </span>
+                      ) : (
+                        <span>
+                          Survive match-wide curse ({SEASONAL_LIVE_OPS.eventQueueLineup.halloween.curses.join(' · ')}) to unlock{' '}
+                          <strong className="text-[#D4AF37]">{selectedWishSet}</strong> +{' '}
+                          <strong className="text-[#C4A1EA]">Exclusive Cursed VFX / Ether Seal Variant</strong> (Defeat = 24h lock).
+                        </span>
+                      )}
                     </div>
                   </div>
 
-                  {/* Midwinter — Dark Santa's Wish */}
+                  {/* Midwinter - Dark Santa's Wish */}
                   <div className="flex flex-col justify-between rounded-md border border-[#3E82C7]/45 bg-[#0F0F12] p-6 lg:col-span-5">
                     <div>
                       <p className="flex items-center gap-1.5 text-[11px] font-semibold tracking-wider text-[#6BA8E5] uppercase">
@@ -1314,29 +1266,23 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
                   </div>
                 </div>
 
-                {/* Annual Reset, Repeat-Win Single-Match 2x EXP & Unique Seasonal Trophies */}
-                <div className="mt-6 grid grid-cols-1 gap-4 border-t border-white/10 pt-6 lg:grid-cols-3">
-                  {SEASONAL_LIVE_OPS.eventQueueLineup.annualProgression.map((rule, idx) => (
-                    <div
-                      key={rule.id}
-                      className="rounded-md border border-white/10 bg-[#0F0F12] p-5"
-                    >
-                      <div className="flex items-center gap-2 text-[11px] font-semibold tracking-wider text-[#C89B3C] uppercase">
-                        {idx === 0 ? (
-                          <Sparkles className="h-3.5 w-3.5 text-[#4F9E68]" aria-hidden="true" />
-                        ) : idx === 1 ? (
-                          <RefreshCw className="h-3.5 w-3.5 text-[#6BA8E5]" aria-hidden="true" />
-                        ) : (
-                          <Trophy className="h-3.5 w-3.5 text-[#D4AF37]" aria-hidden="true" />
-                        )}
-                        <span>{rule.tag}</span>
-                      </div>
-                      <h5 className="font-display mt-1.5 text-lg font-semibold text-[#F6EFE2]">
-                        {rule.title}
-                      </h5>
-                      <p className="mt-2 text-xs leading-relaxed text-[#B8B1A6]">{rule.detail}</p>
+                {/* Veteran Replay Mechanic: 2x Match-Wide EXP for Past Event Winners */}
+                <div className="mt-6 rounded-md border border-[#C89B3C]/45 bg-[#12110E] p-5">
+                  <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-[#C89B3C] uppercase">
+                      <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+                      <span>{SEASONAL_LIVE_OPS.eventQueueLineup.veteranBonus.badge}</span>
                     </div>
-                  ))}
+                    <span className="font-mono-tabular text-xs font-bold text-[#D4AF37]">
+                      {SEASONAL_LIVE_OPS.eventQueueLineup.veteranBonus.multiplier}
+                    </span>
+                  </div>
+                  <h5 className="font-display mt-2 text-lg font-semibold text-[#F6EFE2]">
+                    {SEASONAL_LIVE_OPS.eventQueueLineup.veteranBonus.title}
+                  </h5>
+                  <p className="mt-1.5 text-xs leading-relaxed text-[#D4CEC3]">
+                    {SEASONAL_LIVE_OPS.eventQueueLineup.veteranBonus.rule}
+                  </p>
                 </div>
               </div>
 
@@ -1388,7 +1334,7 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
                     <MediaFrame
                       key={activeSeason.id}
                       src={activeSeason.image}
-                      alt={`${activeSeason.seasonLabel} — ${activeSeason.title}`}
+                      alt={`${activeSeason.seasonLabel} - ${activeSeason.title}`}
                       caption={`${activeSeason.seasonLabel} Storm Variant · ${activeSeason.ue5Tech}`}
                       aspectClass="aspect-video lg:h-full"
                     />
@@ -1543,7 +1489,7 @@ export function BiomesAndMathSection({ profile, onChangeProfile }: BiomesAndMath
                       <div className="aspect-[4/3] w-full overflow-hidden bg-[#08080A]">
                         <img
                           src={skin.image}
-                          alt={`${skin.eventTitle} — ${skin.skinName}`}
+                          alt={`${skin.eventTitle} - ${skin.skinName}`}
                           loading="lazy"
                           referrerPolicy="no-referrer"
                           className="h-full w-full object-cover object-top"

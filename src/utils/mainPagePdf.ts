@@ -35,13 +35,21 @@ const BOTTOM_Y = PAGE_H - 16; // 281mm
 
 function pdfSafe(input: string): string {
   return input
-    .replace(/→/g, '->')
-    .replace(/←/g, '<-')
-    .replace(/≤/g, '<=')
-    .replace(/≥/g, '>=')
-    .replace(/Δ/g, 'Delta ')
-    .replace(/×/g, 'x')
-    .replace(/•/g, '-')
+    .replace(/\u2014/g, ' - ')
+    .replace(/\u2013/g, '-')
+    .replace(/[\u2012\u2015\u2212]/g, '-')
+    .replace(/[\u2018\u2019\u201A]/g, "'")
+    .replace(/[\u201C\u201D\u201E]/g, '"')
+    .replace(/\u2026/g, '...')
+    .replace(/\u2192/g, '->')
+    .replace(/\u2190/g, '<-')
+    .replace(/\u2264/g, '<=')
+    .replace(/\u2265/g, '>=')
+    .replace(/\u0394/g, 'Delta ')
+    .replace(/\u00D7/g, 'x')
+    .replace(/\u2022/g, '-')
+    .replace(/\u00B7/g, ' | ')
+    .replace(/\s{2,}/g, ' ')
     .replace(/[^\x09\x0A\x0D\x20-\xFF]/g, '');
 }
 
@@ -126,7 +134,7 @@ function drawPageChrome(doc: jsPDF, sectionHeader: string, pageNum: number) {
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(7.5);
   doc.setTextColor(156, 150, 139);
-  doc.text('Dimpz Games  ·  Original IP Edition  ·  World of Valdris  ·  Unreal Engine 5', MARGIN_X, PAGE_H - 8.5);
+  doc.text('Dimpz Games  |  Original IP Edition  |  World of Valdris  |  Unreal Engine 5', MARGIN_X, PAGE_H - 8.5);
   doc.text(`Page ${pageNum}`, PAGE_W - MARGIN_X, PAGE_H - 8.5, { align: 'right' });
 }
 
@@ -240,7 +248,7 @@ export async function exportMainPageToPdf(
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(7.2);
   doc.setTextColor(200, 155, 60);
-  doc.text('DIMPZ GAMES  ·  ORIGINAL IP EDITION  ·  WORLD OF VALDRIS', MARGIN_X + 5, y + 9.5);
+  doc.text('DIMPZ GAMES  |  ORIGINAL IP EDITION  |  WORLD OF VALDRIS', MARGIN_X + 5, y + 9.5);
 
   doc.setFont('times', 'bold');
   doc.setFontSize(24);
@@ -251,7 +259,9 @@ export async function exportMainPageToPdf(
   doc.setFontSize(8.4);
   doc.setTextColor(225, 220, 210);
   const heroDesc = doc.splitTextToSize(
-    'Tactical TPS Battle Royale / Dark Medieval Action / PvPvE for 200 Players in Unreal Engine 5. Two hundred souls descend upon Valdris beneath The Abyssal Ash to claim The Iron Crown.',
+    pdfSafe(
+      'Tactical TPS Battle Royale / Dark Medieval Action / PvPvE for 200 Players in Unreal Engine 5. Two hundred souls descend upon Valdris beneath The Abyssal Ash to claim The Iron Crown.'
+    ),
     108
   );
   doc.text(heroDesc, MARGIN_X + 5, y + 26.5);
@@ -266,9 +276,9 @@ export async function exportMainPageToPdf(
   // 4-Column Structural Strip
   const statStrip = [
     ['Match Scale', '200 Players'],
-    ['5-Act Match Loop', '15–18 Minutes'],
+    ['5-Act Match Loop', '15-18 Minutes'],
     ['Gold Cap (Mastery)', '35% -> 50% @ Lv.100'],
-    ['Engine & Replication', 'UE5 · 50–80m'],
+    ['Engine & Replication', 'UE5 | 50-80m'],
   ];
   const statW = (CONTENT_W - 9) / 4;
   statStrip.forEach(([label, val], idx) => {
@@ -281,12 +291,12 @@ export async function exportMainPageToPdf(
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(6.8);
     doc.setTextColor(156, 150, 139);
-    doc.text(label, sx + 3, y + 4.6);
+    doc.text(pdfSafe(label), sx + 3, y + 4.6);
 
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(9.2);
     doc.setTextColor(idx === 2 ? 212 : 246, idx === 2 ? 175 : 239, idx === 2 ? 55 : 226);
-    doc.text(val, sx + 3, y + 10.4);
+    doc.text(pdfSafe(val), sx + 3, y + 10.4);
   });
   y += 17.5;
 
@@ -321,15 +331,17 @@ export async function exportMainPageToPdf(
   y = drawSectionHeading(
     doc,
     y,
-    '01 · Universe, Identity & Game Modes',
-    'The Cursed Continent of Valdris — Oath & Wanderer Modes'
+    '01 | Universe, Identity & Game Modes',
+    'The Cursed Continent of Valdris - Oath & Wanderer Modes'
   );
 
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8.2);
   doc.setTextColor(212, 206, 195);
   const loreLines = doc.splitTextToSize(
-    'Across the cursed continent of Valdris, every blood moon unleashes The Abyssal Ash—an arcane storm born from the kingdom\'s ancient broken oath. No fixed classes or rigid bloodlines bind you: every player begins identically as a Warrior and forges their discipline through weapons and Ether Seals.',
+    pdfSafe(
+      "Across the cursed continent of Valdris, every blood moon unleashes The Abyssal Ash - an arcane storm born from the kingdom's ancient broken oath. No fixed classes or rigid bloodlines bind you: every player begins identically as a Warrior and forges their discipline through weapons and Ether Seals."
+    ),
     CONTENT_W
   );
   doc.text(loreLines, MARGIN_X, y);
@@ -400,7 +412,7 @@ export async function exportMainPageToPdf(
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(8.5);
     doc.setTextColor(200, 155, 60);
-    doc.text(`${act.number} — ${act.name}`, MARGIN_X + 4, y + 5.5);
+    doc.text(pdfSafe(`${act.number} - ${act.name}`), MARGIN_X + 4, y + 5.5);
 
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(7.5);
@@ -637,7 +649,7 @@ export async function exportMainPageToPdf(
     y = drawSectionHeading(
       doc,
       y,
-      '03B · Logical Gear Sets (Stats) + 90 Episode I Launch Skins (Visual Only — Unrelated)',
+      '03B · Logical Gear Sets (Stats) + 90 Episode I Launch Skins (Visual Only - Unrelated)',
       subTitle
     );
 
@@ -733,7 +745,7 @@ export async function exportMainPageToPdf(
   renderProfessionBatch(
     ['sword-warrior', 'club-warrior', 'axe-warrior'],
     '03B · 45 Melee Logical Sets & Launch Skins',
-    'Sword, Club & Axe — Pure Stat Data Unlinked From Visual Skins'
+    'Sword, Club & Axe - Pure Stat Data Unlinked From Visual Skins'
   );
   onProgress?.(6, totalSteps);
 
@@ -752,7 +764,7 @@ export async function exportMainPageToPdf(
     doc,
     y,
     '04 · Arcane Magic System (3 Equippable Slots)',
-    'The 8 Ether Seals — Direct Magic Level Scaling'
+    'The 8 Ether Seals - Direct Magic Level Scaling'
   );
 
   const sealW = (CONTENT_W - 4) / 2;
@@ -845,7 +857,7 @@ export async function exportMainPageToPdf(
   y = drawSectionHeading(
     doc,
     y,
-    '06 · World Design — Multi-Level Battlefield',
+    '06 · World Design - Multi-Level Battlefield',
     'The 4 Strategic Biomes of Valdris'
   );
 
@@ -1062,13 +1074,13 @@ export async function exportMainPageToPdf(
   });
   y += 7;
 
-  // Page 9: Section 08 — Decoupled Progression, Combat Integrity, Live-Ops & UE5 Architecture
+  // Page 9: Section 08 - Decoupled Progression, Combat Integrity, Live-Ops & UE5 Architecture
   y = addNewPage('08 · Decoupled Gear, Combat Integrity & Live-Ops');
   y = drawSectionHeading(
     doc,
     y,
     '08 · Decoupled Modular Architecture & Live-Ops (Episode I)',
-    'Logical Gear Data vs. Launch Cosmetic Skins — Zero Pay-to-Win'
+    'Logical Gear Data vs. Launch Cosmetic Skins - Zero Pay-to-Win'
   );
 
   DECOUPLED_SYSTEM_PILLARS.forEach((pillar) => {
@@ -1160,22 +1172,45 @@ export async function exportMainPageToPdf(
   onProgress?.(10, totalSteps);
 
   // ============================================================================
-  // PAGE 10: HOLIDAY LOOT EVENTS (MARKED DATES ONLY) & CLIMATE-REACTIVE SKINS
+  // PAGE 10: LIMITED-TIME HOLIDAY LOOT EVENTS (MARKED DATES) & REACTIVE SKINS
   // ============================================================================
-  y = addNewPage('09 · Limited-Time Holiday Loot Events & Reactive Skins');
+  y = addNewPage('09 | Limited-Time Holiday Loot Events & Reactive Skins');
   y = drawSectionHeading(
     doc,
     y,
     SEASONAL_LIVE_OPS.eyebrow,
-    "Limited-Time Holiday Loot Events (1-2w) Inside Full-Season Worlds"
+    "Limited-Time Holiday Loot Events (1-2w) & Reactive Skins"
   );
 
+  // Queue Rule & Veteran Replay Strip (keeps Page 10 distinct from Page 11)
+  doc.setFillColor(20, 20, 24);
+  doc.setDrawColor(120, 96, 48);
+  doc.rect(MARGIN_X, y, CONTENT_W, 14, 'FD');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(6.5);
+  doc.setTextColor(200, 155, 60);
+  doc.text(
+    'LOOT QUEUE CADENCE: Always-Open 24/7 Queue  |  1 Entry / 24h Personal Cooldown  |  Zero Pay-to-Win',
+    MARGIN_X + 3.5,
+    y + 4.2
+  );
   doc.setFont('helvetica', 'normal');
-  doc.setFontSize(7.2);
+  doc.setFontSize(6.1);
   doc.setTextColor(212, 206, 195);
-  const holLead = doc.splitTextToSize(pdfSafe(SEASONAL_LIVE_OPS.lead), CONTENT_W);
-  doc.text(holLead.slice(0, 2), MARGIN_X, y);
-  y += 10.5;
+  doc.text(
+    'Loot contracts open strictly during marked calendar dates (1w Halloween, 2w Dec 24-Jan 7, 1w Jun 21-28) inside full-season storm worlds.',
+    MARGIN_X + 3.5,
+    y + 8.1
+  );
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(6.0);
+  doc.setTextColor(246, 239, 226);
+  doc.text(
+    'SAME-YEAR REPLAY (RESETS ANNUALLY): Already won this year? Re-entering gives 2x EXP for that match (Monsters, Bosses & Players); resets yearly for new loot.',
+    MARGIN_X + 3.5,
+    y + 11.9
+  );
+  y += 16.5;
 
   const holW = (CONTENT_W - 6) / 3;
   const holArts = [eventHalloweenArt, stormWinterArt, stormSummerArt];
@@ -1183,44 +1218,51 @@ export async function exportMainPageToPdf(
     const hx = MARGIN_X + idx * (holW + 3);
     doc.setFillColor(20, 20, 23);
     doc.setDrawColor(56, 52, 44);
-    doc.rect(hx, y, holW, 95, 'FD');
+    doc.rect(hx, y, holW, 96, 'FD');
 
     const imgData = holArts[idx];
     if (imgData) {
-      doc.addImage(imgData, 'JPEG', hx + 1, y + 1, holW - 2, 33);
+      doc.addImage(imgData, 'JPEG', hx + 1, y + 1, holW - 2, 32);
     }
 
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(6.2);
+    doc.setFontSize(6.0);
     doc.setTextColor(200, 155, 60);
-    doc.text(pdfSafe(`${ev.seasonTag.toUpperCase()}  |  ${ev.window}`), hx + 3, y + 38.5);
+    doc.text(pdfSafe(ev.seasonTag.toUpperCase()), hx + 3, y + 36.2);
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(5.7);
+    doc.setTextColor(234, 230, 223);
+    const winL = doc.splitTextToSize(pdfSafe(ev.window), holW - 6);
+    doc.text(winL.slice(0, 1), hx + 3, y + 39.6);
 
     doc.setFont('times', 'bold');
-    doc.setFontSize(9.2);
+    doc.setFontSize(8.8);
     doc.setTextColor(246, 239, 226);
-    doc.text(pdfSafe(ev.title), hx + 3, y + 43.5);
-
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(5.9);
-    doc.setTextColor(212, 206, 195);
-    const atmL = doc.splitTextToSize(pdfSafe(ev.atmosphere), holW - 6);
-    doc.text(atmL.slice(0, 4), hx + 3, y + 48.2);
+    const titleL = doc.splitTextToSize(pdfSafe(ev.title), holW - 6);
+    doc.text(titleL.slice(0, 2), hx + 3, y + 44.1);
 
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(5.8);
+    doc.setTextColor(212, 206, 195);
+    const atmL = doc.splitTextToSize(pdfSafe(ev.atmosphere), holW - 6);
+    doc.text(atmL.slice(0, 4), hx + 3, y + 52.0);
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(5.7);
     doc.setTextColor(184, 177, 166);
-    const twL = doc.splitTextToSize(pdfSafe(`Twist: ${ev.gameplayTwist}`), holW - 6);
-    doc.text(twL.slice(0, 4), hx + 3, y + 62.5);
+    const twL = doc.splitTextToSize(pdfSafe(`Rule: ${ev.gameplayTwist}`), holW - 6);
+    doc.text(twL.slice(0, 5), hx + 3, y + 66.0);
 
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(5.6);
+    doc.setFontSize(5.5);
     doc.setTextColor(200, 155, 60);
     const rwL = doc.splitTextToSize(pdfSafe(`Reward: ${ev.rewardSkin}`), holW - 6);
-    doc.text(rwL.slice(0, 3), hx + 3, y + 81.5);
+    doc.text(rwL.slice(0, 3), hx + 3, y + 85.2);
   });
-  y += 101;
+  y += 101.5;
 
-  // Climate-Reactive Seasonal Skins (3 columns)
+  // Climate-Reactive Seasonal Event Skins (3 Character Renders)
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(8.4);
   doc.setTextColor(246, 239, 226);
@@ -1228,14 +1270,14 @@ export async function exportMainPageToPdf(
   y += 3.2;
 
   doc.setFont('helvetica', 'normal');
-  doc.setFontSize(6.8);
+  doc.setFontSize(6.7);
   doc.setTextColor(184, 177, 166);
   const reactSum = doc.splitTextToSize(
     pdfSafe(SEASONAL_LIVE_OPS.climateReactiveSkins.summary),
     CONTENT_W
   );
   doc.text(reactSum.slice(0, 2), MARGIN_X, y + 2);
-  y += 10.5;
+  y += 10.2;
 
   const skinCardW = (CONTENT_W - 6) / 3;
   const skinArts = [skinHalloweenArt, skinWinterArt, skinSummerArt];
@@ -1243,81 +1285,61 @@ export async function exportMainPageToPdf(
     const kx = MARGIN_X + idx * (skinCardW + 3);
     doc.setFillColor(20, 20, 23);
     doc.setDrawColor(56, 52, 44);
-    doc.rect(kx, y, skinCardW, 92, 'FD');
+    doc.rect(kx, y, skinCardW, 91, 'FD');
 
     const imgData = skinArts[idx];
     if (imgData) {
-      doc.addImage(imgData, 'JPEG', kx + 1, y + 1, skinCardW - 2, 43);
+      doc.addImage(imgData, 'JPEG', kx + 1, y + 1, skinCardW - 2, 42);
     }
 
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(5.9);
+    doc.setFontSize(5.8);
     doc.setTextColor(200, 155, 60);
-    doc.text(pdfSafe(skin.eventTitle.toUpperCase()), kx + 3, y + 48.2);
+    const evTL = doc.splitTextToSize(pdfSafe(skin.eventTitle.toUpperCase()), skinCardW - 6);
+    doc.text(evTL.slice(0, 1), kx + 3, y + 47.0);
 
     doc.setFont('times', 'bold');
     doc.setFontSize(8.5);
     doc.setTextColor(246, 239, 226);
     const skTitle = doc.splitTextToSize(pdfSafe(skin.skinName), skinCardW - 6);
-    doc.text(skTitle.slice(0, 1), kx + 3, y + 53);
+    doc.text(skTitle.slice(0, 1), kx + 3, y + 51.8);
 
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(5.9);
     doc.setTextColor(184, 177, 166);
     const sLines = doc.splitTextToSize(pdfSafe(skin.detail), skinCardW - 6);
-    doc.text(sLines.slice(0, 6), kx + 3, y + 58);
+    doc.text(sLines.slice(0, 6), kx + 3, y + 56.8);
 
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(5.6);
+    doc.setFontSize(5.5);
     doc.setTextColor(234, 230, 223);
-    doc.text(pdfSafe(skin.seasonTag), kx + 3, y + 87.5);
-  });
-
-  // Annual Reset, Repeat-Win 2x Match EXP & Unique Seasonal Trophies Strip (y = 254.2 to 279.2mm, < 281mm)
-  y += 96;
-  doc.setFillColor(18, 18, 22);
-  doc.setDrawColor(120, 96, 48);
-  doc.rect(MARGIN_X, y, CONTENT_W, 25, 'FD');
-
-  const apW = (CONTENT_W - 8) / 3;
-  SEASONAL_LIVE_OPS.eventQueueLineup.annualProgression.forEach((rule, idx) => {
-    const ax = MARGIN_X + 2 + idx * (apW + 2);
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(5.3);
-    doc.setTextColor(200, 155, 60);
-    doc.text(pdfSafe(rule.tag.toUpperCase()), ax + 1.5, y + 4.4);
-
-    doc.setFont('times', 'bold');
-    doc.setFontSize(7.1);
-    doc.setTextColor(246, 239, 226);
-    doc.text(pdfSafe(rule.title), ax + 1.5, y + 8.3);
-
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(5.2);
-    doc.setTextColor(184, 177, 166);
-    const apLines = doc.splitTextToSize(pdfSafe(rule.detail), apW - 3);
-    doc.text(apLines.slice(0, 4), ax + 1.5, y + 12.0);
+    doc.text(pdfSafe(skin.seasonTag), kx + 3, y + 86.4);
   });
 
   onProgress?.(11, totalSteps);
 
   // ============================================================================
-  // PAGE 11: FULL-SEASON DYNAMIC STORM & WORLD CYCLE + PRODUCTION ADVANTAGE
+  // PAGE 11: FULL-SEASON WORLD CLIMATE SCENARIOS ONLY + PRODUCTION PIPELINE
   // ============================================================================
-  y = addNewPage('10 · Full-Season World Storms & Timed Loot Rituals');
+  y = addNewPage('10 | Full-Season World Storms & Production Pipeline');
   y = drawSectionHeading(
     doc,
     y,
-    'Full-Season Environment Scenarios (All Winter / Summer / Spring-Autumn)',
+    'UE5 Environment Cycle | Active Entire Astronomical Season (3 Months Each)',
     '4-Season Dynamic Storm & World Cycle'
   );
 
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(7.4);
   doc.setTextColor(212, 206, 195);
-  const seasonLeadLines = doc.splitTextToSize(pdfSafe(SEASONAL_LIVE_OPS.lead), CONTENT_W);
-  doc.text(seasonLeadLines.slice(0, 2), MARGIN_X, y);
-  y += 11;
+  const envLead = doc.splitTextToSize(
+    pdfSafe(
+      'Unlike the 1-2 week timed holiday loot contracts on Page 10, these environmental storm scenarios persist across entire 3-month seasons using modular UE5 Niagara VFX, weather shaders, and lighting presets - delivering continuous seasonal atmosphere with zero map geometry rebuilds.'
+    ),
+    CONTENT_W
+  );
+  doc.text(envLead.slice(0, 2), MARGIN_X, y);
+  y += 11.5;
 
   const stormCardW = (CONTENT_W - 6) / 3;
   const stormArts = [stormMiasmaArt, stormWinterArt, stormSummerArt];
@@ -1325,186 +1347,116 @@ export async function exportMainPageToPdf(
     const sx = MARGIN_X + idx * (stormCardW + 3);
     doc.setFillColor(20, 20, 23);
     doc.setDrawColor(56, 52, 44);
-    doc.rect(sx, y, stormCardW, 88, 'FD');
+    doc.rect(sx, y, stormCardW, 114, 'FD');
 
     const imgData = stormArts[idx];
     if (imgData) {
-      doc.addImage(imgData, 'JPEG', sx + 1, y + 1, stormCardW - 2, 34);
+      doc.addImage(imgData, 'JPEG', sx + 1, y + 1, stormCardW - 2, 42);
     }
 
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(6.5);
-    doc.setTextColor(200, 155, 60);
-    doc.text(pdfSafe(phase.seasonLabel.toUpperCase()), sx + 3, y + 39.5);
-
-    doc.setFont('times', 'bold');
-    doc.setFontSize(9.0);
-    doc.setTextColor(246, 239, 226);
-    const tLines = doc.splitTextToSize(pdfSafe(phase.title), stormCardW - 6);
-    doc.text(tLines.slice(0, 1), sx + 3, y + 44.5);
-
-    doc.setFont('helvetica', 'normal');
     doc.setFontSize(6.2);
-    doc.setTextColor(184, 177, 166);
-    const dLines = doc.splitTextToSize(pdfSafe(phase.description), stormCardW - 6);
-    doc.text(dLines.slice(0, 5), sx + 3, y + 49.5);
+    doc.setTextColor(200, 155, 60);
+    doc.text(pdfSafe(phase.seasonLabel.toUpperCase()), sx + 3, y + 47.2);
 
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(5.8);
-    doc.setTextColor(212, 206, 195);
-    const uLines = doc.splitTextToSize(pdfSafe(phase.ue5Tech), stormCardW - 6);
-    doc.text(uLines.slice(0, 2), sx + 3, y + 73);
+    doc.setFontSize(5.7);
+    doc.setTextColor(234, 230, 223);
+    const calL = doc.splitTextToSize(pdfSafe(phase.calendarWindow), stormCardW - 6);
+    doc.text(calL.slice(0, 1), sx + 3, y + 50.8);
+
+    doc.setFont('times', 'bold');
+    doc.setFontSize(9.5);
+    doc.setTextColor(246, 239, 226);
+    const tLines = doc.splitTextToSize(pdfSafe(phase.title), stormCardW - 6);
+    doc.text(tLines.slice(0, 1), sx + 3, y + 56.2);
 
     doc.setFont('helvetica', 'normal');
+    doc.setFontSize(6.3);
+    doc.setTextColor(184, 177, 166);
+    const dLines = doc.splitTextToSize(pdfSafe(phase.description), stormCardW - 6);
+    doc.text(dLines.slice(0, 6), sx + 3, y + 61.5);
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(5.9);
+    doc.setTextColor(212, 206, 195);
+    const uLines = doc.splitTextToSize(pdfSafe(`UE5 Tech: ${phase.ue5Tech}`), stormCardW - 6);
+    doc.text(uLines.slice(0, 3), sx + 3, y + 89.5);
+
+    doc.setFont('helvetica', 'bold');
     doc.setFontSize(5.7);
     doc.setTextColor(200, 155, 60);
     const evL = doc.splitTextToSize(pdfSafe(phase.eventPairing), stormCardW - 6);
-    doc.text(evL.slice(0, 2), sx + 3, y + 81.5);
+    doc.text(evL.slice(0, 2), sx + 3, y + 104.5);
   });
-  y += 94;
+  y += 121;
 
-  // Production & Live-Ops Advantage
+  // Production & Live-Ops Advantage (Expanded cleanly in dedicated space)
   doc.setFillColor(22, 20, 17);
   doc.setDrawColor(120, 96, 48);
-  doc.rect(MARGIN_X, y, CONTENT_W, 56, 'FD');
+  doc.rect(MARGIN_X, y, CONTENT_W, 66, 'FD');
 
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(7.4);
+  doc.setFontSize(7.6);
   doc.setTextColor(200, 155, 60);
-  doc.text('ART PIPELINE & RETENTION STRATEGY', MARGIN_X + 4, y + 6);
+  doc.text('ART PIPELINE & RETENTION STRATEGY', MARGIN_X + 4, y + 6.5);
 
   doc.setFont('times', 'bold');
-  doc.setFontSize(11.5);
+  doc.setFontSize(12);
   doc.setTextColor(246, 239, 226);
-  doc.text(pdfSafe(SEASONAL_LIVE_OPS.productionAdvantage.title), MARGIN_X + 4, y + 12.2);
+  doc.text(pdfSafe(SEASONAL_LIVE_OPS.productionAdvantage.title), MARGIN_X + 4, y + 13);
 
   doc.setFont('helvetica', 'normal');
-  doc.setFontSize(7.2);
+  doc.setFontSize(7.4);
   doc.setTextColor(212, 206, 195);
   const advSumLines = doc.splitTextToSize(
     pdfSafe(SEASONAL_LIVE_OPS.productionAdvantage.summary),
     CONTENT_W - 8
   );
-  doc.text(advSumLines.slice(0, 2), MARGIN_X + 4, y + 18);
+  doc.text(advSumLines.slice(0, 2), MARGIN_X + 4, y + 19);
 
   const ptW = (CONTENT_W - 12) / 2;
   SEASONAL_LIVE_OPS.productionAdvantage.partnerPoints.forEach((pt, idx) => {
     const px = MARGIN_X + 4 + idx * (ptW + 4);
     doc.setFillColor(15, 15, 18);
     doc.setDrawColor(56, 52, 44);
-    doc.rect(px, y + 28, ptW, 24, 'FD');
+    doc.rect(px, y + 30, ptW, 31, 'FD');
 
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(6.9);
+    doc.setFontSize(7.2);
     doc.setTextColor(200, 155, 60);
-    doc.text(pdfSafe(pt.audience), px + 3, y + 33.5);
+    doc.text(pdfSafe(pt.audience), px + 3.5, y + 36);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(6.5);
+    doc.setTextColor(184, 177, 166);
+    const pLines = doc.splitTextToSize(pdfSafe(pt.detail), ptW - 7);
+    doc.text(pLines.slice(0, 5), px + 3.5, y + 41.5);
+  });
+  y += 72;
+
+  // Dual Cadence Architectural Summary Strip (y = 237 to 267mm, safely < 281mm)
+  const cadW = (CONTENT_W - 4) / 2;
+  SEASONAL_LIVE_OPS.cadenceRule.forEach((rule, idx) => {
+    const cx = MARGIN_X + idx * (cadW + 4);
+    doc.setFillColor(18, 18, 22);
+    doc.setDrawColor(idx === 0 ? 62 : 200, idx === 0 ? 130 : 155, idx === 0 ? 199 : 60);
+    doc.rect(cx, y, cadW, 28, 'FD');
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(6.8);
+    doc.setTextColor(idx === 0 ? 107 : 200, idx === 0 ? 168 : 155, idx === 0 ? 229 : 60);
+    doc.text(pdfSafe(rule.layer.toUpperCase()), cx + 3.5, y + 5.5);
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(7.2);
+    doc.setTextColor(246, 239, 226);
+    doc.text(pdfSafe(rule.duration), cx + 3.5, y + 10.5);
+
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(6.2);
     doc.setTextColor(184, 177, 166);
-    const pLines = doc.splitTextToSize(pdfSafe(pt.detail), ptW - 6);
-    doc.text(pLines.slice(0, 4), px + 3, y + 38.2);
-  });
-  y += 61;
-
-  // Seasonal Event Lineup: 1 Attempt Every 24 Hours (Zero Pay-to-Win) (y = 199 to 278mm, safely < 281mm)
-  doc.setFillColor(18, 18, 22);
-  doc.setDrawColor(120, 96, 48);
-  doc.rect(MARGIN_X, y, CONTENT_W, 79, 'FD');
-
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(6.6);
-  doc.setTextColor(200, 155, 60);
-  doc.text(
-    '24/7 QUEUE  |  1 ENTRY / 24H  |  SAME-YEAR REPEAT WIN: 2X MATCH EXP (1 MATCH)  |  ANNUAL NEW LOOT & TROPHIES',
-    MARGIN_X + 4,
-    y + 5.5
-  );
-
-  doc.setFont('times', 'bold');
-  doc.setFontSize(10.5);
-  doc.setTextColor(246, 239, 226);
-  doc.text(pdfSafe(SEASONAL_LIVE_OPS.eventQueueLineup.title), MARGIN_X + 4, y + 11.2);
-
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(6.5);
-  doc.setTextColor(212, 206, 195);
-  const qLead = doc.splitTextToSize(pdfSafe(SEASONAL_LIVE_OPS.eventQueueLineup.lead), CONTENT_W - 8);
-  doc.text(qLead.slice(0, 2), MARGIN_X + 4, y + 16);
-
-  const qColW = (CONTENT_W - 12) / 2;
-  // Left Box: Halloween — Wish or Threat
-  const hx = MARGIN_X + 4;
-  const qy = y + 25;
-  doc.setFillColor(15, 15, 18);
-  doc.setDrawColor(148, 97, 201);
-  doc.rect(hx, qy, qColW, 50, 'FD');
-
-  doc.setFont('times', 'bold');
-  doc.setFontSize(8.8);
-  doc.setTextColor(246, 239, 226);
-  doc.text(pdfSafe(SEASONAL_LIVE_OPS.eventQueueLineup.halloween.title), hx + 3, y + 29.8);
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(5.4);
-  doc.setTextColor(196, 161, 234);
-  doc.text(pdfSafe(SEASONAL_LIVE_OPS.eventQueueLineup.halloween.durationLabel), hx + 3, y + 33.0);
-
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(5.9);
-  doc.setTextColor(200, 155, 60);
-  doc.text('WISH (STANDARD RULES):', hx + 3, y + 37.2);
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(5.6);
-  doc.setTextColor(184, 177, 166);
-  const wL = doc.splitTextToSize(
-    pdfSafe(SEASONAL_LIVE_OPS.eventQueueLineup.halloween.wish.summary),
-    qColW - 6
-  );
-  doc.text(wL.slice(0, 3), hx + 3, y + 40.6);
-
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(5.9);
-  doc.setTextColor(196, 161, 234);
-  doc.text('THREAT (CURSED STAKES / +VFX VARIANT):', hx + 3, y + 52.2);
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(5.6);
-  doc.setTextColor(184, 177, 166);
-  const tL = doc.splitTextToSize(
-    pdfSafe(SEASONAL_LIVE_OPS.eventQueueLineup.halloween.threat.summary),
-    qColW - 6
-  );
-  doc.text(tL.slice(0, 4), hx + 3, y + 55.6);
-
-  // Right Box: Midwinter — Dark Santa's Wish
-  const mx = MARGIN_X + 8 + qColW;
-  doc.setFillColor(15, 15, 18);
-  doc.setDrawColor(62, 130, 199);
-  doc.rect(mx, qy, qColW, 50, 'FD');
-
-  doc.setFont('times', 'bold');
-  doc.setFontSize(8.8);
-  doc.setTextColor(246, 239, 226);
-  doc.text(pdfSafe(SEASONAL_LIVE_OPS.eventQueueLineup.midwinter.title), mx + 3, y + 29.8);
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(5.4);
-  doc.setTextColor(107, 168, 229);
-  doc.text(pdfSafe(SEASONAL_LIVE_OPS.eventQueueLineup.midwinter.durationLabel), mx + 3, y + 33.0);
-
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(5.8);
-  doc.setTextColor(212, 206, 195);
-  const dsSum = doc.splitTextToSize(
-    pdfSafe(SEASONAL_LIVE_OPS.eventQueueLineup.midwinter.summary),
-    qColW - 6
-  );
-  doc.text(dsSum.slice(0, 4), mx + 3, y + 37.2);
-
-  let dhy = y + 52.5;
-  doc.setFontSize(5.7);
-  doc.setTextColor(184, 177, 166);
-  SEASONAL_LIVE_OPS.eventQueueLineup.midwinter.highlights.forEach((h) => {
-    const hl = doc.splitTextToSize(`- ${pdfSafe(h)}`, qColW - 6);
-    doc.text(hl.slice(0, 2), mx + 3, dhy);
-    dhy += hl.slice(0, 2).length * 2.8 + 1.1;
+    const cLines = doc.splitTextToSize(pdfSafe(rule.detail), cadW - 7);
+    doc.text(cLines.slice(0, 3), cx + 3.5, y + 15.5);
   });
 
   onProgress?.(12, totalSteps);
@@ -1512,7 +1464,7 @@ export async function exportMainPageToPdf(
   // ============================================================================
   // PAGE 12: COMMERCIAL CO-PITCHING & STUDIO ALLIANCE MODEL (VERTICAL SLICE)
   // ============================================================================
-  y = addNewPage('11 · Commercial Co-Pitching & Studio Alliance Model');
+  y = addNewPage('11 | Commercial Co-Pitching & Studio Alliance Model');
   y = drawSectionHeading(
     doc,
     y,
@@ -1539,7 +1491,7 @@ export async function exportMainPageToPdf(
     doc.setTextColor(156, 150, 139);
     doc.text(pdfSafe(m.label), mx + 2.5, y + 4.2);
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(7.8);
+    doc.setFontSize(7.0);
     doc.setTextColor(200, 155, 60);
     doc.text(pdfSafe(m.value), mx + 2.5, y + 9.2);
   });
@@ -1549,7 +1501,7 @@ export async function exportMainPageToPdf(
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(7.8);
   doc.setTextColor(246, 239, 226);
-  doc.text('DIVISION OF LABOR (PHASE 1 — VERTICAL SLICE)', MARGIN_X, y);
+  doc.text('DIVISION OF LABOR (PHASE 1 - VERTICAL SLICE)', MARGIN_X, y);
   y += 2.8;
 
   const colW = (CONTENT_W - 4) / 2;
@@ -1690,7 +1642,7 @@ export async function exportMainPageToPdf(
   // 5. Current Technical Status (Playable Prototype)
   doc.setFillColor(18, 18, 22);
   doc.setDrawColor(79, 158, 104);
-  doc.rect(MARGIN_X, y, CONTENT_W, 26, 'FD');
+  doc.rect(MARGIN_X, y, CONTENT_W, 34, 'FD');
 
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(7.2);
@@ -1698,13 +1650,13 @@ export async function exportMainPageToPdf(
   doc.text(pdfSafe(CO_PITCHING_ALLIANCE.currentTechnicalStatus.title.toUpperCase()), MARGIN_X + 4, y + 5);
 
   doc.setFont('helvetica', 'normal');
-  doc.setFontSize(6.1);
+  doc.setFontSize(6.0);
   doc.setTextColor(212, 206, 195);
-  let statusY = y + 9.5;
+  let statusY = y + 9.2;
   CO_PITCHING_ALLIANCE.currentTechnicalStatus.points.forEach((pt) => {
     const pL = doc.splitTextToSize(`- ${pdfSafe(pt.label)}: ${pdfSafe(pt.detail)}`, CONTENT_W - 8);
     doc.text(pL.slice(0, 2), MARGIN_X + 4, statusY);
-    statusY += pL.slice(0, 2).length * 3.1 + 1.4;
+    statusY += pL.slice(0, 2).length * 3.0 + 1.5;
   });
 
   onProgress?.(totalSteps, totalSteps);

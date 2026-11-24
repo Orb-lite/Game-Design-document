@@ -52,7 +52,7 @@ export function BiomesTab({ onOpenBestiary }: BiomesTabProps) {
               </h1>
               <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#B8B1A6]">
                 Four interlocking regions built for 200-Warrior Battle Royale rotations beneath The
-                Abyssal Ash—combining toxic marsh catwalks, vertical tree canopies, claustrophobic
+                Abyssal Ash - combining toxic marsh catwalks, vertical tree canopies, claustrophobic
                 catacombs, and the three-tier Citadel Throne Hall.
               </p>
             </div>
@@ -86,9 +86,9 @@ export function BiomesTab({ onOpenBestiary }: BiomesTabProps) {
               {(
                 [
                   ['all', 'All 4 Biomes'],
-                  ['early', 'Acts I–II · Outer Flanks'],
-                  ['mid', 'Acts II–III · Sanctums & Canopies'],
-                  ['endgame', 'Acts IV–V · Black Bell & Citadel'],
+                  ['early', 'Acts I-II · Outer Flanks'],
+                  ['mid', 'Acts II-III · Sanctums & Canopies'],
+                  ['endgame', 'Acts IV-V · Black Bell & Citadel'],
                 ] as [BiomePhaseFilter, string][]
               ).map(([key, label]) => (
                 <button

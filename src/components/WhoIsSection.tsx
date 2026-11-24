@@ -359,7 +359,7 @@ export function WhoIsSection({
                         <div
                           key={point.hour}
                           className="group flex flex-1 flex-col items-center justify-end gap-1"
-                          title={`${String(point.hour).padStart(2, '0')}:00 UTC — ${point.views} views`}
+                          title={`${String(point.hour).padStart(2, '0')}:00 UTC - ${point.views} views`}
                         >
                           <span className="font-mono-tabular text-[9px] text-[#4F9E68]">
                             {point.views > 0 ? point.views : ''}

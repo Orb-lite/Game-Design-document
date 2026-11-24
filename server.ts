@@ -556,6 +556,7 @@ async function startServer(): Promise<void> {
       res.sendFile(distIndex);
     });
   } else {
+    app.use('/assets', express.static(path.resolve(__dirname, 'public/assets')));
     const { createServer } = await import('vite');
     const vite = await createServer({
       server: { middlewareMode: true },

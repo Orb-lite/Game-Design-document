@@ -5,6 +5,26 @@ interface LoadedImageResult {
   dataUrl: string;
 }
 
+function pdfSafe(input: string): string {
+  return input
+    .replace(/\u2014/g, ' - ')
+    .replace(/\u2013/g, '-')
+    .replace(/[\u2012\u2015\u2212]/g, '-')
+    .replace(/[\u2018\u2019\u201A]/g, "'")
+    .replace(/[\u201C\u201D\u201E]/g, '"')
+    .replace(/\u2026/g, '...')
+    .replace(/\u2192/g, '->')
+    .replace(/\u2190/g, '<-')
+    .replace(/\u2264/g, '<=')
+    .replace(/\u2265/g, '>=')
+    .replace(/\u0394/g, 'Delta ')
+    .replace(/\u00D7/g, 'x')
+    .replace(/\u2022/g, '-')
+    .replace(/\u00B7/g, ' | ')
+    .replace(/\s{2,}/g, ' ')
+    .replace(/[^\x09\x0A\x0D\x20-\xFF]/g, '');
+}
+
 async function loadCroppedJpeg(
   src: string,
   targetAspect = 16 / 9,
@@ -80,8 +100,8 @@ function drawSlideChrome(doc: jsPDF, W: number, H: number, footerRight: string) 
 
   doc.setFont('helvetica', 'normal');
   doc.setTextColor(156, 150, 139);
-  doc.text('Dimpz Games · isaacgestrada94@gmail.com · +52 33 1835 9421', 74, H - 9.5);
-  doc.text(footerRight, W - 14, H - 9.5, { align: 'right' });
+  doc.text('Dimpz Games | isaacgestrada94@gmail.com | +52 33 1835 9421', 74, H - 9.5);
+  doc.text(pdfSafe(footerRight), W - 14, H - 9.5, { align: 'right' });
 }
 
 export async function exportPitchDeckToPdf(
@@ -141,7 +161,7 @@ export async function exportPitchDeckToPdf(
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(10);
   doc.setTextColor(200, 155, 60);
-  doc.text('DIMPZ GAMES · EXECUTIVE COMMERCIAL PITCH DECK', 22, 34);
+  doc.text('DIMPZ GAMES | EXECUTIVE COMMERCIAL PITCH DECK', 22, 34);
 
   doc.setFont('times', 'bold');
   doc.setFontSize(40);
@@ -164,8 +184,8 @@ export async function exportPitchDeckToPdf(
 
   const metrics = [
     ['MATCH SCALE', '200 Warriors'],
-    ['LOOP DURATION', '5 Acts · 15–18m'],
-    ['3D ARMORY', '90 Sets (Lv.1–100+)'],
+    ['LOOP DURATION', '5 Acts | 15-18m'],
+    ['3D ARMORY', '90 Sets (Lv.1-100+)'],
     ['MONETIZATION', 'Zero Pay-to-Win'],
   ];
   metrics.forEach(([label, value], i) => {
@@ -177,14 +197,14 @@ export async function exportPitchDeckToPdf(
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(10.5);
     doc.setTextColor(246, 239, 226);
-    doc.text(value, mx, 124);
+    doc.text(pdfSafe(value), mx, 124);
   });
 
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8.5);
   doc.setTextColor(184, 177, 166);
   doc.text(
-    'Oath Mode (Duos / Trios / Squads)  ·  Wanderer Mode (Solo 1 vs 199)  ·  Universe of Valdris',
+    'Oath Mode (Duos / Trios / Squads)  |  Wanderer Mode (Solo 1 vs 199)  |  Universe of Valdris',
     22,
     H - 22
   );
@@ -201,7 +221,7 @@ export async function exportPitchDeckToPdf(
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(9);
     doc.setTextColor(200, 155, 60);
-    doc.text(`SLIDE ${slide.code}  ·  ${slide.section.toUpperCase()}`, 14, 24);
+    doc.text(pdfSafe(`SLIDE ${slide.code}  |  ${slide.section.toUpperCase()}`), 14, 24);
 
     // Left column: Title, Key Message, Bullets
     const leftX = 14;
@@ -210,7 +230,7 @@ export async function exportPitchDeckToPdf(
     doc.setFont('times', 'bold');
     doc.setFontSize(20);
     doc.setTextColor(246, 239, 226);
-    const titleLines = doc.splitTextToSize(slide.title, leftW);
+    const titleLines = doc.splitTextToSize(pdfSafe(slide.title), leftW);
     doc.text(titleLines, leftX, 34);
 
     let cursorY = 34 + titleLines.length * 7.8 + 3;
@@ -218,7 +238,7 @@ export async function exportPitchDeckToPdf(
     doc.setFont('helvetica', 'italic');
     doc.setFontSize(10.5);
     doc.setTextColor(212, 175, 55);
-    const quoteLines = doc.splitTextToSize(slide.keyMessage, leftW);
+    const quoteLines = doc.splitTextToSize(pdfSafe(slide.keyMessage), leftW);
     doc.text(quoteLines, leftX, cursorY);
 
     cursorY += quoteLines.length * 5.2 + 4;
@@ -234,7 +254,7 @@ export async function exportPitchDeckToPdf(
     for (const bullet of slide.bullets) {
       doc.setFillColor(200, 155, 60);
       doc.rect(leftX, cursorY - 2.3, 1.8, 1.8, 'F');
-      const bLines = doc.splitTextToSize(bullet, leftW - 6);
+      const bLines = doc.splitTextToSize(pdfSafe(bullet), leftW - 6);
       doc.text(bLines, leftX + 5, cursorY);
       cursorY += bLines.length * 4.8 + 4.5;
     }
@@ -250,7 +270,7 @@ export async function exportPitchDeckToPdf(
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(8.5);
         doc.setTextColor(200, 155, 60);
-        doc.text(slide.showcaseTitle.toUpperCase(), rightX, rightY + 3);
+        doc.text(pdfSafe(slide.showcaseTitle.toUpperCase()), rightX, rightY + 3);
       }
 
       const items = slide.showcaseItems;
@@ -282,12 +302,12 @@ export async function exportPitchDeckToPdf(
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(8);
         doc.setTextColor(246, 239, 226);
-        doc.text(item.label, cx + 2.5, cy + imgH + 6);
+        doc.text(pdfSafe(item.label), cx + 2.5, cy + imgH + 6);
 
         doc.setFont('helvetica', 'normal');
         doc.setFontSize(7);
         doc.setTextColor(184, 177, 166);
-        doc.text(item.sublabel, cx + 2.5, cy + imgH + 11.5);
+        doc.text(pdfSafe(item.sublabel), cx + 2.5, cy + imgH + 11.5);
       }
     } else {
       const boxH = 82;
@@ -305,7 +325,7 @@ export async function exportPitchDeckToPdf(
       doc.setFont('helvetica', 'italic');
       doc.setFontSize(8);
       doc.setTextColor(156, 150, 139);
-      doc.text(`${slide.section} — Valdris Visual Reference`, rightX, boxY + boxH + 6);
+      doc.text(pdfSafe(`${slide.section} - Valdris Visual Reference`), rightX, boxY + boxH + 6);
     }
 
     onProgress?.(i + 2, totalSteps);
