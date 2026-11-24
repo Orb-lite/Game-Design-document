@@ -25,6 +25,43 @@ import { exportPitchDeckToPdf } from './utils/pitchDeckPdf';
 
 type MainViewTab = 'overview' | 'sets' | 'biomes' | 'bestiary' | 'videos';
 
+function getTabFromUrl(): MainViewTab {
+  if (typeof window === 'undefined') return 'overview';
+  const path = window.location.pathname.replace(/\/+$/, '').toLowerCase();
+  const params = new URLSearchParams(window.location.search);
+  const queryTab = (params.get('tab') ?? '').toLowerCase();
+  const hash = window.location.hash.toLowerCase();
+
+  if (path === '/videos' || path === '/video' || queryTab === 'videos' || hash === '#videos') {
+    return 'videos';
+  }
+  if (path === '/sets' || queryTab === 'sets') {
+    return 'sets';
+  }
+  if (path === '/biomes' || queryTab === 'biomes') {
+    return 'biomes';
+  }
+  if (path === '/bestiary' || queryTab === 'bestiary') {
+    return 'bestiary';
+  }
+  return 'overview';
+}
+
+function getPathForTab(tab: MainViewTab): string {
+  switch (tab) {
+    case 'videos':
+      return '/videos';
+    case 'sets':
+      return '/sets';
+    case 'biomes':
+      return '/biomes';
+    case 'bestiary':
+      return '/bestiary';
+    default:
+      return '/';
+  }
+}
+
 function isHiddenTrafficUrl(): boolean {
   if (typeof window === 'undefined') return false;
   const path = window.location.pathname.replace(/\/+$/, '').toLowerCase();
@@ -54,7 +91,7 @@ function getOrCreateStorageId(storage: Storage, key: string): string {
 
 export default function App() {
   const [isTrafficConsole, setIsTrafficConsole] = useState<boolean>(() => isHiddenTrafficUrl());
-  const [activeTab, setActiveTab] = useState<MainViewTab>('overview');
+  const [activeTab, setActiveTab] = useState<MainViewTab>(() => getTabFromUrl());
   const [isDeckOpen, setIsDeckOpen] = useState(false);
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [pdfProgress, setPdfProgress] = useState<string | null>(null);
@@ -188,6 +225,12 @@ export default function App() {
 
   const switchTab = (nextTab: MainViewTab) => {
     setActiveTab(nextTab);
+    if (typeof window !== 'undefined') {
+      const targetPath = getPathForTab(nextTab);
+      if (window.location.pathname !== targetPath || window.location.search || window.location.hash) {
+        window.history.pushState({}, '', targetPath);
+      }
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -252,6 +295,7 @@ export default function App() {
   useEffect(() => {
     const handlePopState = () => {
       setIsTrafficConsole(isHiddenTrafficUrl());
+      setActiveTab(getTabFromUrl());
     };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
@@ -503,10 +547,10 @@ export default function App() {
         ) : activeTab === 'videos' ? (
           <VideosTab
             onOpenAlliance={() => {
-              setActiveTab('overview');
+              switchTab('overview');
               window.setTimeout(() => {
                 document.getElementById('alliance')?.scrollIntoView({ behavior: 'smooth' });
-              }, 60);
+              }, 80);
             }}
           />
         ) : (

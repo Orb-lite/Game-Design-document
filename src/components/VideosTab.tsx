@@ -1,4 +1,5 @@
-import { ArrowRight, CheckCircle2, Film, Layers, Play, ShieldAlert } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowRight, Check, CheckCircle2, Copy, Film, Layers, Play, Share2, ShieldAlert } from 'lucide-react';
 import { CO_PITCHING_ALLIANCE, GENERATED_ASSETS } from '../data/gddData';
 
 interface VideosTabProps {
@@ -33,6 +34,27 @@ const PIPELINE_VIDEO_SLOTS = [
 ] as const;
 
 export function VideosTab({ onOpenAlliance }: VideosTabProps) {
+  const [copiedTarget, setCopiedTarget] = useState<'page' | 'clip' | null>(null);
+
+  const sharePageUrl =
+    typeof window !== 'undefined' ? `${window.location.origin}/videos` : '/videos';
+  const directVideoUrl =
+    typeof window !== 'undefined'
+      ? `${window.location.origin}${GENERATED_ASSETS.ue5PrototypePreviewVideo}`
+      : GENERATED_ASSETS.ue5PrototypePreviewVideo;
+
+  const copyShareUrl = async (url: string, target: 'page' | 'clip') => {
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopiedTarget(target);
+      window.setTimeout(() => {
+        setCopiedTarget((prev) => (prev === target ? null : prev));
+      }, 2200);
+    } catch {
+      // Clipboard blocked in restricted iframe context
+    }
+  };
+
   return (
     <section className="py-12 lg:py-16">
       <div className="mx-auto max-w-6xl px-6">
@@ -58,8 +80,22 @@ export function VideosTab({ onOpenAlliance }: VideosTabProps) {
               </p>
             </div>
 
-            {onOpenAlliance && (
-              <div className="shrink-0">
+            <div className="flex flex-wrap items-center gap-3 shrink-0">
+              <button
+                type="button"
+                onClick={() => {
+                  void copyShareUrl(sharePageUrl, 'page');
+                }}
+                className="inline-flex items-center gap-2 rounded-md border border-[#C89B3C]/60 bg-[#1B1812] px-4 py-2.5 text-xs font-semibold text-[#F6EFE2] transition-colors hover:bg-[#C89B3C]/20"
+              >
+                {copiedTarget === 'page' ? (
+                  <Check className="h-4 w-4 text-[#4F9E68]" aria-hidden="true" />
+                ) : (
+                  <Share2 className="h-4 w-4 text-[#C89B3C]" aria-hidden="true" />
+                )}
+                <span>{copiedTarget === 'page' ? 'Copied /videos Link' : 'Share Videos URL'}</span>
+              </button>
+              {onOpenAlliance && (
                 <button
                   type="button"
                   onClick={onOpenAlliance}
@@ -68,8 +104,27 @@ export function VideosTab({ onOpenAlliance }: VideosTabProps) {
                   <span>View Phase 1 Co-Pitching Scope</span>
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </button>
-              </div>
-            )}
+              )}
+            </div>
+          </div>
+
+          <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-md border border-white/10 bg-[#0F0F12] px-4 py-2.5 text-xs">
+            <div className="flex min-w-0 items-center gap-2">
+              <span className="text-[11px] font-semibold tracking-wider text-[#9C968B] uppercase shrink-0">
+                Shareable URL:
+              </span>
+              <code className="font-mono-tabular truncate text-[#EAE6DF]">{sharePageUrl}</code>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                void copyShareUrl(sharePageUrl, 'page');
+              }}
+              className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#C89B3C] hover:underline shrink-0"
+            >
+              <Copy className="h-3.5 w-3.5" aria-hidden="true" />
+              <span>{copiedTarget === 'page' ? 'Copied!' : 'Copy Link'}</span>
+            </button>
           </div>
         </div>
 
@@ -114,7 +169,23 @@ export function VideosTab({ onOpenAlliance }: VideosTabProps) {
                 <span className="font-mono-tabular text-[#D4CEC3]">
                   Build: VC_LastRelic Preview [NetMode: Standalone] (64-bit Windows)
                 </span>
-                <span className="font-mono-tabular text-[#C89B3C]">Duration: 0:36 · H.264 30fps</span>
+                <div className="flex items-center gap-3">
+                  <span className="font-mono-tabular text-[#C89B3C]">Duration: 0:36 · H.264 30fps</span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      void copyShareUrl(directVideoUrl, 'clip');
+                    }}
+                    className="inline-flex items-center gap-1 rounded border border-white/15 px-2 py-0.5 text-[10px] font-semibold text-[#EAE6DF] transition-colors hover:border-[#C89B3C]/60"
+                  >
+                    {copiedTarget === 'clip' ? (
+                      <Check className="h-3 w-3 text-[#4F9E68]" aria-hidden="true" />
+                    ) : (
+                      <Copy className="h-3 w-3 text-[#C89B3C]" aria-hidden="true" />
+                    )}
+                    <span>{copiedTarget === 'clip' ? 'Copied MP4 URL' : 'Copy MP4 Link'}</span>
+                  </button>
+                </div>
               </div>
             </div>
 
